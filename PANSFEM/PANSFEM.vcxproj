@@ -84,6 +84,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\youat\eigen-eigen-323c052e1731.tar\eigen-eigen-323c052e1731;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -108,6 +109,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\youat\eigen-eigen-323c052e1731.tar\eigen-eigen-323c052e1731;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -115,6 +117,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Element\Element.cpp" />
+    <ClCompile Include="Core\Equation\Equation.cpp" />
+    <ClCompile Include="Core\Field\Field.cpp" />
+    <ClCompile Include="Core\Node\Node.cpp" />
+    <ClCompile Include="Core\ShapeFunction\ShapeFunction.cpp" />
+    <ClCompile Include="Core\System\System.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Element\Element.h" />
+    <ClInclude Include="Core\Equation\Equation.h" />
+    <ClInclude Include="Core\Field\Field.h" />
+    <ClInclude Include="Core\Node\Node.h" />
+    <ClInclude Include="Core\ShapeFunction\ShapeFunction.h" />
+    <ClInclude Include="Core\System\System.h" />
+    <ClInclude Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

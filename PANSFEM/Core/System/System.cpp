@@ -1,0 +1,77 @@
+//*****************************************************************************
+//Title		:PANSFEM/Core/System/System.h
+//Author	:Tanabe Yuta
+//Date		:2019/06/08
+//Copyright	:(C)2019 TanabeYuta
+//*****************************************************************************
+
+
+#include "System.h"
+
+
+PANSFEM::System::System() : DOX(0), DOU(0){}
+
+
+PANSFEM::System::~System(){
+	for (auto& pnode : this->pnodes) {
+		delete pnode;
+	}
+	for (auto& pelement : this->pelements) {
+		delete pelement;
+	}
+	for (auto& pfield : this->pfields) {
+		delete pfield;
+	}
+}
+
+
+PANSFEM::System::System(int _DOX, int _DOU) : DOX(_DOX), DOU(_DOU){}
+
+
+bool PANSFEM::System::ImportNode(std::string _fname){
+	std::ifstream ifs(_fname);
+
+	if (!ifs.is_open()) {
+		std::cout << "Node file " << _fname << " open error!" << std::endl;
+		return false;
+	}
+
+	//.....一行読み飛ばす.....
+	std::string str0;
+	std::getline(ifs, str0);
+
+	while (!ifs.eof()) {
+		//.....一行分読み込む.....
+		std::string buf;
+		ifs >> buf;
+		std::istringstream sbuf(buf);
+		std::string str;
+
+		//.....節点IDを読み飛ばす.....
+		std::getline(sbuf, str, ',');
+
+		//.....節点自由度を取得.....
+		std::getline(sbuf, str, ',');
+		int DOX = stoi(str);
+
+		//.....節点の独立変数の値を読み込む.....
+		std::vector<double> xs(DOX);
+		for (auto x : xs) {
+			std::getline(sbuf, str, ',');
+			x = stod(str);
+		}
+
+		//.....節点の従属変数の対応番号を読み込む.....
+		std::vector<int> ulist;
+		while (std::getline(sbuf, str, ',')) {
+			ulist.push_back(stoi(str));
+		}
+
+		//.....節点を追加.....
+		this->pnodes.push_back(new Node(xs, ulist));
+	}
+
+	ifs.close();
+	
+	return true;
+}

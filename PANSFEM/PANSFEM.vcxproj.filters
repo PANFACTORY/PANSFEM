@@ -1,17 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Core\System\System.cpp" />
+    <ClCompile Include="Core\Node\Node.cpp" />
+    <ClCompile Include="Core\Element\Element.cpp" />
+    <ClCompile Include="Core\ShapeFunction\ShapeFunction.cpp" />
+    <ClCompile Include="Core\Equation\Equation.cpp" />
+    <ClCompile Include="Core\Field\Field.cpp" />
+    <ClCompile Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\System\System.h" />
+    <ClInclude Include="Core\Node\Node.h" />
+    <ClInclude Include="Core\Element\Element.h" />
+    <ClInclude Include="Core\ShapeFunction\ShapeFunction.h" />
+    <ClInclude Include="Core\Equation\Equation.h" />
+    <ClInclude Include="Core\Field\Field.h" />
+    <ClInclude Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
   </ItemGroup>
 </Project>
