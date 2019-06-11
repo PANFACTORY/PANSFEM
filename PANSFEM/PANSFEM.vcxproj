@@ -84,8 +84,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\youat\eigen-eigen-323c052e1731.tar\eigen-eigen-323c052e1731;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\clapack-3.2.1-CMAKE\clapack-3.2.1-CMAKE\INCLUDE;C:\Users\youat\eigen-eigen-323c052e1731.tar\eigen-eigen-323c052e1731;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\buildx64\SRC\Release;C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\buildx64\F2CLIBS\libf2c\Release;C:\Users\youat\OpenBLAS\OpenBLAS-v0.2.19-Win64-int32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libopenblas.dll.a;libf2c.lib;lapack.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -109,11 +113,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\youat\eigen-eigen-323c052e1731.tar\eigen-eigen-323c052e1731;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\clapack-3.2.1-CMAKE\clapack-3.2.1-CMAKE\INCLUDE;C:\Users\youat\eigen-eigen-323c052e1731.tar\eigen-eigen-323c052e1731;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\buildx64\SRC\Release;C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\buildx64\F2CLIBS\libf2c\Release;C:\Users\youat\OpenBLAS\OpenBLAS-v0.2.19-Win64-int32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libopenblas.dll.a;libf2c.lib;lapack.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -123,6 +129,7 @@
     <ClCompile Include="Core\Node\Node.cpp" />
     <ClCompile Include="Core\ShapeFunction\ShapeFunction.cpp" />
     <ClCompile Include="Core\ShapeFunction\Triangle\Triangle.cpp" />
+    <ClCompile Include="Core\System\StaticSystem\StaticSystem.cpp" />
     <ClCompile Include="Core\System\System.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
@@ -134,6 +141,7 @@
     <ClInclude Include="Core\Node\Node.h" />
     <ClInclude Include="Core\ShapeFunction\ShapeFunction.h" />
     <ClInclude Include="Core\ShapeFunction\Triangle\Triangle.h" />
+    <ClInclude Include="Core\System\StaticSystem\StaticSystem.h" />
     <ClInclude Include="Core\System\System.h" />
     <ClInclude Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
   </ItemGroup>

@@ -38,6 +38,9 @@ namespace PANSFEM {
 		bool ImportElement(std::string _fname);								//要素を追加
 		template<class Eq>
 		bool ImportField(std::vector<int> _ulist, std::string _fname);		//場を追加
+
+
+		virtual void Schedule() = 0;		//場の方程式を解く順番，タイミングを管理
 		
 
 	protected:

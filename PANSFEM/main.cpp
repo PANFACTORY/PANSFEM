@@ -9,7 +9,7 @@
 #include <vector>
 
 
-#include "Core/System/System.h"
+#include "Core/System/StaticSystem/StaticSystem.h"
 #include "Core/ShapeFunction/Triangle/Triangle.h"
 #include "Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
 
@@ -18,11 +18,12 @@ using namespace PANSFEM;
 
 
 int main() {
-	//----------モデルの定義----------
-	System model1 = System(2, 2);
+	//----------線形静的モデル----------
+	StaticSystem model1 = StaticSystem(2, 2);
 	model1.ImportNode("Data/Input/Node.csv");
 	model1.ImportElement<Triangle, Triangle>("Data/Input/Element.csv");
 	model1.ImportField<PlaneStrain>({ 0, 1 }, "Data/Input/Equation_Structure.csv");
+	model1.Schedule();
 
 	return 0;
 }
