@@ -15,11 +15,6 @@ PANSFEM::ShapeFunction::ShapeFunction(){}
 PANSFEM::ShapeFunction::~ShapeFunction() {}
 
 
-Eigen::VectorXd PANSFEM::ShapeFunction::N(std::vector<double> _x){
-	return Eigen::VectorXd::Zero(0);
-}
-
-
-Eigen::MatrixXd PANSFEM::ShapeFunction::dNdx(std::vector<double> _x){
-	return Eigen::MatrixXd::Zero(0, 0);
+PANSFEM::ShapeFunction::ShapeFunction(Element * _pelement) {
+	this->pparent = _pelement;
 }

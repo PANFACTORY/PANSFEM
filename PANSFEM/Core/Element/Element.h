@@ -17,6 +17,8 @@
 
 
 namespace PANSFEM {
+	class ShapeFunction;
+
 	class Element
 	{
 	public:
@@ -25,70 +27,44 @@ namespace PANSFEM {
 		Element(std::vector<Node*> _pnodes, std::vector<int> _ulist);
 
 
-		const int DOU;								//要素内で定義された従属変数の次元
-		const int NON;								//要素を構成する節点数（＝形状関数の数）
+		const int DOU;									//要素内で定義された従属変数の次元
+		const int NON;									//要素を構成する節点数（＝形状関数の数）
 
 
-		std::vector<Node*> pnodes;					//要素を構成する節点を指すポインタ
-		std::map<int, int> us_to_uel;				//系従属変数番号→要素従属変数番号
+		std::vector<Node*> pnodes;						//要素を構成する節点を指すポインタ
+		std::map<int, int> us_to_uel;					//系従属変数番号→要素従属変数番号
 		
 		
 		template<class N0, class N1, class ...Ns>
-		void SetTrial();							//試行関数の形状関数を指定
+		void SetShapeFunction();						//形状関数の形状関数を指定
 		template<class N0>
-		void SetTrial();
-		template<class N0, class N1, class ...Ns>
-		void SetTest();								//試験関数の形状関数を指定
-		template<class N0>
-		void SetTest();
+		void SetShapeFunction();
+		
 
 
 	protected:
-		std::vector<ShapeFunction*> TrialDefines;	//試行関数の形状関数の定義
-		std::vector<ShapeFunction*> TestDefines;	//試験関数の形状関数の定義
+		std::vector<ShapeFunction*> pshapefunctions;	//試行関数の形状関数の定義
 	};
 
 	 
 	template<class N0, class N1, class ...Ns>
-	inline void Element::SetTrial()	{
-		this->TrialDefines.push_back(new N0());
-		this->SetTrial<N1, Ns...>();
+	inline void Element::SetShapeFunction()	{
+		this->pshapefunctions.push_back(new N0(this));
+		this->SetShapeFunction<N1, Ns...>();
 	}
 
 
 	template<class N0>
-	inline void Element::SetTrial(){
-		this->TrialDefines.push_back(new N0());
+	inline void Element::SetShapeFunction(){
+		this->pshapefunctions.push_back(new N0(this));
 		//----------形状関数の数の検証----------
 		try {
-			if (this->DOU != this->TrialDefines.size()) {
+			if (this->DOU != this->pshapefunctions.size()) {
 				throw std::exception();
 			}
 		}
 		catch (std::exception e) {
-			std::cout << "Error in Element at SetTrial" << std::endl;
-		}
-	}
-	
-	
-	template<class N0, class N1, class ...Ns>
-	inline void Element::SetTest() {
-		this->TestDefines.push_back(new N0());
-		this->SetTest<N1, Ns...>();
-	}
-
-
-	template<class N0>
-	inline void Element::SetTest() {
-		this->TestDefines.push_back(new N0());
-		//----------形状関数の数の検証----------
-		try {
-			if (this->DOU != this->TestDefines.size()) {
-				throw std::exception();
-			}
-		}
-		catch (std::exception e) {
-			std::cout << "Error in Element at SetTest" << std::endl;
+			std::cout << "Error in Element at SetShapeFunction" << std::endl;
 		}
 	}
 }

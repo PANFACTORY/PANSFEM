@@ -122,6 +122,7 @@
     <ClCompile Include="Core\Field\Field.cpp" />
     <ClCompile Include="Core\Node\Node.cpp" />
     <ClCompile Include="Core\ShapeFunction\ShapeFunction.cpp" />
+    <ClCompile Include="Core\ShapeFunction\Triangle\Triangle.cpp" />
     <ClCompile Include="Core\System\System.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Core\Field\Field.h" />
     <ClInclude Include="Core\Node\Node.h" />
     <ClInclude Include="Core\ShapeFunction\ShapeFunction.h" />
+    <ClInclude Include="Core\ShapeFunction\Triangle\Triangle.h" />
     <ClInclude Include="Core\System\System.h" />
     <ClInclude Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
   </ItemGroup>

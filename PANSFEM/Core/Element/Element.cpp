@@ -6,9 +6,6 @@
 //*****************************************************************************
 
 
-#include <iostream>
-
-
 #include "Element.h"
 
 
@@ -16,11 +13,8 @@ PANSFEM::Element::Element() : NON(0), DOU(0){}
 
 
 PANSFEM::Element::~Element(){
-	for (auto& pequation : this->TrialDefines) {
-		delete pequation;
-	}
-	for (auto& pequation : this->TestDefines) {
-		delete pequation;
+	for (auto& pshapefunction : this->pshapefunctions) {
+		delete pshapefunction;
 	}
 }
 

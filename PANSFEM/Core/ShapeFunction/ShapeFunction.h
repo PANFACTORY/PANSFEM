@@ -12,17 +12,26 @@
 
 
 #include "../Node/Node.h"
+#include "../Element/Element.h"
 
 
 namespace PANSFEM {
+	class Element;
+
 	class ShapeFunction
 	{
 	public:
 		ShapeFunction();
-		virtual ~ShapeFunction();		
+		virtual ~ShapeFunction();
+		ShapeFunction(Element* _pelement);
 
 
-		virtual Eigen::VectorXd N(std::vector<double> _x);		//形状関数ベクトル
-		virtual Eigen::MatrixXd dNdx(std::vector<double> _x);	//形状関数のxによる一階微分行列を返す
+		Element* pparent;		//親要素を指すポインタ
+
+
+		virtual Eigen::VectorXd Trial(std::vector<int> _ulist, std::vector<double> _x) = 0;		//試行関数の形状関数ベクトル
+		virtual Eigen::MatrixXd dTrialdx(std::vector<int> _ulist, std::vector<double> _x) = 0;	//試行関数の形状関数のxによる一階微分行列を返す
+		virtual Eigen::VectorXd Test(std::vector<int> _ulist, std::vector<double> _x) = 0;		//試験関数の形状関数ベクトル
+		virtual Eigen::MatrixXd dTestdx(std::vector<int> _ulist, std::vector<double> _x) = 0;	//試験関数の形状関数のxによる一階微分行列を返す
 	};
 }

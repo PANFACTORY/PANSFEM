@@ -89,7 +89,7 @@ namespace PANSFEM {
 
 			//.....ß“_‚ð’Ç‰Á.....
 			Element *tmppelement = new Element(tmppnodes, ulist);
-			tmppelement->SetTrial<Ns...>();
+			tmppelement->SetShapeFunction<Ns...>();
 			this->pelements.push_back(tmppelement);
 		}
 
