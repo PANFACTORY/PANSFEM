@@ -27,10 +27,7 @@ PANSFEM::Equation::Equation(Element * _pelement, std::vector<int> _ulist, std::v
 
 		//----------パラメータ代入----------
 		this->pelement = _pelement;
-		this->parameters = _parameters;
 		this->ueq_to_us = _ulist;
-
-		//----------要素―節点方程式の初期化----------
 	}
 	catch (std::exception e) {
 		std::cout << "Error in Equation" << std::endl;

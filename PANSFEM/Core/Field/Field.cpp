@@ -108,17 +108,23 @@ void PANSFEM::Field::SolveEquation(){
 	std::vector<double> F = std::vector<double>(N * NRHS, 0.0);		//係数ベクトル
 
 	for (auto pequation : this->pequations) {
+		int Kei = 0;							//要素―節点方程式の行インデックス
 		for (auto pnodei : pequation->pelement->pnodes) {
 			for (int i = 0; i < this->Kmap[pnodei].second; i++) {
+				int Kej = 0;					//要素―節点方程式の列インデックス
+				int Ki = this->Kmap[pnodei].first + i;				//全体―節点方程式の行インデックス
 				//.....係数行列.....
 				for (auto pnodej : pequation->pelement->pnodes) {
 					for (int j = 0; j < this->Kmap[pnodej].second; j++) {
-						
+						int Kj = this->Kmap[pnodej].first + j;		//全体―節点方程式の列インデックス
+						K[Kj*NB + (KL + KU + Ki - Kj)] += pequation->Ke(Kei, Kej);
+						Kej++;
 					}
 				}
 
 				//.....係数ベクトル.....
-
+				F[Ki] += pequation->Fe[Kei];
+				Kei++;
 			}
 		}
 	}
@@ -134,6 +140,8 @@ void PANSFEM::Field::SolveEquation(){
 
 	//----------解の代入----------
 	for (auto& pnode : this->pnodes) {
+		for (int i = 0; i < this->Kmap[pnode].second; i++) {
 
+		}
 	}
 }

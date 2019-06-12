@@ -8,6 +8,7 @@
 
 #pragma once
 #include <vector>
+#include <map>
 
 
 #include "../Element/Element.h"
@@ -27,9 +28,8 @@ namespace PANSFEM {
 
 
 		Element *pelement;	//要素―節点方程式に対応する要素を指すポインタ
-		std::vector<double> parameters;		//要素―節点方程式を記述するパラメータ
-		std::vector<int> ueq_to_us;			//要素―節点方程式従属変数番号→系従属変数番号
-
+		std::vector<int> ueq_to_us;		//要素―節点方程式従属変数番号→系従属変数番号
+				
 
 		Eigen::MatrixXd Ke;	//要素―節点方程式の係数行列
 		Eigen::VectorXd Fe;	//要素―節点方程式の係数ベクトル

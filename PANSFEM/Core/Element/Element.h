@@ -33,17 +33,16 @@ namespace PANSFEM {
 
 		std::vector<Node*> pnodes;						//要素を構成する節点を指すポインタ
 		std::map<int, int> us_to_uel;					//系従属変数番号→要素従属変数番号
-		
+				
 		
 		template<class N0, class N1, class ...Ns>
-		void SetShapeFunction();						//形状関数の形状関数を指定
+		void SetShapeFunction();						//形状関数を指定
 		template<class N0>
 		void SetShapeFunction();
 		
 
-
 	protected:
-		std::vector<ShapeFunction*> pshapefunctions;	//試行関数の形状関数の定義
+		std::vector<ShapeFunction*> pshapefunctions;	//形状関数の定義
 	};
 
 	 
