@@ -11,6 +11,7 @@
     <ClCompile Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
     <ClCompile Include="Core\ShapeFunction\Triangle\Triangle.cpp" />
     <ClCompile Include="Core\System\StaticSystem\StaticSystem.cpp" />
+    <ClCompile Include="Core\Field\LinearField\LinearField.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System\System.h" />
@@ -22,5 +23,6 @@
     <ClInclude Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
     <ClInclude Include="Core\ShapeFunction\Triangle\Triangle.h" />
     <ClInclude Include="Core\System\StaticSystem\StaticSystem.h" />
+    <ClInclude Include="Core\Field\LinearField\LinearField.h" />
   </ItemGroup>
 </Project>

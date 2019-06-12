@@ -67,7 +67,21 @@ void PANSFEM::Field::GetBandwidth(){
 	this->BANDWIDTHU = 0;
 	this->BANDWIDTHL = 0;
 
-
+	for (auto pequation : this->pequations) {
+		for (auto pnodei : pequation->pelement->pnodes) {
+			for (auto pnodej : pequation->pelement->pnodes) {
+				int bandwidthu = (this->Kmap[pnodej].first + this->Kmap[pnodej].second) - this->Kmap[pnodei].first - 1;
+				if (this->BANDWIDTHU < bandwidthu) {
+					this->BANDWIDTHU = bandwidthu;
+				}
+				
+				int bandwidthl = (this->Kmap[pnodei].first + this->Kmap[pnodei].second) - this->Kmap[pnodej].first - 1;
+				if (this->BANDWIDTHL < bandwidthl) {
+					this->BANDWIDTHL = bandwidthl;
+				}
+			}
+		}
+	}
 }
 
 
@@ -94,7 +108,19 @@ void PANSFEM::Field::SolveEquation(){
 	std::vector<double> F = std::vector<double>(N * NRHS, 0.0);		//係数ベクトル
 
 	for (auto pequation : this->pequations) {
-		
+		for (auto pnodei : pequation->pelement->pnodes) {
+			for (int i = 0; i < this->Kmap[pnodei].second; i++) {
+				//.....係数行列.....
+				for (auto pnodej : pequation->pelement->pnodes) {
+					for (int j = 0; j < this->Kmap[pnodej].second; j++) {
+						
+					}
+				}
+
+				//.....係数ベクトル.....
+
+			}
+		}
 	}
 
 	//----------境界条件の適用----------

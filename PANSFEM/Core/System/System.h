@@ -36,7 +36,7 @@ namespace PANSFEM {
 		bool ImportNode(std::string _fname);								//節点を追加
 		template<class ...Ns>
 		bool ImportElement(std::string _fname);								//要素を追加
-		template<class Eq>
+		template<class Fi, class Eq>
 		bool ImportField(std::vector<int> _ulist, std::string _fname);		//場を追加
 
 
@@ -102,7 +102,7 @@ namespace PANSFEM {
 	}
 
 
-	template<class Eq>
+	template<class Fi, class Eq>
 	inline bool System::ImportField(std::vector<int> _ulist, std::string _fname)	{
 		//----------ファイルをもとに要素―節点方程式を生成----------
 		std::vector<Equation*> tmppequations;
@@ -141,7 +141,7 @@ namespace PANSFEM {
 		ifs.close();
 
 		//----------場を追加----------
-		this->pfields.push_back(new Field(_ulist, tmppequations));
+		this->pfields.push_back(new Fi(_ulist, tmppequations));
 
 		return true;
 	}

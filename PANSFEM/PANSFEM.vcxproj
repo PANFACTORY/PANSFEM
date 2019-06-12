@@ -126,6 +126,7 @@
     <ClCompile Include="Core\Element\Element.cpp" />
     <ClCompile Include="Core\Equation\Equation.cpp" />
     <ClCompile Include="Core\Field\Field.cpp" />
+    <ClCompile Include="Core\Field\LinearField\LinearField.cpp" />
     <ClCompile Include="Core\Node\Node.cpp" />
     <ClCompile Include="Core\ShapeFunction\ShapeFunction.cpp" />
     <ClCompile Include="Core\ShapeFunction\Triangle\Triangle.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Core\Element\Element.h" />
     <ClInclude Include="Core\Equation\Equation.h" />
     <ClInclude Include="Core\Field\Field.h" />
+    <ClInclude Include="Core\Field\LinearField\LinearField.h" />
     <ClInclude Include="Core\Node\Node.h" />
     <ClInclude Include="Core\ShapeFunction\ShapeFunction.h" />
     <ClInclude Include="Core\ShapeFunction\Triangle\Triangle.h" />
