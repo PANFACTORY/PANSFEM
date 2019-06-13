@@ -39,6 +39,12 @@ namespace PANSFEM {
 		void SetShapeFunction();						//形状関数を指定
 		template<class N0>
 		void SetShapeFunction();
+
+
+		Eigen::MatrixXd Trial(std::vector<int> _ulist, std::vector<int> _x);		//試行関数行列を返す
+		Eigen::MatrixXd dTrialdx(std::vector<int> _ulist, std::vector<int> _x);		//試行関数のxによる一階微分行列を返す
+		Eigen::MatrixXd Test(std::vector<int> _ulist, std::vector<int> _x);			//試験関数行列を返す
+		Eigen::MatrixXd dTestdx(std::vector<int> _ulist, std::vector<int> _x);		//試験関数のxによる一階微分行列を返す
 		
 
 	protected:

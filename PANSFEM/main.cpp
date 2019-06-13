@@ -10,7 +10,7 @@
 
 
 #include "Core/System/StaticSystem/StaticSystem.h"
-#include "Core/ShapeFunction/Triangle/Triangle.h"
+#include "Core/ShapeFunction/Simplex/Triangle.h"
 #include "Core/Field/LinearField/LinearField.h"
 #include "Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
 

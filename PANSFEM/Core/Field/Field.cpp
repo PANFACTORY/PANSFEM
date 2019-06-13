@@ -139,9 +139,14 @@ void PANSFEM::Field::SolveEquation(){
 	dgbsv_(&N, &KL, &KU, &NRHS, K.data(), &LDK, IPIV.data(), F.data(), &LDF, &INFO);
 
 	//----------‰ð‚Ì‘ã“ü----------
+	int iresult = 0;
 	for (auto& pnode : this->pnodes) {
-		for (int i = 0; i < this->Kmap[pnode].second; i++) {
-
+		for (auto i : this->uf_to_us) {
+			auto iu = std::find(pnode->ulist.begin(), pnode->ulist.end(), i);
+			if (iu != pnode->ulist.end()) {
+				pnode->u(iu - pnode->ulist.begin()) = F[iresult];
+				iresult++;
+			}
 		}
 	}
 }

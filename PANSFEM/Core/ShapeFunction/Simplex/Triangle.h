@@ -20,9 +20,9 @@ namespace PANSFEM {
 		Triangle(Element* _pelement);
 
 
-		Eigen::VectorXd Trial(std::vector<int> _ulist, std::vector<double> _x);		//試行関数の形状関数ベクトル
-		Eigen::MatrixXd dTrialdx(std::vector<int> _ulist, std::vector<double> _x);	//試行関数の形状関数のxによる一階微分行列を返す
-		Eigen::VectorXd Test(std::vector<int> _ulist, std::vector<double> _x);		//試験関数の形状関数ベクトル
-		Eigen::MatrixXd dTestdx(std::vector<int> _ulist, std::vector<double> _x);	//試験関数の形状関数のxによる一階微分行列を返す
+		Eigen::VectorXd Trial(std::vector<double> _x);		//試行関数の形状関数ベクトル
+		Eigen::MatrixXd dTrialdx(std::vector<double> _x);	//試行関数の形状関数のxによる一階微分行列を返す
+		Eigen::VectorXd Test(std::vector<double> _x);		//試験関数の形状関数ベクトル
+		Eigen::MatrixXd dTestdx(std::vector<double> _x);	//試験関数の形状関数のxによる一階微分行列を返す
 	};
 }
