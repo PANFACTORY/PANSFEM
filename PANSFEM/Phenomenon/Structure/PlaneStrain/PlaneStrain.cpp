@@ -30,15 +30,21 @@ void PANSFEM::PlaneStrain::SetEquation(){
 	D(2, 0) = 0.0;				D(2, 1) = 0.0;				D(2, 2) = (1.0 - 2.0*this->V) / 2.0;
 	D *= coef;
 
+	//----------↓この記述は誤り：本来は領域積分する----------
+
 	//----------[B]を生成----------
 	Eigen::MatrixXd A = Eigen::MatrixXd(3, 4);
 	A(0, 0) = 1.0;	A(0, 1) = 0.0;	A(0, 2) = 0.0;	A(0, 3) = 0.0;
 	A(1, 0) = 0.0;	A(1, 1) = 0.0;	A(1, 2) = 0.0;	A(1, 3) = 1.0;
 	A(2, 0) = 0.0;	A(2, 1) = 1.0;	A(2, 2) = 1.0;	A(2, 3) = 0.0;
 
-	Eigen::MatrixXd B = A * this->pelement->dTrialdx(this->ueq_to_us, { 0, 0 });
-	Eigen::MatrixXd BT = this->pelement->dTestdx(this->ueq_to_us, { 0, 0 }).transpose() * A.transpose;
+	Eigen::MatrixXd B = A * this->dTrialdx({ 0, 0 });
+	Eigen::MatrixXd BT = this->dTestdx({ 0, 0 }).transpose() * A.transpose();
 
 	//----------[Ke]を生成----------
 	this->Ke = BT*D*B*this->t;
+
+	//----------[Fe]を生成----------
+	Eigen::VectorXd G = Eigen::VectorXd::Zero(2);	//自重無しとする
+	this->Fe = this->Test({ 0, 0 }).transpose() * G;
 }

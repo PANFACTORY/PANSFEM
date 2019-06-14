@@ -38,7 +38,6 @@ namespace PANSFEM {
 		//void SolveEigen();						//全体―節点方程式を解く（固有値問題）
 
 
-	protected:
 		std::vector<Equation*> pequations;		//場を記述する要素―節点方程式を指すポインタ
 		std::vector<Node*> pnodes;				//場に属する節点を指すポインタ
 	};

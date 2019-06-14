@@ -56,7 +56,7 @@ bool PANSFEM::System::ImportNode(std::string _fname){
 
 		//.....ß“_‚Ì“Æ—§•Ï”‚Ì’l‚ğ“Ç‚İ‚Ş.....
 		std::vector<double> xs(DOX);
-		for (auto x : xs) {
+		for (auto& x : xs) {
 			std::getline(sbuf, str, ',');
 			x = stod(str);
 		}

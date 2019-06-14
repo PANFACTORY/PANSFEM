@@ -25,24 +25,3 @@ PANSFEM::Element::Element(std::vector<Node*> _pnodes, std::vector<int> _ulist) :
 		this->us_to_uel[_ulist[i]] = i;
 	}
 }
-
-
-Eigen::MatrixXd PANSFEM::Element::Trial(std::vector<int> _ulist, std::vector<int> _x){
-	//Eigen::MatrixXd trial = Eigen::MatrixXd(_ulist.size(), )
-	return Eigen::MatrixXd();
-}
-
-
-Eigen::MatrixXd PANSFEM::Element::dTrialdx(std::vector<int> _ulist, std::vector<int> _x){
-	return Eigen::MatrixXd();
-}
-
-
-Eigen::MatrixXd PANSFEM::Element::Test(std::vector<int> _ulist, std::vector<int> _x){
-	return Eigen::MatrixXd();
-}
-
-
-Eigen::MatrixXd PANSFEM::Element::dTestdx(std::vector<int> _ulist, std::vector<int> _x){
-	return Eigen::MatrixXd();
-}

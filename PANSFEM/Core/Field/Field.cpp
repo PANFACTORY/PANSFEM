@@ -86,17 +86,6 @@ void PANSFEM::Field::GetBandwidth(){
 
 
 void PANSFEM::Field::SolveEquation(){
-	//----------Kmapの作成----------
-	this->MakeKmap();
-
-	//----------要素―節点方程式を計算----------
-	for (auto& pequation : this->pequations) {
-		pequation->SetEquation();
-	}
-
-	//----------バンド幅の計算----------
-	this->GetBandwidth();
-
 	//----------全体―節点方程式のアセンブリング----------
 	integer N = (integer)this->KDEGREE;			//方程式の数
 	integer KL = (integer)this->BANDWIDTHL;		//帯行列の下側幅（対角は除く）
@@ -128,7 +117,7 @@ void PANSFEM::Field::SolveEquation(){
 			}
 		}
 	}
-
+	
 	//----------境界条件の適用----------
 
 	//----------連立方程式を解く----------

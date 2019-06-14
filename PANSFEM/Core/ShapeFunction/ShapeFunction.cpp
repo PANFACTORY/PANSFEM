@@ -17,6 +17,6 @@ PANSFEM::ShapeFunction::ShapeFunction(){
 PANSFEM::ShapeFunction::~ShapeFunction() {}
 
 
-PANSFEM::ShapeFunction::ShapeFunction(Element * _pelement) {
+PANSFEM::ShapeFunction::ShapeFunction(Element *_pelement) {
 	this->pparent = _pelement;
 }
