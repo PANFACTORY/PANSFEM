@@ -119,6 +119,9 @@ void PANSFEM::Field::SolveEquation(){
 	}
 	
 	//----------境界条件の適用----------
+	for (auto pdirichlet : this->pdirichlets) {
+
+	}
 
 	//----------連立方程式を解く----------
 	integer LDK = (integer)NB;			//係数行列の寸法

@@ -12,6 +12,7 @@
     <ClCompile Include="Core\System\StaticSystem\StaticSystem.cpp" />
     <ClCompile Include="Core\Field\LinearField\LinearField.cpp" />
     <ClCompile Include="Core\ShapeFunction\Simplex\Triangle.cpp" />
+    <ClCompile Include="Core\Dirichlet\Dirichlet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System\System.h" />
@@ -24,5 +25,6 @@
     <ClInclude Include="Core\System\StaticSystem\StaticSystem.h" />
     <ClInclude Include="Core\Field\LinearField\LinearField.h" />
     <ClInclude Include="Core\ShapeFunction\Simplex\Triangle.h" />
+    <ClInclude Include="Core\Dirichlet\Dirichlet.h" />
   </ItemGroup>
 </Project>

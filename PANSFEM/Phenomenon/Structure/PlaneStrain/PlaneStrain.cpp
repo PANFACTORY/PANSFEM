@@ -15,7 +15,7 @@ PANSFEM::PlaneStrain::PlaneStrain() : Equation(){}
 PANSFEM::PlaneStrain::~PlaneStrain(){}
 
 
-PANSFEM::PlaneStrain::PlaneStrain(Element * _pelement, std::vector<int> _ulist, std::vector<double> _parameters) : Equation(_pelement, _ulist, _parameters, 2, 3){
+PANSFEM::PlaneStrain::PlaneStrain(Element * _pelement, std::vector<int> _ulist, std::vector<double> _parameters) : Equation(_pelement, _ulist, _parameters, 2, 2, 3){
 	this->E = _parameters[0];
 	this->V = _parameters[1];
 	this->t = _parameters[2];
@@ -38,13 +38,14 @@ void PANSFEM::PlaneStrain::SetEquation(){
 	A(1, 0) = 0.0;	A(1, 1) = 0.0;	A(1, 2) = 0.0;	A(1, 3) = 1.0;
 	A(2, 0) = 0.0;	A(2, 1) = 1.0;	A(2, 2) = 1.0;	A(2, 3) = 0.0;
 
-	Eigen::MatrixXd B = A * this->dTrialdx({ 0, 0 });
-	Eigen::MatrixXd BT = this->dTestdx({ 0, 0 }).transpose() * A.transpose();
+	Eigen::MatrixXd B = A * this->pelement->dTrialdx(this->ueq_to_us, { 0.0, 0.0 });
+	Eigen::MatrixXd BT = this->pelement->dTestdx(this->ueq_to_us, { 0.0, 0.0 }).transpose() * A.transpose();
 
 	//----------[Ke]‚ð¶¬----------
-	this->Ke = BT*D*B*this->t;
+	this->Ke = BT * D * B * this->t * this->pelement->Jacobian({ 0.0, 0.0 }).determinant();
+	std::cout << Ke << std::endl;
 
 	//----------[Fe]‚ð¶¬----------
 	Eigen::VectorXd G = Eigen::VectorXd::Zero(2);	//Ž©d–³‚µ‚Æ‚·‚é
-	this->Fe = this->Test({ 0, 0 }).transpose() * G;
+	this->Fe = this->pelement->Test(this->ueq_to_us, { 0.0, 0.0 }).transpose() * G;
 }

@@ -27,7 +27,6 @@ namespace PANSFEM {
 		Element(std::vector<Node*> _pnodes, std::vector<int> _ulist);
 
 
-		const int DOU;									//要素内で定義された従属変数の次元
 		const int NON;									//要素を構成する節点数（＝形状関数の数）
 
 
@@ -39,9 +38,18 @@ namespace PANSFEM {
 		void SetShapeFunction();						//形状関数を指定
 		template<class N0>
 		void SetShapeFunction();
-		
 
-		std::vector<ShapeFunction*> pshapefunctions;	//形状関数の定義
+
+		Eigen::MatrixXd Trial(std::vector<int> _ulist, std::vector<double> _xi);		//試行関数の形状関数
+		Eigen::MatrixXd dTrialdx(std::vector<int> _ulist, std::vector<double> _xi);		//試行関数の形状関数のxによる一階微分
+		Eigen::MatrixXd Test(std::vector<int> _ulist, std::vector<double> _xi);			//試験関数の形状関数
+		Eigen::MatrixXd dTestdx(std::vector<int> _ulist, std::vector<double> _xi);		//試験関数の形状関数のxによる一階微分
+		Eigen::MatrixXd Jacobian(std::vector<double> _xi);								//Jacobi行列
+
+		
+	protected:
+		std::vector<ShapeFunction*> pshapefunctions;	//内挿用の形状関数の定義
+		ShapeFunction* pmapping;						//写像用の形状関数の定義
 	};
 
 	 
@@ -54,15 +62,6 @@ namespace PANSFEM {
 
 	template<class N0>
 	inline void Element::SetShapeFunction(){
-		this->pshapefunctions.push_back(new N0(this));
-		//----------形状関数の数の検証----------
-		try {
-			if (this->DOU != this->pshapefunctions.size()) {
-				throw std::exception();
-			}
-		}
-		catch (std::exception e) {
-			std::cout << "Error in Element at SetShapeFunction" << std::endl;
-		}
+		this->pmapping = new N0(this);
 	}
 }
