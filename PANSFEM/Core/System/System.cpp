@@ -75,3 +75,49 @@ bool PANSFEM::System::ImportNode(std::string _fname){
 	
 	return true;
 }
+
+
+bool PANSFEM::System::ImportDirichlet(std::string _fname){
+	std::ifstream ifs(_fname);
+
+	if (!ifs.is_open()) {
+		std::cout << "Dirichlet Condition file " << _fname << " open error!" << std::endl;
+		return false;
+	}
+
+	//.....一行読み飛ばす.....
+	std::string str0;
+	std::getline(ifs, str0);
+
+	while (!ifs.eof()) {
+		//.....一行分読み込む.....
+		std::string buf;
+		ifs >> buf;
+		std::istringstream sbuf(buf);
+		std::string str;
+
+		//.....境界条件IDを読み飛ばす.....
+		std::getline(sbuf, str, ',');
+
+		//.....対応する節点を指すポインタを取得.....
+		std::getline(sbuf, str, ',');
+		Node* pnode = this->pnodes[stoi(str)];
+
+		//.....節点の従属変数の値を読み込む.....
+		std::vector<bool> is_fixed = std::vector<bool>(this->DOU, false);
+		std::vector<double> fixedvalue = std::vector<double>(this->DOU, false);
+		for (int i = 0; i < this->DOU; i++) {
+			std::getline(sbuf, str, ',');
+			if (str != "free") {
+				if (pnode->us_to_un.find(i) != pnode->us_to_un.end()) {
+					pnode->is_ufixed[pnode->us_to_un[i]] = true;
+					pnode->u[pnode->us_to_un[i]] = stod(str);
+				}				
+			}
+		}
+	}
+
+	ifs.close();
+
+	return true;
+}

@@ -12,7 +12,6 @@
 
 
 #include "../Equation/Equation.h"
-#include "../Dirichlet/Dirichlet.h"
 
 
 namespace PANSFEM {
@@ -41,6 +40,5 @@ namespace PANSFEM {
 
 		std::vector<Equation*> pequations;		//場を記述する要素―節点方程式を指すポインタ
 		std::vector<Node*> pnodes;				//場に属する節点を指すポインタ
-		std::vector<Dirichlet*> pdirichlets;	//場に属する境界条件を指すポインタ
 	};
 }

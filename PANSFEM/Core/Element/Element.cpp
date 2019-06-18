@@ -41,7 +41,7 @@ Eigen::MatrixXd PANSFEM::Element::Trial(std::vector<int> _ueq_to_us, std::vector
 	for (int i = 0; i < this->NON; i++) {
 		Rcol[i] = DEGREE;
 		for (int j = 0; j < DOU; j++) {
-			if (std::find(this->pnodes[i]->ulist.begin(), this->pnodes[i]->ulist.end(), _ueq_to_us[j]) != this->pnodes[i]->ulist.end()) {
+			if (this->pnodes[i]->us_to_un.find(_ueq_to_us[j]) != this->pnodes[i]->us_to_un.end()) {
 				is_udefined[i][j] = true;
 				DEGREE++;
 			}
@@ -82,7 +82,7 @@ Eigen::MatrixXd PANSFEM::Element::dTrialdx(std::vector<int> _ueq_to_us, std::vec
 	for (int i = 0; i < this->NON; i++) {
 		Rcol[i] = DEGREE;
 		for (int j = 0; j < DOU; j++) {
-			if (std::find(this->pnodes[i]->ulist.begin(), this->pnodes[i]->ulist.end(), _ueq_to_us[j]) != this->pnodes[i]->ulist.end()) {
+			if (this->pnodes[i]->us_to_un.find(_ueq_to_us[j]) != this->pnodes[i]->us_to_un.end()) {
 				is_udefined[i][j] = true;
 				DEGREE++;
 			}
@@ -128,7 +128,7 @@ Eigen::MatrixXd PANSFEM::Element::Test(std::vector<int> _ueq_to_us, std::vector<
 	for (int i = 0; i < this->NON; i++) {
 		Rcol[i] = DEGREE;
 		for (int j = 0; j < DOU; j++) {
-			if (std::find(this->pnodes[i]->ulist.begin(), this->pnodes[i]->ulist.end(), _ueq_to_us[j]) != this->pnodes[i]->ulist.end()) {
+			if (this->pnodes[i]->us_to_un.find(_ueq_to_us[j]) != this->pnodes[i]->us_to_un.end()) {
 				is_udefined[i][j] = true;
 				DEGREE++;
 			}
@@ -169,7 +169,7 @@ Eigen::MatrixXd PANSFEM::Element::dTestdx(std::vector<int> _ueq_to_us, std::vect
 	for (int i = 0; i < this->NON; i++) {
 		Rcol[i] = DEGREE;
 		for (int j = 0; j < DOU; j++) {
-			if (std::find(this->pnodes[i]->ulist.begin(), this->pnodes[i]->ulist.end(), _ueq_to_us[j]) != this->pnodes[i]->ulist.end()) {
+			if (this->pnodes[i]->us_to_un.find(_ueq_to_us[j]) != this->pnodes[i]->us_to_un.end()) {
 				is_udefined[i][j] = true;
 				DEGREE++;
 			}

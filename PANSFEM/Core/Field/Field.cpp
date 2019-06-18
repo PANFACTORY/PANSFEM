@@ -53,9 +53,11 @@ void PANSFEM::Field::MakeKmap(){
 	for (auto pnode : this->pnodes) {
 		int size = 0;
 		for (auto us : this->uf_to_us) {
-			if (std::find(pnode->ulist.begin(), pnode->ulist.end(), us) != pnode->ulist.end()) {
-				size++;
-			}
+			if (pnode->us_to_un.find(us) != pnode->us_to_un.end()) {
+				if (!pnode->is_ufixed[pnode->us_to_un[us]]) {
+					size++;
+				}
+			}			
 		}
 		this->Kmap[pnode] = std::make_pair(this->KDEGREE, size);
 		this->KDEGREE += size;
@@ -69,16 +71,24 @@ void PANSFEM::Field::GetBandwidth(){
 
 	for (auto pequation : this->pequations) {
 		for (auto pnodei : pequation->pelement->pnodes) {
-			for (auto pnodej : pequation->pelement->pnodes) {
-				int bandwidthu = (this->Kmap[pnodej].first + this->Kmap[pnodej].second) - this->Kmap[pnodei].first - 1;
-				if (this->BANDWIDTHU < bandwidthu) {
-					this->BANDWIDTHU = bandwidthu;
+			if (this->Kmap[pnodei].second > 0) {
+
+				for (auto pnodej : pequation->pelement->pnodes) {
+					if (this->Kmap[pnodej].second > 0) {
+
+						int bandwidthu = (this->Kmap[pnodej].first + this->Kmap[pnodej].second) - this->Kmap[pnodei].first - 1;
+						if (this->BANDWIDTHU < bandwidthu) {
+							this->BANDWIDTHU = bandwidthu;
+						}
+
+						int bandwidthl = (this->Kmap[pnodei].first + this->Kmap[pnodei].second) - this->Kmap[pnodej].first - 1;
+						if (this->BANDWIDTHL < bandwidthl) {
+							this->BANDWIDTHL = bandwidthl;
+						}
+
+					}
 				}
-				
-				int bandwidthl = (this->Kmap[pnodei].first + this->Kmap[pnodei].second) - this->Kmap[pnodej].first - 1;
-				if (this->BANDWIDTHL < bandwidthl) {
-					this->BANDWIDTHL = bandwidthl;
-				}
+
 			}
 		}
 	}
@@ -97,31 +107,48 @@ void PANSFEM::Field::SolveEquation(){
 	std::vector<double> F = std::vector<double>(N * NRHS, 0.0);		//係数ベクトル
 
 	for (auto pequation : this->pequations) {
-		int Kei = 0;							//要素―節点方程式の行インデックス
-		for (auto pnodei : pequation->pelement->pnodes) {
-			for (int i = 0; i < this->Kmap[pnodei].second; i++) {
-				int Kej = 0;					//要素―節点方程式の列インデックス
-				int Ki = this->Kmap[pnodei].first + i;				//全体―節点方程式の行インデックス
-				//.....係数行列.....
-				for (auto pnodej : pequation->pelement->pnodes) {
-					for (int j = 0; j < this->Kmap[pnodej].second; j++) {
-						int Kj = this->Kmap[pnodej].first + j;		//全体―節点方程式の列インデックス
-						K[Kj*NB + (KL + KU + Ki - Kj)] += pequation->Ke(Kei, Kej);
-						Kej++;
-					}
-				}
 
-				//.....係数ベクトル.....
-				F[Ki] += pequation->Fe[Kei];
-				Kei++;
+		int Kei = 0;												//要素―節点方程式の行インデックス
+		for (auto pnodei : pequation->pelement->pnodes) {
+			int Ki = this->Kmap[pnodei].first;						//全体―節点方程式の行インデックス
+			for (auto usi : this->uf_to_us) {
+								
+				if (pnodei->us_to_un.find(usi) != pnodei->us_to_un.end()) {
+					if (!pnodei->is_ufixed[pnodei->us_to_un[usi]]) {
+
+						//.....係数行列.....
+						int Kej = 0;								//要素―節点方程式の列インデックス
+						for (auto pnodej : pequation->pelement->pnodes) {
+
+							int Kj = this->Kmap[pnodej].first;		//全体―節点方程式の列インデックス
+							for (auto usj : this->uf_to_us) {
+								if (pnodej->us_to_un.find(usj) != pnodej->us_to_un.end()) {
+									if (!pnodej->is_ufixed[pnodej->us_to_un[usj]]) {
+										K[Kj*NB + (KL + KU + Ki - Kj)] += pequation->Ke(Kei, Kej);
+										std::cout << Ki << "\t" << Kj << "\t" << Kei << "\t" << Kej << std::endl;
+										Kj++;
+										
+									}
+									Kej++;
+								}
+								
+							}
+						}
+
+						//.....係数ベクトル.....
+						F[Ki] += pequation->Fe[Kei];
+						Ki++;
+						
+					}
+					Kei++;
+				}
 			}
 		}
 	}
-	
-	//----------境界条件の適用----------
-	for (auto pdirichlet : this->pdirichlets) {
 
-	}
+
+	F[5] = -100;
+
 
 	//----------連立方程式を解く----------
 	integer LDK = (integer)NB;			//係数行列の寸法
@@ -131,14 +158,14 @@ void PANSFEM::Field::SolveEquation(){
 	dgbsv_(&N, &KL, &KU, &NRHS, K.data(), &LDK, IPIV.data(), F.data(), &LDF, &INFO);
 
 	//----------解の代入----------
-	int iresult = 0;
+	/*int iresult = 0;
 	for (auto& pnode : this->pnodes) {
 		for (auto i : this->uf_to_us) {
-			auto iu = std::find(pnode->ulist.begin(), pnode->ulist.end(), i);
-			if (iu != pnode->ulist.end()) {
-				pnode->u(iu - pnode->ulist.begin()) = F[iresult];
+			auto iu = std::find(pnode->un_to_us.begin(), pnode->un_to_us.end(), i);
+			if (iu != pnode->un_to_us.end()) {
+				pnode->u(iu - pnode->un_to_us.begin()) = F[iresult];
 				iresult++;
 			}
 		}
-	}
+	}*/
 }

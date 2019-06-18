@@ -38,6 +38,7 @@ namespace PANSFEM {
 		bool ImportElement(std::string _fname);								//要素を追加
 		template<class Fi, class Eq>
 		bool ImportField(std::vector<int> _ulist, std::string _fname);		//場を追加
+		bool ImportDirichlet(std::string _fname);							//Dirichlet境界条件を入力
 
 
 		virtual void Schedule() = 0;		//場の方程式を解く順番，タイミングを管理

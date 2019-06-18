@@ -24,6 +24,7 @@ int main() {
 	model1.ImportNode("Data/Input/Node.csv");
 	model1.ImportElement<Triangle, Triangle, Triangle>("Data/Input/Element.csv");
 	model1.ImportField<LinearField, PlaneStrain>({ 0, 1 }, "Data/Input/Equation_Structure.csv");
+	model1.ImportDirichlet("Data/Input/Dirichlet.csv");
 	model1.Schedule();
 
 	return 0;

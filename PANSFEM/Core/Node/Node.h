@@ -8,6 +8,7 @@
 
 #pragma once
 #include <vector>
+#include <map>
 #include <Eigen/dense>
 
 
@@ -25,6 +26,7 @@ namespace PANSFEM {
 
 		Eigen::VectorXd x;				//“Æ—§•Ï”
 		Eigen::VectorXd u;				//]‘®•Ï”
-		std::vector<int> ulist;			//ß“_\‘S‘Ì]‘®•Ï”‘Î‰ŠÖŒW
+		std::vector<bool> is_ufixed;	//]‘®•Ï”‚ªŒÅ’è‚³‚ê‚Ä‚¢‚é‚©
+		std::map<int, int> us_to_un;	//Œn]‘®•Ï””Ô†¨ß“_]‘®•Ï””Ô†
 	};
 }

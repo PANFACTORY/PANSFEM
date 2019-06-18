@@ -123,7 +123,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Core\Dirichlet\Dirichlet.cpp" />
     <ClCompile Include="Core\Element\Element.cpp" />
     <ClCompile Include="Core\Equation\Equation.cpp" />
     <ClCompile Include="Core\Field\Field.cpp" />
@@ -137,7 +136,6 @@
     <ClCompile Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Dirichlet\Dirichlet.h" />
     <ClInclude Include="Core\Element\Element.h" />
     <ClInclude Include="Core\Equation\Equation.h" />
     <ClInclude Include="Core\Field\Field.h" />

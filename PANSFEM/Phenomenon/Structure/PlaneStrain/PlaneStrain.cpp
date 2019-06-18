@@ -42,8 +42,7 @@ void PANSFEM::PlaneStrain::SetEquation(){
 	Eigen::MatrixXd BT = this->pelement->dTestdx(this->ueq_to_us, { 0.0, 0.0 }).transpose() * A.transpose();
 
 	//----------[Ke]‚ğ¶¬----------
-	this->Ke = BT * D * B * this->t * this->pelement->Jacobian({ 0.0, 0.0 }).determinant();
-	std::cout << Ke << std::endl;
+	this->Ke = 0.5 * BT * D * B * this->t * this->pelement->Jacobian({ 0.0, 0.0 }).determinant();
 
 	//----------[Fe]‚ğ¶¬----------
 	Eigen::VectorXd G = Eigen::VectorXd::Zero(2);	//©d–³‚µ‚Æ‚·‚é
