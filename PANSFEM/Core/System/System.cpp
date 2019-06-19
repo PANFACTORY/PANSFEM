@@ -121,3 +121,39 @@ bool PANSFEM::System::ImportDirichlet(std::string _fname){
 
 	return true;
 }
+
+
+bool PANSFEM::System::ImportNeumann(std::string _fname){
+	std::ifstream ifs(_fname);
+
+	if (!ifs.is_open()) {
+		std::cout << "Neumann Condition file " << _fname << " open error!" << std::endl;
+		return false;
+	}
+
+	//.....一行読み飛ばす.....
+	std::string str0;
+	std::getline(ifs, str0);
+
+	while (!ifs.eof()) {
+		//.....一行分読み込む.....
+		std::string buf;
+		ifs >> buf;
+		std::istringstream sbuf(buf);
+		std::string str;
+
+		//.....境界条件IDを読み飛ばす.....
+		std::getline(sbuf, str, ',');
+
+		//.....対応する節点を指すポインタを取得.....
+		std::getline(sbuf, str, ',');
+		Node* pnode = this->pnodes[stoi(str)];
+
+		//.....節点のNeumann境界条件値を読み込む.....
+		
+	}
+
+	ifs.close();
+
+	return true;
+}

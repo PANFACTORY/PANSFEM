@@ -106,49 +106,40 @@ void PANSFEM::Field::SolveEquation(){
 	std::vector<double> K = std::vector<double>(NB * N, 0.0);		//係数行列（帯行列）
 	std::vector<double> F = std::vector<double>(N * NRHS, 0.0);		//係数ベクトル
 
-	for (auto pequation : this->pequations) {
+	//.....Neumann境界条件の設定.....
+	F[7] = -100;
 
+	//.....要素―節点方程式のアセンブリング.....
+	for (auto pequation : this->pequations) {
 		int Kei = 0;												//要素―節点方程式の行インデックス
 		for (auto pnodei : pequation->pelement->pnodes) {
 			int Ki = this->Kmap[pnodei].first;						//全体―節点方程式の行インデックス
 			for (auto usi : this->uf_to_us) {
-								
 				if (pnodei->us_to_un.find(usi) != pnodei->us_to_un.end()) {
 					if (!pnodei->is_ufixed[pnodei->us_to_un[usi]]) {
-
 						//.....係数行列.....
 						int Kej = 0;								//要素―節点方程式の列インデックス
 						for (auto pnodej : pequation->pelement->pnodes) {
-
 							int Kj = this->Kmap[pnodej].first;		//全体―節点方程式の列インデックス
 							for (auto usj : this->uf_to_us) {
 								if (pnodej->us_to_un.find(usj) != pnodej->us_to_un.end()) {
 									if (!pnodej->is_ufixed[pnodej->us_to_un[usj]]) {
 										K[Kj*NB + (KL + KU + Ki - Kj)] += pequation->Ke(Kei, Kej);
-										std::cout << Ki << "\t" << Kj << "\t" << Kei << "\t" << Kej << std::endl;
 										Kj++;
-										
 									}
 									Kej++;
 								}
-								
 							}
 						}
-
 						//.....係数ベクトル.....
 						F[Ki] += pequation->Fe[Kei];
 						Ki++;
-						
 					}
 					Kei++;
 				}
 			}
 		}
-	}
-
-
-	F[5] = -100;
-
+	}	
 
 	//----------連立方程式を解く----------
 	integer LDK = (integer)NB;			//係数行列の寸法
@@ -158,14 +149,16 @@ void PANSFEM::Field::SolveEquation(){
 	dgbsv_(&N, &KL, &KU, &NRHS, K.data(), &LDK, IPIV.data(), F.data(), &LDF, &INFO);
 
 	//----------解の代入----------
-	/*int iresult = 0;
+	int iresult = 0;
 	for (auto& pnode : this->pnodes) {
-		for (auto i : this->uf_to_us) {
-			auto iu = std::find(pnode->un_to_us.begin(), pnode->un_to_us.end(), i);
-			if (iu != pnode->un_to_us.end()) {
-				pnode->u(iu - pnode->un_to_us.begin()) = F[iresult];
-				iresult++;
+		int ui = 0;
+		for (auto us : this->uf_to_us) {
+			if (pnode->us_to_un.find(us) != pnode->us_to_un.end()) {
+				if (!pnode->is_ufixed[pnode->us_to_un[us]]) {
+					pnode->u[pnode->us_to_un[us]] = F[this->Kmap[pnode].first + ui];
+					ui++;
+				}
 			}
 		}
-	}*/
+	}
 }
