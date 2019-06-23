@@ -21,10 +21,10 @@ using namespace PANSFEM;
 int main() {
 	//----------ê¸å`ê√ìIÉÇÉfÉã----------
 	StaticSystem model1 = StaticSystem(2, 2);
-	model1.ImportNode("Data/Input/QuadrangleBeam/Node.csv");
-	model1.ImportElement<Quadrangle, Quadrangle, Quadrangle>("Data/Input/QuadrangleBeam/Element.csv");
-	model1.ImportField<LinearField, PlaneStrain>({ 0, 1 }, "Data/Input/QuadrangleBeam/Equation_Structure.csv");
-	model1.ImportDirichlet("Data/Input/QuadrangleBeam/Dirichlet.csv");
+	model1.ImportNode("Data/Input/CurveBeam/Node.csv");
+	model1.ImportElement<Quadrangle, Quadrangle, Quadrangle>("Data/Input/CurveBeam/Element.csv");
+	model1.ImportField<LinearField, PlaneStrain>({ 0, 1 }, "Data/Input/CurveBeam/Equation_Structure.csv");
+	model1.ImportDirichlet("Data/Input/CurveBeam/Dirichlet.csv");
 	//model1.ImportNeumann("Data/Input/Neumann.csv");
 	model1.Schedule();
 	model1.Show();
