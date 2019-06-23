@@ -149,11 +149,24 @@ bool PANSFEM::System::ImportNeumann(std::string _fname){
 		std::getline(sbuf, str, ',');
 		Node* pnode = this->pnodes[stoi(str)];
 
+		//.....Neumann‹«ŠE’l‚ð’è‚ß‚é.....
+		std::vector<double> q;
+		while (std::getline(sbuf, str, ',')) {
+			q.push_back(stod(str));
+		}
+
 		//.....ß“_‚ÌNeumann‹«ŠEðŒ’l‚ð“Ç‚Ýž‚Þ.....
-		
+		this->pneumann.push_back(new Neumann(pnode, q));
 	}
 
 	ifs.close();
 
 	return true;
+}
+
+
+void PANSFEM::System::Show(){
+	for (auto pnode : this->pnodes) {
+		std::cout << pnode->x.transpose() << "\t" << pnode->u.transpose() << std::endl;
+	}
 }

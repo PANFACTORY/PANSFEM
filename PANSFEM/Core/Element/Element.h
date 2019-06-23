@@ -17,8 +17,6 @@
 
 
 namespace PANSFEM {
-	class ShapeFunction;
-
 	class Element
 	{
 	public:
@@ -55,13 +53,21 @@ namespace PANSFEM {
 	 
 	template<class N0, class N1, class ...Ns>
 	inline void Element::SetShapeFunction()	{
-		this->pshapefunctions.push_back(new N0(this));
+		this->pshapefunctions.push_back(new N0());
 		this->SetShapeFunction<N1, Ns...>();
 	}
 
 
 	template<class N0>
 	inline void Element::SetShapeFunction(){
-		this->pmapping = new N0(this);
+		try {
+			this->pmapping = new N0();
+			if (this->pshapefunctions.size() != this->us_to_uel.size()) {
+				throw std::exception();
+			}
+		}
+		catch (std::exception e) {
+			std::cout << "Error in setting ShapeFunctions" << this->pshapefunctions.size() << "\t" << this->NON << std::endl;
+		}
 	}
 }

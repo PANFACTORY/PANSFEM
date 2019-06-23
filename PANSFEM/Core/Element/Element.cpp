@@ -51,7 +51,16 @@ Eigen::MatrixXd PANSFEM::Element::Trial(std::vector<int> _ueq_to_us, std::vector
 	//----------形状関数行列を計算----------
 	Eigen::MatrixXd trial = Eigen::MatrixXd(DOU, DEGREE);
 	for (int j = 0; j < DOU; j++) {
-		Eigen::VectorXd N = this->pshapefunctions[this->us_to_uel[_ueq_to_us[j]]]->Trial(_xi);
+		//.....必要な節点のリストを生成.....
+		std::vector<Node*> tmppnodes;
+		for (int i = 0; i < this->NON; i++) {
+			if (is_udefined[i][j]) {
+				tmppnodes.push_back(this->pnodes[i]);
+			}
+		}
+		
+		//.....形状関数を取得.....
+		Eigen::VectorXd N = this->pshapefunctions[this->us_to_uel[_ueq_to_us[j]]]->Trial(tmppnodes, _xi);
 
 		//.....右形状行列の計算.....
 		Eigen::MatrixXd R = Eigen::MatrixXd::Zero(N.rows(), DEGREE);
@@ -92,7 +101,16 @@ Eigen::MatrixXd PANSFEM::Element::dTrialdx(std::vector<int> _ueq_to_us, std::vec
 	//----------形状関数行列を計算----------
 	Eigen::MatrixXd dtrialdx = Eigen::MatrixXd::Zero(DOU * DOX, DEGREE);
 	for (int j = 0; j < DOU; j++) {
-		Eigen::MatrixXd dN = this->Jacobian(_xi).inverse() * this->pshapefunctions[this->us_to_uel[_ueq_to_us[j]]]->dTrialdx(_xi);
+		//.....必要な節点のリストを生成.....
+		std::vector<Node*> tmppnodes;
+		for (int i = 0; i < this->NON; i++) {
+			if (is_udefined[i][j]) {
+				tmppnodes.push_back(this->pnodes[i]);
+			}
+		}
+
+		//.....形状関数を取得.....
+		Eigen::MatrixXd dN = this->Jacobian(_xi).inverse() * this->pshapefunctions[this->us_to_uel[_ueq_to_us[j]]]->dTrialdx(tmppnodes, _xi);
 
 		//.....右形状行列の計算.....
 		Eigen::MatrixXd R = Eigen::MatrixXd::Zero(dN.cols(), DEGREE);
@@ -138,7 +156,16 @@ Eigen::MatrixXd PANSFEM::Element::Test(std::vector<int> _ueq_to_us, std::vector<
 	//----------形状関数行列を計算----------
 	Eigen::MatrixXd test = Eigen::MatrixXd(DOU, DEGREE);
 	for (int j = 0; j < DOU; j++) {
-		Eigen::VectorXd N = this->pshapefunctions[this->us_to_uel[_ueq_to_us[j]]]->Test(_xi);
+		//.....必要な節点のリストを生成.....
+		std::vector<Node*> tmppnodes;
+		for (int i = 0; i < this->NON; i++) {
+			if (is_udefined[i][j]) {
+				tmppnodes.push_back(this->pnodes[i]);
+			}
+		}
+
+		//.....形状関数を取得.....
+		Eigen::VectorXd N = this->pshapefunctions[this->us_to_uel[_ueq_to_us[j]]]->Test(tmppnodes, _xi);
 
 		//.....右形状行列の計算.....
 		Eigen::MatrixXd R = Eigen::MatrixXd::Zero(N.rows(), DEGREE);
@@ -179,7 +206,16 @@ Eigen::MatrixXd PANSFEM::Element::dTestdx(std::vector<int> _ueq_to_us, std::vect
 	//----------形状関数行列を計算----------
 	Eigen::MatrixXd dtestdx = Eigen::MatrixXd::Zero(DOU * DOX, DEGREE);
 	for (int j = 0; j < DOU; j++) {
-		Eigen::MatrixXd dN = this->Jacobian(_xi).inverse() * this->pshapefunctions[this->us_to_uel[_ueq_to_us[j]]]->dTestdx(_xi);
+		//.....必要な節点のリストを生成.....
+		std::vector<Node*> tmppnodes;
+		for (int i = 0; i < this->NON; i++) {
+			if (is_udefined[i][j]) {
+				tmppnodes.push_back(this->pnodes[i]);
+			}
+		}
+
+		//.....形状関数を取得.....
+		Eigen::MatrixXd dN = this->Jacobian(_xi).inverse() * this->pshapefunctions[this->us_to_uel[_ueq_to_us[j]]]->dTestdx(tmppnodes, _xi);
 
 		//.....右形状行列の計算.....
 		Eigen::MatrixXd R = Eigen::MatrixXd::Zero(dN.cols(), DEGREE);
@@ -211,5 +247,5 @@ Eigen::MatrixXd PANSFEM::Element::Jacobian(std::vector<double> _xi){
 		xs.row(i) = this->pnodes[i]->x.transpose();
 	}
 	
-	return this->pmapping->dTrialdx(_xi) * xs;
+	return this->pmapping->dTrialdx(this->pnodes, _xi) * xs;
 }

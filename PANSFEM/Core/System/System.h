@@ -18,6 +18,7 @@
 #include "../Element/Element.h"
 #include "../Field/Field.h"
 #include "../Equation/Equation.h"
+#include "../Neumann/Neumann.h"
 
 
 namespace PANSFEM {
@@ -43,12 +44,14 @@ namespace PANSFEM {
 
 
 		virtual void Schedule() = 0;		//場の方程式を解く順番，タイミングを管理
+		virtual void Show();				//結果の出力
 		
 
 	protected:
 		std::vector<Node*> pnodes;			//系を構成する節点
 		std::vector<Element*> pelements;	//系を構成する要素
 		std::vector<Field*> pfields;		//系を構成する場
+		std::vector<Neumann*> pneumann;		//系に課されるNeumann境界条件
 	};
 
 

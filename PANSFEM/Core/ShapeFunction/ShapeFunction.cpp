@@ -9,14 +9,7 @@
 #include "ShapeFunction.h"
 
 
-PANSFEM::ShapeFunction::ShapeFunction(){
-	this->pparent = nullptr;
-}
+PANSFEM::ShapeFunction::ShapeFunction(){}
 
 
 PANSFEM::ShapeFunction::~ShapeFunction() {}
-
-
-PANSFEM::ShapeFunction::ShapeFunction(Element *_pelement) {
-	this->pparent = _pelement;
-}

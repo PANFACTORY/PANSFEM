@@ -12,6 +12,7 @@
 
 
 #include "../Equation/Equation.h"
+#include "../Neumann/Neumann.h"
 
 
 namespace PANSFEM {

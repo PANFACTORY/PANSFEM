@@ -38,11 +38,17 @@ void PANSFEM::PlaneStrain::SetEquation(){
 	A(1, 0) = 0.0;	A(1, 1) = 0.0;	A(1, 2) = 0.0;	A(1, 3) = 1.0;
 	A(2, 0) = 0.0;	A(2, 1) = 1.0;	A(2, 2) = 1.0;	A(2, 3) = 0.0;
 
-	Eigen::MatrixXd B = A * this->pelement->dTrialdx(this->ueq_to_us, { 0.0, 0.0 });
-	Eigen::MatrixXd BT = this->pelement->dTestdx(this->ueq_to_us, { 0.0, 0.0 }).transpose() * A.transpose();
+	Eigen::MatrixXd B = A * this->pelement->dTrialdx(this->ueq_to_us, { -1.0 / sqrt(3.0), -1.0 / sqrt(3.0) });
+	this->Ke = B.transpose() * D * B * this->t * this->pelement->Jacobian({ -1.0 / sqrt(3.0), -1.0 / sqrt(3.0) }).determinant();
 
-	//----------[Ke]Çê∂ê¨----------
-	this->Ke = 0.5 * BT * D * B * this->t * this->pelement->Jacobian({ 0.0, 0.0 }).determinant();
+	B = A * this->pelement->dTrialdx(this->ueq_to_us, { 1.0 / sqrt(3.0), -1.0 / sqrt(3.0) });
+	this->Ke += B.transpose() * D * B * this->t * this->pelement->Jacobian({ 1.0 / sqrt(3.0), -1.0 / sqrt(3.0) }).determinant();
+
+	B = A * this->pelement->dTrialdx(this->ueq_to_us, { 1.0 / sqrt(3.0), 1.0 / sqrt(3.0) });
+	this->Ke += B.transpose() * D * B * this->t * this->pelement->Jacobian({ 1.0 / sqrt(3.0), 1.0 / sqrt(3.0) }).determinant();
+
+	B = A * this->pelement->dTrialdx(this->ueq_to_us, { -1.0 / sqrt(3.0), 1.0 / sqrt(3.0) });
+	this->Ke += B.transpose() * D * B * this->t * this->pelement->Jacobian({ -1.0 / sqrt(3.0), 1.0 / sqrt(3.0) }).determinant();
 
 	//----------[Fe]Çê∂ê¨----------
 	Eigen::VectorXd G = Eigen::VectorXd::Zero(2);	//é©èdñ≥ÇµÇ∆Ç∑ÇÈ

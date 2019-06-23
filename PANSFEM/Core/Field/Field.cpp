@@ -107,7 +107,7 @@ void PANSFEM::Field::SolveEquation(){
 	std::vector<double> F = std::vector<double>(N * NRHS, 0.0);		//係数ベクトル
 
 	//.....Neumann境界条件の設定.....
-	F[7] = -100;
+	F[99] = -0.1;
 
 	//.....要素―節点方程式のアセンブリング.....
 	for (auto pequation : this->pequations) {

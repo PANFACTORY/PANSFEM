@@ -127,9 +127,11 @@
     <ClCompile Include="Core\Equation\Equation.cpp" />
     <ClCompile Include="Core\Field\Field.cpp" />
     <ClCompile Include="Core\Field\LinearField\LinearField.cpp" />
+    <ClCompile Include="Core\Neumann\Neumann.cpp" />
     <ClCompile Include="Core\Node\Node.cpp" />
+    <ClCompile Include="Core\ShapeFunction\Parametric\Quadrangle\Quadrangle.cpp" />
+    <ClCompile Include="Core\ShapeFunction\Parametric\Triangle\Triangle.cpp" />
     <ClCompile Include="Core\ShapeFunction\ShapeFunction.cpp" />
-    <ClCompile Include="Core\ShapeFunction\Simplex\Triangle.cpp" />
     <ClCompile Include="Core\System\StaticSystem\StaticSystem.cpp" />
     <ClCompile Include="Core\System\System.cpp" />
     <ClCompile Include="main.cpp" />
@@ -140,9 +142,11 @@
     <ClInclude Include="Core\Equation\Equation.h" />
     <ClInclude Include="Core\Field\Field.h" />
     <ClInclude Include="Core\Field\LinearField\LinearField.h" />
+    <ClInclude Include="Core\Neumann\Neumann.h" />
     <ClInclude Include="Core\Node\Node.h" />
+    <ClInclude Include="Core\ShapeFunction\Parametric\Quadrangle\Quadrangle.h" />
+    <ClInclude Include="Core\ShapeFunction\Parametric\Triangle\Triangle.h" />
     <ClInclude Include="Core\ShapeFunction\ShapeFunction.h" />
-    <ClInclude Include="Core\ShapeFunction\Simplex\Triangle.h" />
     <ClInclude Include="Core\System\StaticSystem\StaticSystem.h" />
     <ClInclude Include="Core\System\System.h" />
     <ClInclude Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
