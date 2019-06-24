@@ -43,15 +43,16 @@ namespace PANSFEM {
 		bool ImportNeumann(std::string _fname);								//Neumann境界条件を入力
 
 
-		virtual void Schedule() = 0;		//場の方程式を解く順番，タイミングを管理
-		virtual void Show();				//結果の出力
-		
+		virtual void Schedule() = 0;										//場の方程式を解く順番，タイミングを管理
+		virtual void Show();												//結果を標準出力に掃出す
+		virtual void Export(std::string _fname) = 0;						//結果をVTKファイルに書き出す	
+				
 
 	protected:
 		std::vector<Node*> pnodes;			//系を構成する節点
 		std::vector<Element*> pelements;	//系を構成する要素
 		std::vector<Field*> pfields;		//系を構成する場
-		std::vector<Neumann*> pneumann;		//系に課されるNeumann境界条件
+		std::vector<Neumann*> pneumanns;	//系に課されるNeumann境界条件
 	};
 
 

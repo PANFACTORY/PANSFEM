@@ -107,7 +107,17 @@ void PANSFEM::Field::SolveEquation(){
 	std::vector<double> F = std::vector<double>(N * NRHS, 0.0);		//係数ベクトル
 
 	//.....Neumann境界条件の設定.....
-	F[99] = -0.1;
+	for (auto pneumann : this->pneumanns) {
+		int Ki = this->Kmap[pneumann->pnode].first;					//全体―節点方程式の行インデックス
+		for (auto usi : this->uf_to_us) {
+			if (pneumann->pnode->us_to_un.find(usi) != pneumann->pnode->us_to_un.end()) {
+				if (!pneumann->pnode->is_ufixed[pneumann->pnode->us_to_un[usi]]) {
+					F[Ki] += pneumann->q[pneumann->pnode->us_to_un[usi]];
+					Ki++;
+				}
+			}
+		}
+	}
 
 	//.....要素―節点方程式のアセンブリング.....
 	for (auto pequation : this->pequations) {

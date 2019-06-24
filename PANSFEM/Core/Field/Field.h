@@ -9,6 +9,7 @@
 #pragma once
 #include <vector>
 #include <map>
+#include <fstream>
 
 
 #include "../Equation/Equation.h"
@@ -41,5 +42,6 @@ namespace PANSFEM {
 
 		std::vector<Equation*> pequations;		//場を記述する要素―節点方程式を指すポインタ
 		std::vector<Node*> pnodes;				//場に属する節点を指すポインタ
+		std::vector<Neumann*> pneumanns;		//場を記述するNeumann境界条件
 	};
 }

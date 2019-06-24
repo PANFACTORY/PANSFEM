@@ -124,6 +124,7 @@ bool PANSFEM::System::ImportDirichlet(std::string _fname){
 
 
 bool PANSFEM::System::ImportNeumann(std::string _fname){
+	//----------Neumann‹«ŠEğŒ‚ğ“Ç‚İ‚Ş----------
 	std::ifstream ifs(_fname);
 
 	if (!ifs.is_open()) {
@@ -156,10 +157,19 @@ bool PANSFEM::System::ImportNeumann(std::string _fname){
 		}
 
 		//.....ß“_‚ÌNeumann‹«ŠEğŒ’l‚ğ“Ç‚İ‚Ş.....
-		this->pneumann.push_back(new Neumann(pnode, q));
+		this->pneumanns.push_back(new Neumann(pnode, q));
 	}
 
 	ifs.close();
+
+	//----------Šeê‚É‘Î‰‚·‚éNeumann‹«ŠEğŒƒCƒ“ƒXƒ^ƒ“ƒX‚ÌƒŠƒXƒg‚ğ“n‚·----------
+	for (auto& pfield : this->pfields) {
+		for (auto pneumann : this->pneumanns) {
+			if (std::find(pfield->pnodes.begin(), pfield->pnodes.end(), pneumann->pnode) != pfield->pnodes.end()) {
+				pfield->pneumanns.push_back(pneumann);
+			}
+		}
+	}
 
 	return true;
 }
