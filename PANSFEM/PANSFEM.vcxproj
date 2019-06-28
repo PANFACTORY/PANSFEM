@@ -127,6 +127,8 @@
     <ClCompile Include="Core\Equation\Equation.cpp" />
     <ClCompile Include="Core\Field\Field.cpp" />
     <ClCompile Include="Core\Field\LinearField\LinearField.cpp" />
+    <ClCompile Include="Core\Integration\Gauss\Square\GaussSquare.cpp" />
+    <ClCompile Include="Core\Integration\Integration.cpp" />
     <ClCompile Include="Core\Neumann\Neumann.cpp" />
     <ClCompile Include="Core\Node\Node.cpp" />
     <ClCompile Include="Core\ShapeFunction\Parametric\Quadrangle\Quadrangle.cpp" />
@@ -143,6 +145,8 @@
     <ClInclude Include="Core\Equation\Equation.h" />
     <ClInclude Include="Core\Field\Field.h" />
     <ClInclude Include="Core\Field\LinearField\LinearField.h" />
+    <ClInclude Include="Core\Integration\Gauss\Square\GaussSquare.h" />
+    <ClInclude Include="Core\Integration\Integration.h" />
     <ClInclude Include="Core\Neumann\Neumann.h" />
     <ClInclude Include="Core\Node\Node.h" />
     <ClInclude Include="Core\ShapeFunction\Parametric\Quadrangle\Quadrangle.h" />

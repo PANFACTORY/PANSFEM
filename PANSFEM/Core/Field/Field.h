@@ -22,7 +22,7 @@ namespace PANSFEM {
 	public:
 		Field();
 		virtual ~Field();
-		Field(std::vector<int> _ulist, std::vector<Equation*> _pequations);
+		Field(std::vector<int> _ulist);
 
 
 		int KDEGREE;		//場の全体―節点方程式の次数
@@ -34,11 +34,12 @@ namespace PANSFEM {
 		std::map<Node*, std::pair<int, int> > Kmap;		//節点を指すポインタ→全体―節点方程式位置，幅
 
 
+		void Initialize();						//場に属する要素、節点を指すポインタを集める
 		void MakeKmap();						//Kmapの作成
 		void GetBandwidth();					//バンド幅を計算
 		void SolveEquation();					//全体―節点方程式を解く（連立方程式）
 		//void SolveEigen();					//全体―節点方程式を解く（固有値問題）
-
+		
 
 		std::vector<Equation*> pequations;		//場を記述する要素―節点方程式を指すポインタ
 		std::vector<Node*> pnodes;				//場に属する節点を指すポインタ

@@ -34,25 +34,26 @@ namespace PANSFEM {
 		const int DOU;		//系の従属変数
 
 
-		bool ImportNode(std::string _fname);								//節点を追加
+		bool ImportNode(std::string _fname);				//節点を追加
 		template<class ...Ns>
-		bool ImportElement(std::string _fname);								//要素を追加
-		template<class Fi, class Eq>
-		bool ImportField(std::vector<int> _ulist, std::string _fname);		//場を追加
-		bool ImportDirichlet(std::string _fname);							//Dirichlet境界条件を入力
-		bool ImportNeumann(std::string _fname);								//Neumann境界条件を入力
+		bool ImportElement(std::string _fname);				//要素を追加
+		template<class F>
+		bool ImportField(std::vector<int> _ulist);			//場を追加
+		template<class E, class I>
+		bool ImportEquation(int _fi, std::string _fname);	//場を構成する方程式を入力
+		bool ImportDirichlet(std::string _fname);			//Dirichlet境界条件を入力
+		bool ImportNeumann(int _fi, std::string _fname);	//Neumann境界条件を入力
 
 
-		virtual void Schedule() = 0;										//場の方程式を解く順番，タイミングを管理
-		virtual void Show();												//結果を標準出力に掃出す
-		virtual void Export(std::string _fname) = 0;						//結果をVTKファイルに書き出す	
+		virtual void Schedule() = 0;						//場の方程式を解く順番，タイミングを管理
+		virtual void Show();								//結果を標準出力に掃出す
+		virtual void Export(std::string _fname) = 0;		//結果をVTKファイルに書き出す	
 				
 
 	protected:
 		std::vector<Node*> pnodes;			//系を構成する節点
 		std::vector<Element*> pelements;	//系を構成する要素
 		std::vector<Field*> pfields;		//系を構成する場
-		std::vector<Neumann*> pneumanns;	//系に課されるNeumann境界条件
 	};
 
 
@@ -108,10 +109,8 @@ namespace PANSFEM {
 	}
 
 
-	template<class Fi, class Eq>
-	inline bool System::ImportField(std::vector<int> _ulist, std::string _fname)	{
-		//----------ファイルをもとに要素―節点方程式を生成----------
-		std::vector<Equation*> tmppequations;
+	template<class E, class I>
+	inline bool System::ImportEquation(int _fi, std::string _fname)	{
 		std::ifstream ifs(_fname);
 
 		if (!ifs.is_open()) {
@@ -141,14 +140,18 @@ namespace PANSFEM {
 			}
 
 			//.....節点を追加.....
-			tmppequations.push_back(new Eq(pelement, _ulist, parameters));
+			this->pfields[_fi]->pequations.push_back(new E(pelement, this->pfields[_fi]->uf_to_us, parameters, new I()));
 		}
 
 		ifs.close();
 
-		//----------場を追加----------
-		this->pfields.push_back(new Fi(_ulist, tmppequations));
+		return true;
+	}
 
+
+	template<class F>
+	inline bool System::ImportField(std::vector<int> _ulist)	{
+		this->pfields.push_back(new F(_ulist));
 		return true;
 	}
 }

@@ -15,14 +15,18 @@ PANSFEM::HeatTransferStatic2D::HeatTransferStatic2D() : Equation(){}
 PANSFEM::HeatTransferStatic2D::~HeatTransferStatic2D() {}
 
 
-PANSFEM::HeatTransferStatic2D::HeatTransferStatic2D(Element * _pelement, std::vector<int> _ulist, std::vector<double> _parameters) : Equation(_pelement, _ulist, _parameters, 2, 1, 1){
+PANSFEM::HeatTransferStatic2D::HeatTransferStatic2D(Element * _pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration) : Equation(_pelement, _ulist, _parameters, _pintegration, 2, 1, 1){
 	this->alpha = _parameters[0];
 }
 
 
-void PANSFEM::HeatTransferStatic2D::SetEquation(){
-	//----------[Ke]‚ðŒvŽZ----------
-	
+Eigen::MatrixXd PANSFEM::HeatTransferStatic2D::GetKe(std::vector<double> _xi){
+	Eigen::MatrixXd B = this->pelement->dTrialdx(this->ueq_to_us, _xi);
+	return this->alpha * B.transpose() * B * this->pelement->Jacobian(_xi).determinant();
+}
 
-	//----------{Fe}‚ðŒvŽZ----------
+
+Eigen::VectorXd PANSFEM::HeatTransferStatic2D::GetFe(std::vector<double> _xi){
+	Eigen::VectorXd G = Eigen::VectorXd::Zero(1);	//Ž©ŒÈ”­”M–³‚µ‚Æ‚·‚é
+	return this->pelement->Test(this->ueq_to_us, { 0.0, 0.0 }).transpose() * G;
 }

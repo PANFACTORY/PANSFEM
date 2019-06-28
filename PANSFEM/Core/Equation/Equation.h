@@ -12,6 +12,7 @@
 
 
 #include "../Element/Element.h"
+#include "../Integration/Integration.h"
 
 
 namespace PANSFEM {
@@ -20,7 +21,7 @@ namespace PANSFEM {
 	public:
 		Equation();
 		virtual ~Equation();
-		Equation(Element *_pelement, std::vector<int> _ulist, std::vector<double> _parameters, int _DOX, int _DOU, int _NOP);
+		Equation(Element *_pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration, int _DOX, int _DOU, int _NOP);
 
 
 		const int DOX;		//要素―節点方程式を記述する独立変数自由度：継承時に指定
@@ -30,12 +31,15 @@ namespace PANSFEM {
 
 		Element *pelement;	//要素―節点方程式に対応する要素を指すポインタ
 		std::vector<int> ueq_to_us;			//要素―節点方程式従属変数番号→系従属変数番号
+		Integration* pintegration;			//要素―節点方程式を生成するときの積分法
 				
 
 		Eigen::MatrixXd Ke;	//要素―節点方程式の係数行列
 		Eigen::VectorXd Fe;	//要素―節点方程式の係数ベクトル
 
 
-		virtual void SetEquation() = 0;		//要素―節点方程式を設定
+		void SetEquation();	//要素―節点方程式を設定
+		virtual Eigen::MatrixXd GetKe(std::vector<double> _xi) = 0;
+		virtual Eigen::VectorXd GetFe(std::vector<double> _xi) = 0;
 	};
 }

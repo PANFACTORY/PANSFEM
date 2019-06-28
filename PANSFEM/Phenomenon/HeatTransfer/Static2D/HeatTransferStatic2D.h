@@ -17,12 +17,13 @@ namespace PANSFEM {
 	public:
 		HeatTransferStatic2D();
 		virtual ~HeatTransferStatic2D();
-		HeatTransferStatic2D(Element *_pelement, std::vector<int> _ulist, std::vector<double> _parameters);
+		HeatTransferStatic2D(Element *_pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration);
 
 
 		double alpha;			//”M“`“±—¦
 
 
-		void SetEquation();		//—v‘f\ß“_•û’ö®‚ğİ’è
+		Eigen::MatrixXd GetKe(std::vector<double> _xi);
+		Eigen::VectorXd GetFe(std::vector<double> _xi);
 	};
 }

@@ -20,6 +20,6 @@ namespace PANSFEM {
 	public:
 		LinearField();
 		virtual ~LinearField();
-		LinearField(std::vector<int> _ulist, std::vector<Equation*> _pequations);
+		LinearField(std::vector<int> _ulist);
 	};
 }

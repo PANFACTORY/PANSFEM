@@ -20,7 +20,7 @@ namespace PANSFEM {
 	public:
 		PlaneStrain();
 		virtual ~PlaneStrain();
-		PlaneStrain(Element *_pelement, std::vector<int> _ulist, std::vector<double> _parameters);
+		PlaneStrain(Element *_pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration);
 
 
 		double E;	//要素のYoung率
@@ -28,6 +28,7 @@ namespace PANSFEM {
 		double t;	//要素の厚さ
 
 
-		void SetEquation();		//要素―節点方程式を設定
+		Eigen::MatrixXd GetKe(std::vector<double> _xi);
+		Eigen::VectorXd GetFe(std::vector<double> _xi);
 	};
 }

@@ -15,4 +15,4 @@ PANSFEM::LinearField::LinearField() : Field() {}
 PANSFEM::LinearField::~LinearField(){}
 
 
-PANSFEM::LinearField::LinearField(std::vector<int> _ulist, std::vector<Equation*> _pequations) : Field(_ulist, _pequations){}
+PANSFEM::LinearField::LinearField(std::vector<int> _ulist) : Field(_ulist){}

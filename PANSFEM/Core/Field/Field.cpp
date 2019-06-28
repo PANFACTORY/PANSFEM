@@ -27,15 +27,18 @@ PANSFEM::Field::~Field(){
 	for (auto& pequation : this->pequations) {
 		delete pequation;
 	}
+	for (auto& pneumann : this->pneumanns) {
+		delete pneumann;
+	}
 }
 
 
-PANSFEM::Field::Field(std::vector<int> _ulist, std::vector<Equation*> _pequations){
-	//----------uf_to_us‚Æpequation‚ğİ’è----------
+PANSFEM::Field::Field(std::vector<int> _ulist){
 	this->uf_to_us = _ulist;
-	this->pequations = _pequations;
-	
-	//----------ê‚É‘®‚·‚éß“_‚ğô‚¢o‚·----------
+}
+
+
+void PANSFEM::Field::Initialize(){
 	for (auto pequation : this->pequations) {
 		for (auto pnode : pequation->pelement->pnodes) {
 			if (std::find(this->pnodes.begin(), this->pnodes.end(), pnode) == this->pnodes.end()) {
