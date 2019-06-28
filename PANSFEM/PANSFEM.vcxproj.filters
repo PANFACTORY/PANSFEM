@@ -17,6 +17,7 @@
     <ClCompile Include="Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.cpp" />
     <ClCompile Include="Core\Integration\Integration.cpp" />
     <ClCompile Include="Core\Integration\Gauss\Square\GaussSquare.cpp" />
+    <ClCompile Include="Core\Integration\Gauss\Triangle\GaussTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System\System.h" />
@@ -34,5 +35,6 @@
     <ClInclude Include="Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.h" />
     <ClInclude Include="Core\Integration\Integration.h" />
     <ClInclude Include="Core\Integration\Gauss\Square\GaussSquare.h" />
+    <ClInclude Include="Core\Integration\Gauss\Triangle\GaussTriangle.h" />
   </ItemGroup>
 </Project>

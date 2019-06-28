@@ -20,16 +20,17 @@ PANSFEM::Equation::~Equation(){
 }
 
 
-PANSFEM::Equation::Equation(Element * _pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration, int _DOX, int _DOU, int _NOP) : DOX(_DOX), DOU(_DOU), NOP(_NOP){
+PANSFEM::Equation::Equation(Element * _pelement, std::vector<int> _ulist, std::vector<int> _plist, Integration* _pintegration, int _DOX, int _DOU, int _NOP) : DOX(_DOX), DOU(_DOU), NOP(_NOP){
 	try {
 		//----------DOU‚ÆNOP‚ÌŒŸØ----------
-		if (_ulist.size() != _DOU || _parameters.size() != _NOP) {
+		if (_ulist.size() != _DOU || _plist.size() != _NOP) {
 			throw std::exception();
 		}
 
 		//----------ƒpƒ‰ƒ[ƒ^‘ã“ü----------
 		this->pelement = _pelement;
 		this->ueq_to_us = _ulist;
+		this->peq_to_ps = _plist;
 		this->pintegration = _pintegration;
 	}
 	catch (std::exception e) {

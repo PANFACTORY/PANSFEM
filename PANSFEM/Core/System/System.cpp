@@ -50,12 +50,8 @@ bool PANSFEM::System::ImportNode(std::string _fname){
 		//.....節点IDを読み飛ばす.....
 		std::getline(sbuf, str, ',');
 
-		//.....節点自由度を取得.....
-		std::getline(sbuf, str, ',');
-		int DOX = stoi(str);
-
 		//.....節点の独立変数の値を読み込む.....
-		std::vector<double> xs(DOX);
+		std::vector<double> xs(this->DOX);
 		for (auto& x : xs) {
 			std::getline(sbuf, str, ',');
 			x = stod(str);
@@ -73,6 +69,48 @@ bool PANSFEM::System::ImportNode(std::string _fname){
 
 	ifs.close();
 	
+	return true;
+}
+
+
+bool PANSFEM::System::ImportParameter(std::vector<int> _plist, std::string _fname) {
+	std::ifstream ifs(_fname);
+
+	if (!ifs.is_open()) {
+		std::cout << "Parameter file " << _fname << " open error!" << std::endl;
+		return false;
+	}
+
+	//.....一行読み飛ばす.....
+	std::string str0;
+	std::getline(ifs, str0);
+
+	while (!ifs.eof()) {
+		//.....一行分読み込む.....
+		std::string buf;
+		ifs >> buf;
+		std::istringstream sbuf(buf);
+		std::string str;
+
+		//.....パラメータIDを読み飛ばす.....
+		std::getline(sbuf, str, ',');
+
+		//.....対応する要素を指すポインタを取得.....
+		std::getline(sbuf, str, ',');
+		Element* tmppelement = this->pelements[stoi(str)];
+
+		//.....パラメータの値を読み込む.....
+		std::vector<double> ps;
+		while (std::getline(sbuf, str, ',')) {
+			ps.push_back(stod(str));
+		}
+
+		//.....要素にパラメータを代入.....
+		tmppelement->SetParameter(ps, _plist);
+	}
+
+	ifs.close();
+
 	return true;
 }
 

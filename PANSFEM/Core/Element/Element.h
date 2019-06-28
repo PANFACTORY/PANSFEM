@@ -30,8 +30,10 @@ namespace PANSFEM {
 
 		std::vector<Node*> pnodes;						//要素を構成する節点を指すポインタ
 		std::map<int, int> us_to_uel;					//系従属変数番号→要素従属変数番号
+		std::map<int, double> parameters;				//系パラメータ番号→要素パラメータの値
 				
 		
+		void SetParameter(std::vector<double> _parameters, std::vector<int> _plist);	//要素パラメータを指定
 		template<class N0, class N1, class ...Ns>
 		void SetShapeFunction();						//形状関数を指定
 		template<class N0>

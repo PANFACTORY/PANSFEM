@@ -20,7 +20,7 @@ namespace PANSFEM {
 	public:
 		PlaneStrain();
 		virtual ~PlaneStrain();
-		PlaneStrain(Element *_pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration);
+		PlaneStrain(Element *_pelement, std::vector<int> _ulist, std::vector<int> _plist, Integration* _pintegration);
 
 
 		double E;	//—v‘f‚ÌYoung—¦

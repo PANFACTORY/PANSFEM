@@ -21,7 +21,7 @@ namespace PANSFEM {
 	public:
 		Equation();
 		virtual ~Equation();
-		Equation(Element *_pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration, int _DOX, int _DOU, int _NOP);
+		Equation(Element *_pelement, std::vector<int> _ulist, std::vector<int> _plist, Integration* _pintegration, int _DOX, int _DOU, int _NOP);
 
 
 		const int DOX;		//要素―節点方程式を記述する独立変数自由度：継承時に指定
@@ -31,6 +31,7 @@ namespace PANSFEM {
 
 		Element *pelement;	//要素―節点方程式に対応する要素を指すポインタ
 		std::vector<int> ueq_to_us;			//要素―節点方程式従属変数番号→系従属変数番号
+		std::vector<int> peq_to_ps;			//要素―節点方程式パラメータ番号→系パラメータ番号
 		Integration* pintegration;			//要素―節点方程式を生成するときの積分法
 				
 

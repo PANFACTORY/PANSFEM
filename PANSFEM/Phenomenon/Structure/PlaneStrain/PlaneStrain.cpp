@@ -15,10 +15,10 @@ PANSFEM::PlaneStrain::PlaneStrain() : Equation(){}
 PANSFEM::PlaneStrain::~PlaneStrain(){}
 
 
-PANSFEM::PlaneStrain::PlaneStrain(Element * _pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration) : Equation(_pelement, _ulist, _parameters, _pintegration, 2, 2, 3){
-	this->E = _parameters[0];
-	this->V = _parameters[1];
-	this->t = _parameters[2];
+PANSFEM::PlaneStrain::PlaneStrain(Element * _pelement, std::vector<int> _ulist, std::vector<int> _plist, Integration* _pintegration) : Equation(_pelement, _ulist, _plist, _pintegration, 2, 2, 3){
+	this->E = this->pelement->parameters[this->peq_to_ps[0]];
+	this->V = this->pelement->parameters[this->peq_to_ps[1]];
+	this->t = this->pelement->parameters[this->peq_to_ps[2]];
 }
 
 

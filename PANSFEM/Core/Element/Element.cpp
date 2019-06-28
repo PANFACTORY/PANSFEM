@@ -23,11 +23,33 @@ PANSFEM::Element::~Element(){
 
 
 PANSFEM::Element::Element(std::vector<Node*> _pnodes, std::vector<int> _ulist) : NON(_pnodes.size()){
+	//----------節点を指すポインタの代入----------
 	this->pnodes = _pnodes;
+
+	//----------従属変数の対応関係を整理----------
 	for (int i = 0; i < _ulist.size(); i++) {
 		this->us_to_uel[_ulist[i]] = i;
 	}
+		
+	//----------自然座標系への写像関数はとりあえずnullptr----------
 	this->pmapping = nullptr;
+}
+
+
+void PANSFEM::Element::SetParameter(std::vector<double> _parameters, std::vector<int> _plist){
+	try {
+		if (_parameters.size() != _plist.size()) {
+			throw std::exception();
+		}
+
+		//----------パラメータの対応関係を整理----------
+		for (int i = 0; i < _plist.size(); i++) {
+			this->parameters[_plist[i]] = _parameters[i];
+		}
+	}
+	catch (std::exception e) {
+		std::cout << "Error in setting parameters" << std::endl;
+	}
 }
 
 

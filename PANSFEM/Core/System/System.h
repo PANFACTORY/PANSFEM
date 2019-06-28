@@ -36,11 +36,12 @@ namespace PANSFEM {
 
 		bool ImportNode(std::string _fname);				//節点を追加
 		template<class ...Ns>
-		bool ImportElement(std::string _fname);				//要素を追加
+		bool ImportElement(std::vector<int> _ulist, std::string _fname);			//要素を追加
+		bool ImportParameter(std::vector<int> _plist, std::string _fname);			//要素パラメータを追加
 		template<class F>
 		bool ImportField(std::vector<int> _ulist);			//場を追加
 		template<class E, class I>
-		bool ImportEquation(int _fi, std::string _fname);	//場を構成する方程式を入力
+		bool ImportEquation(int _fi, std::vector<int> _plist, std::string _fname);	//場を構成する方程式を入力
 		bool ImportDirichlet(std::string _fname);			//Dirichlet境界条件を入力
 		bool ImportNeumann(int _fi, std::string _fname);	//Neumann境界条件を入力
 
@@ -58,7 +59,7 @@ namespace PANSFEM {
 
 
 	template<class ...Ns>
-	inline bool System::ImportElement(std::string _fname) {
+	inline bool System::ImportElement(std::vector<int> _ulist, std::string _fname) {
 		std::ifstream ifs(_fname);
 
 		if (!ifs.is_open()) {
@@ -84,21 +85,15 @@ namespace PANSFEM {
 			std::getline(sbuf, str, ',');
 			int NON = stoi(str);
 
-			//.....節点の独立変数の値を読み込む.....
+			//.....要素を構成する節点を指すポインタを取得.....
 			std::vector<Node*> tmppnodes(NON);
 			for (auto &pnode : tmppnodes) {
 				std::getline(sbuf, str, ',');
 				pnode = this->pnodes[stoi(str)];
 			}
 
-			//.....節点の従属変数の対応番号を読み込む.....
-			std::vector<int> ulist;
-			while (std::getline(sbuf, str, ',')) {
-				ulist.push_back(stoi(str));
-			}
-
 			//.....節点を追加.....
-			Element *tmppelement = new Element(tmppnodes, ulist);
+			Element *tmppelement = new Element(tmppnodes, _ulist);
 			tmppelement->SetShapeFunction<Ns...>();
 			this->pelements.push_back(tmppelement);
 		}
@@ -110,7 +105,7 @@ namespace PANSFEM {
 
 
 	template<class E, class I>
-	inline bool System::ImportEquation(int _fi, std::string _fname)	{
+	inline bool System::ImportEquation(int _fi, std::vector<int> _plist, std::string _fname)	{
 		std::ifstream ifs(_fname);
 
 		if (!ifs.is_open()) {
@@ -129,18 +124,15 @@ namespace PANSFEM {
 			std::istringstream sbuf(buf);
 			std::string str;
 
+			//.....要素―節点方程式IDを読み飛ばす.....
+			std::getline(sbuf, str, ',');
+
 			//.....対応する要素を指すポインタを取得.....
 			std::getline(sbuf, str, ',');
 			Element* pelement = this->pelements[stoi(str)];
 
-			//.....要素―節点方程式のパラメータを読み込む.....
-			std::vector<double> parameters;
-			while (std::getline(sbuf, str, ',')) {
-				parameters.push_back(stod(str));
-			}
-
-			//.....節点を追加.....
-			this->pfields[_fi]->pequations.push_back(new E(pelement, this->pfields[_fi]->uf_to_us, parameters, new I()));
+			//.....要素―節点方程式を追加.....
+			this->pfields[_fi]->pequations.push_back(new E(pelement, this->pfields[_fi]->uf_to_us, _plist, new I()));
 		}
 
 		ifs.close();

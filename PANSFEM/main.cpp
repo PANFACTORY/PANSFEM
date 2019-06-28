@@ -10,35 +10,53 @@
 
 
 #include "Core/System/StaticSystem/StaticSystem.h"
+#include "Core/ShapeFunction/Parametric/Triangle/Triangle.h"
 #include "Core/ShapeFunction/Parametric/Quadrangle/Quadrangle.h"
 #include "Core/Field/LinearField/LinearField.h"
 #include "Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
 #include "Phenomenon/HeatTransfer/Static2D/HeatTransferStatic2D.h"
 #include "Core/Integration/Gauss/Square/GaussSquare.h"
+#include "Core/Integration/Gauss/Triangle/GaussTriangle.h"
 
 
 using namespace PANSFEM;
 
 
 int main() {
+	//----------直梁（三角形要素）モデル----------
+	StaticSystem model0 = StaticSystem(2, 2);
+	model0.ImportNode("Data/Input/Structure/TriangleBeam/Node.csv");
+	model0.ImportElement<Triangle, Triangle, Triangle>({ 0, 1 }, "Data/Input/Structure/TriangleBeam/Element.csv");
+	model0.ImportParameter({ 0, 1, 2 }, "Data/Input/Structure/TriangleBeam/Parameter.csv");
+	model0.ImportField<LinearField>({ 0, 1 });
+	model0.ImportEquation<PlaneStrain, GaussTriangle>(0, { 0, 1, 2 }, "Data/Input/Structure/TriangleBeam/Equation.csv");
+	model0.ImportDirichlet("Data/Input/Structure/TriangleBeam/Dirichlet.csv");
+	model0.ImportNeumann(0, "Data/Input/Structure/TriangleBeam/Neumann.csv");
+	model0.Schedule();
+	model0.Show();
+	
+
 	//----------直梁（四角形要素）モデル----------
-	/*StaticSystem model1 = StaticSystem(2, 2);
+	StaticSystem model1 = StaticSystem(2, 2);
 	model1.ImportNode("Data/Input/Structure/QuadrangleBeam/Node.csv");
-	model1.ImportElement<Quadrangle, Quadrangle, Quadrangle>("Data/Input/Structure/QuadrangleBeam/Element.csv");
-	model1.ImportField<LinearField, PlaneStrain>({ 0, 1 }, "Data/Input/Structure/QuadrangleBeam/Equation.csv");
+	model1.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, "Data/Input/Structure/QuadrangleBeam/Element.csv");
+	model1.ImportParameter({ 0, 1, 2 }, "Data/Input/Structure/QuadrangleBeam/Parameter.csv");
+	model1.ImportField<LinearField>({ 0, 1 });
+	model1.ImportEquation<PlaneStrain, GaussSquare>(0, { 0, 1, 2 }, "Data/Input/Structure/QuadrangleBeam/Equation.csv");
 	model1.ImportDirichlet("Data/Input/Structure/QuadrangleBeam/Dirichlet.csv");
 	model1.ImportNeumann(0, "Data/Input/Structure/QuadrangleBeam/Neumann.csv");
 	model1.Schedule();
 	//model1.Show();
 	model1.Export("Data/Output/model1");
-	*/
+	
 
 	//----------曲がり梁モデル----------
 	StaticSystem model2 = StaticSystem(2, 2);
 	model2.ImportNode("Data/Input/Structure/CurveBeam/Node.csv");
-	model2.ImportElement<Quadrangle, Quadrangle, Quadrangle>("Data/Input/Structure/CurveBeam/Element.csv");
+	model2.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, "Data/Input/Structure/CurveBeam/Element.csv");
+	model2.ImportParameter({ 0, 1, 2 }, "Data/Input/Structure/CurveBeam/Parameter.csv");
 	model2.ImportField<LinearField>({ 0, 1 });
-	model2.ImportEquation<PlaneStrain, GaussSquare>(0, "Data/Input/Structure/CurveBeam/Equation.csv");
+	model2.ImportEquation<PlaneStrain, GaussSquare>(0, { 0, 1, 2 }, "Data/Input/Structure/CurveBeam/Equation.csv");
 	model2.ImportDirichlet("Data/Input/Structure/CurveBeam/Dirichlet.csv");
 	model2.ImportNeumann(0, "Data/Input/Structure/CurveBeam/Neumann.csv");
 	model2.Schedule();
@@ -47,17 +65,17 @@ int main() {
 	
 
 	//----------熱伝導モデル----------
-	/*StaticSystem model3 = StaticSystem(2, 1);
+	StaticSystem model3 = StaticSystem(2, 1);
 	model3.ImportNode("Data/Input/HeatTransfer/Plate/Node.csv");
-	model3.ImportElement<Quadrangle, Quadrangle>("Data/Input/HeatTransfer/Plate/Element.csv");
+	model3.ImportElement<Quadrangle, Quadrangle>({ 0 }, "Data/Input/HeatTransfer/Plate/Element.csv");
+	model3.ImportParameter({ 0 }, "Data/Input/HeatTransfer/Plate/Parameter.csv");
 	model3.ImportField<LinearField>({ 0 });
-	model3.ImportEquation<HeatTransferStatic2D, GaussSquare>(0, "Data/Input/HeatTransfer/Plate/Equation.csv");
+	model3.ImportEquation<HeatTransferStatic2D, GaussSquare>(0, { 0 }, "Data/Input/HeatTransfer/Plate/Equation.csv");
 	model3.ImportDirichlet("Data/Input/HeatTransfer/Plate/Dirichlet.csv");
 	model3.ImportNeumann(0, "Data/Input/HeatTransfer/Plate/Neumann.csv");
 	model3.Schedule();
-	//model3.Show();
 	model3.Export("Data/Output/model3");
-	*/
+	
 
 	return 0;
 }

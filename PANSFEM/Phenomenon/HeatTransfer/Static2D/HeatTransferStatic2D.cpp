@@ -15,8 +15,8 @@ PANSFEM::HeatTransferStatic2D::HeatTransferStatic2D() : Equation(){}
 PANSFEM::HeatTransferStatic2D::~HeatTransferStatic2D() {}
 
 
-PANSFEM::HeatTransferStatic2D::HeatTransferStatic2D(Element * _pelement, std::vector<int> _ulist, std::vector<double> _parameters, Integration* _pintegration) : Equation(_pelement, _ulist, _parameters, _pintegration, 2, 1, 1){
-	this->alpha = _parameters[0];
+PANSFEM::HeatTransferStatic2D::HeatTransferStatic2D(Element * _pelement, std::vector<int> _ulist, std::vector<int> _plist, Integration* _pintegration) : Equation(_pelement, _ulist, _plist, _pintegration, 2, 1, 1){
+	this->alpha = this->pelement->parameters[this->peq_to_ps[0]];
 }
 
 
