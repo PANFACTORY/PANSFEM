@@ -107,7 +107,7 @@ int main() {
 
 	//----------”ñ’èí”M“`“±ƒ‚ƒfƒ‹----------
 	std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
-	DynamicSystem model5 = DynamicSystem(2, 1, 100000);
+	DynamicSystem model5 = DynamicSystem(2, 1, 1000);
 	model5.ImportNode(model5_path + "Node.csv");
 	model5.ImportElement<Quadrangle, Quadrangle>({ 0 }, model5_path + "Element.csv");
 	model5.ImportParameter({ 0, 1, 2, 3, 4 }, model5_path + "Parameter.csv");

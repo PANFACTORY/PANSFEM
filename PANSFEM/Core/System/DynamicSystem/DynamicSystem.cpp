@@ -42,6 +42,9 @@ void PANSFEM::DynamicSystem::Schedule(){
 
 			//.....全体―節点方程式を解く.....
 			pfield->SolveEquation();
+
+			//.....結果の出力.....
+			this->Export("Data/Output/model6/model6-" + std::to_string(i));
 		}
 	}
 }
