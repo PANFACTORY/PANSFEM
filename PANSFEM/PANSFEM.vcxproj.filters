@@ -19,6 +19,8 @@
     <ClCompile Include="Core\Integration\Gauss\Square\GaussSquare.cpp" />
     <ClCompile Include="Core\Integration\Gauss\Triangle\GaussTriangle.cpp" />
     <ClCompile Include="Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.cpp" />
+    <ClCompile Include="Core\System\DynamicSystem\DynamicSystem.cpp" />
+    <ClCompile Include="Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System\System.h" />
@@ -38,5 +40,7 @@
     <ClInclude Include="Core\Integration\Gauss\Square\GaussSquare.h" />
     <ClInclude Include="Core\Integration\Gauss\Triangle\GaussTriangle.h" />
     <ClInclude Include="Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.h" />
+    <ClInclude Include="Core\System\DynamicSystem\DynamicSystem.h" />
+    <ClInclude Include="Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.h" />
   </ItemGroup>
 </Project>

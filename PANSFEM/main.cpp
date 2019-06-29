@@ -10,6 +10,7 @@
 
 
 #include "Core/System/StaticSystem/StaticSystem.h"
+#include "Core/System/DynamicSystem/DynamicSystem.h"
 
 
 #include "Core/Field/LinearField/LinearField.h"
@@ -22,6 +23,7 @@
 #include "Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
 #include "Phenomenon/HeatTransfer/Static2D/HeatTransferStatic2D.h"
 #include "Phenomenon/Structure/PlaneStrainWithHeat/PlaneStrainWithHeat.h"
+#include "Phenomenon/HeatTransfer/Dynamic2D/HeatTransferDynamic2D.h"
 
 
 #include "Core/Integration/Gauss/Square/GaussSquare.h"
@@ -73,7 +75,7 @@ int main() {
 	model2.Export("Data/Output/model2");
 	*/
 
-	//----------îMì`ì±ÉÇÉfÉã----------
+	//----------íËèÌîMì`ì±ÉÇÉfÉã----------
 	/*StaticSystem model3 = StaticSystem(2, 1);
 	model3.ImportNode("Data/Input/HeatTransfer/Plate/Node.csv");
 	model3.ImportElement<Quadrangle, Quadrangle>({ 0 }, "Data/Input/HeatTransfer/Plate/Element.csv");
@@ -87,7 +89,7 @@ int main() {
 	*/
 
 	//----------îMÇÕÇËã»Ç∞ÉÇÉfÉã----------
-	std::string model4_path = "Data/Input/HeatAndStructure/StaticHeatBeam/";
+	/*std::string model4_path = "Data/Input/HeatAndStructure/StaticHeatBeam/";
 	StaticSystem model4 = StaticSystem(2, 3);
 	model4.ImportNode(model4_path + "Node.csv");
 	model4.ImportElement<Quadrangle, Quadrangle, Quadrangle, Quadrangle>({ 0, 1, 2 }, model4_path + "Element.csv");
@@ -101,6 +103,20 @@ int main() {
 	model4.ImportNeumann(1, model4_path + "Neumann1.csv");
 	model4.Schedule();
 	model4.Export("Data/Output/model4");
-	
+	*/
+
+	//----------îÒíËèÌîMì`ì±ÉÇÉfÉã----------
+	std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
+	DynamicSystem model5 = DynamicSystem(2, 1, 100000);
+	model5.ImportNode(model5_path + "Node.csv");
+	model5.ImportElement<Quadrangle, Quadrangle>({ 0 }, model5_path + "Element.csv");
+	model5.ImportParameter({ 0, 1, 2, 3, 4 }, model5_path + "Parameter.csv");
+	model5.ImportField<LinearField>({ 0 });
+	model5.ImportEquation<HeatTransferDynamic2D, GaussSquare>(0, {}, { 0, 1, 2, 3, 4 }, model5_path + "Equation.csv");
+	model5.ImportDirichlet(model5_path + "Dirichlet.csv");
+	model5.ImportNeumann(0, model5_path + "Neumann.csv");
+	model5.Schedule();
+	model5.Export("Data/Output/model5");
+
 	return 0;
 }
