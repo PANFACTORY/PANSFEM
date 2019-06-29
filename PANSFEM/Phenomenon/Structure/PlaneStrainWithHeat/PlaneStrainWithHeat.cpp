@@ -63,8 +63,6 @@ Eigen::VectorXd PANSFEM::PlaneStrainWithHeat::GetFe(std::vector<double> _xi){
 	EPST(0) = 1.0;	EPST(1) = 1.0;	EPST(2) = 0.0;
 	EPST *= this->alpha * this->pelement->Trial(this->refueq_to_us, _xi) * this->pelement->u(this->refueq_to_us);
 
-	std::cout << EPST << std::endl;
-
 	return B.transpose() * D * EPST * this->t * this->pelement->Jacobian(_xi).determinant();
 }
 

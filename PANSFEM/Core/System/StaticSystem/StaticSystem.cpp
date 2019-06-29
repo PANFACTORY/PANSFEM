@@ -93,26 +93,30 @@ void PANSFEM::StaticSystem::Export(std::string _fname){
 
 	//----------節点の値を追加----------
 	fout << "\nPOINT_DATA\t" << this->pnodes.size() << "\n";
-	if (this->DOU == 1) {
-		fout << "SCALARS u float\n";
-		fout << "LOOKUP_TABLE default\n";
+	for (int i = 0; i < this->pfields.size(); i++) {
+		//.....スカラー量.....
+		if (this->pfields[i]->uf_to_us.size() == 1) {
+			fout << "SCALARS u" << i << " float\n";
+			fout << "LOOKUP_TABLE default\n";
 
-		for (auto pnode : this->pnodes) {
-			fout << pnode->u(0) << std::endl;
+			for (auto pnode : this->pnodes) {
+				fout << pnode->u[this->pfields[i]->uf_to_us[0]] << std::endl;
+			}
 		}
-	}
-	else if (this->DOU == 2) {
-		fout << "VECTORS u float\n";
 
-		for (auto pnode : this->pnodes) {
-			fout << pnode->u(0) << "\t" << pnode->u(1) << "\t" << "0.0" <<  std::endl;
-		}
-	}
-	else if (this->DOU == 3) {
-		fout << "VECTORS u float\n";
-
-		for (auto pnode : this->pnodes) {
-			fout << pnode->u(0) << "\t" << pnode->u(1) << "\t" << pnode->u(2) << std::endl;
+		//.....ベクトル量.....
+		else {
+			fout << "VECTORS u" << i << " float\n";
+			if (this->pfields[i]->uf_to_us.size() == 2) {
+				for (auto pnode : this->pnodes) {
+					fout << pnode->u[this->pfields[i]->uf_to_us[0]] << "\t" << pnode->u[this->pfields[i]->uf_to_us[1]] << "\t" << "0" << std::endl;
+				}
+			}
+			else if(this->pfields[i]->uf_to_us.size() == 3){
+				for (auto pnode : this->pnodes) {
+					fout << pnode->u[this->pfields[i]->uf_to_us[0]] << "\t" << pnode->u[this->pfields[i]->uf_to_us[1]] << "\t" << pnode->u[this->pfields[i]->uf_to_us[2]] << std::endl;
+				}
+			}
 		}
 	}
 	

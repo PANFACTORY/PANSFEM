@@ -94,7 +94,7 @@ int main() {
 	model4.ImportParameter({ 0, 1, 2, 3, 4 }, model4_path + "Parameter.csv");
 	model4.ImportField<LinearField>({ 2 });		//”M“`“±ê
 	model4.ImportEquation<HeatTransferStatic2D, GaussSquare>(0, {}, { 4 }, model4_path + "Equation.csv");
-	model4.ImportField<LinearField>({ 0, 1 });	//”M‰—ÍŠwê
+	model4.ImportField<LinearField>({ 0, 1 });	//”M‰—Íê
 	model4.ImportEquation<PlaneStrainWithHeat, GaussSquare>(1, { 2 }, { 0, 1, 2, 3 }, model4_path + "Equation.csv");
 	model4.ImportDirichlet(model4_path + "Dirichlet.csv");
 	model4.ImportNeumann(0, model4_path + "Neumann2.csv");
