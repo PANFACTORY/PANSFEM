@@ -190,12 +190,19 @@ bool PANSFEM::System::ImportNeumann(int _fi, std::string _fname){
 
 		//.....Neumann‹«ŠE’l‚ð’è‚ß‚é.....
 		std::vector<double> q;
-		while (std::getline(sbuf, str, ',')) {
-			q.push_back(stod(str));
+		std::vector<int> qlist;
+		for (int i = 0; i < this->DOU; i++) {
+			std::getline(sbuf, str, ',');
+			if (str != "free") {
+				if (pnode->us_to_un.find(i) != pnode->us_to_un.end()) {
+					qlist.push_back(i);
+					q.push_back(stod(str));
+				}
+			}
 		}
 
 		//.....ß“_‚ÌNeumann‹«ŠEðŒ’l‚ð“Ç‚Ýž‚Þ.....
-		this->pfields[_fi]->pneumanns.push_back(new Neumann(pnode, q));
+		this->pfields[_fi]->pneumanns.push_back(new Neumann(pnode, q, qlist));
 	}
 
 	ifs.close();

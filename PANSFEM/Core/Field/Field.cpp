@@ -113,9 +113,11 @@ void PANSFEM::Field::SolveEquation(){
 	for (auto pneumann : this->pneumanns) {
 		int Ki = this->Kmap[pneumann->pnode].first;					//全体―節点方程式の行インデックス
 		for (auto usi : this->uf_to_us) {
-			if (pneumann->pnode->us_to_un.find(usi) != pneumann->pnode->us_to_un.end()) {
-				if (!pneumann->pnode->is_ufixed[pneumann->pnode->us_to_un[usi]]) {
-					F[Ki] += pneumann->q[pneumann->pnode->us_to_un[usi]];
+			if (pneumann->pnode->us_to_un.find(usi) != pneumann->pnode->us_to_un.end()) {	//節点で定義されているか
+				if (!pneumann->pnode->is_ufixed[pneumann->pnode->us_to_un[usi]]) {			//節点でDirichlet境界条件が与えられていないか
+					if (pneumann->q.find(usi) != pneumann->q.end()) {
+						F[Ki] += pneumann->q[usi];
+					}
 					Ki++;
 				}
 			}

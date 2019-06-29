@@ -17,7 +17,7 @@ namespace PANSFEM {
 	public:
 		HeatTransferStatic2D();
 		virtual ~HeatTransferStatic2D();
-		HeatTransferStatic2D(Element *_pelement, std::vector<int> _ulist, std::vector<int> _plist, Integration* _pintegration);
+		HeatTransferStatic2D(Element *_pelement, std::vector<int> _ulist, std::vector<int> _refulist, std::vector<int> _plist, Integration* _pintegration);
 
 
 		double alpha;			//”M“`“±—¦

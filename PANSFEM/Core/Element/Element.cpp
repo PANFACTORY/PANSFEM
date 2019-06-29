@@ -271,3 +271,16 @@ Eigen::MatrixXd PANSFEM::Element::Jacobian(std::vector<double> _xi){
 	
 	return this->pmapping->dTrialdx(this->pnodes, _xi) * xs;
 }
+
+
+Eigen::VectorXd PANSFEM::Element::u(std::vector<int> _ueq_to_us){
+	std::vector<double> us;
+	for (auto pnode : this->pnodes) {
+		for (auto ui : _ueq_to_us) {
+			if (pnode->us_to_un.find(ui) != pnode->us_to_un.end()) {
+				us.push_back(pnode->u[pnode->us_to_un[ui]]);
+			}
+		}
+	}
+	return Eigen::Map<Eigen::VectorXd>(&us[0], us.size());
+}

@@ -19,10 +19,10 @@ namespace PANSFEM {
 	public:
 		Neumann();
 		virtual ~Neumann();
-		Neumann(Node* _pnode, std::vector<double> _q);
+		Neumann(Node* _pnode, std::vector<double> _q, std::vector<int> _qlist);
 
 
 		Node* pnode;				//対応する節点を指すポインタ
-		std::vector<double> q;		//Neumann境界条件の値
+		std::map<int, double> q;	//Neumann境界条件の値
 	};
 }

@@ -45,6 +45,7 @@ namespace PANSFEM {
 		Eigen::MatrixXd Test(std::vector<int> _ulist, std::vector<double> _xi);			//試験関数の形状関数
 		Eigen::MatrixXd dTestdx(std::vector<int> _ulist, std::vector<double> _xi);		//試験関数の形状関数のxによる一階微分
 		Eigen::MatrixXd Jacobian(std::vector<double> _xi);								//Jacobi行列
+		Eigen::VectorXd u(std::vector<int> _ulist);		//要素内従属変数を返す
 
 		
 	protected:

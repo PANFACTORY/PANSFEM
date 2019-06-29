@@ -139,6 +139,7 @@
     <ClCompile Include="Core\System\System.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.cpp" />
+    <ClCompile Include="Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.cpp" />
     <ClCompile Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +158,7 @@
     <ClInclude Include="Core\System\StaticSystem\StaticSystem.h" />
     <ClInclude Include="Core\System\System.h" />
     <ClInclude Include="Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.h" />
+    <ClInclude Include="Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.h" />
     <ClInclude Include="Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

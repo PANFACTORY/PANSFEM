@@ -36,12 +36,12 @@ namespace PANSFEM {
 
 		bool ImportNode(std::string _fname);				//節点を追加
 		template<class ...Ns>
-		bool ImportElement(std::vector<int> _ulist, std::string _fname);			//要素を追加
-		bool ImportParameter(std::vector<int> _plist, std::string _fname);			//要素パラメータを追加
+		bool ImportElement(std::vector<int> _ulist, std::string _fname);	//要素を追加
+		bool ImportParameter(std::vector<int> _plist, std::string _fname);	//要素パラメータを追加
 		template<class F>
 		bool ImportField(std::vector<int> _ulist);			//場を追加
 		template<class E, class I>
-		bool ImportEquation(int _fi, std::vector<int> _plist, std::string _fname);	//場を構成する方程式を入力
+		bool ImportEquation(int _fi, std::vector<int> _refulist, std::vector<int> _plist, std::string _fname);	//場を構成する方程式を入力
 		bool ImportDirichlet(std::string _fname);			//Dirichlet境界条件を入力
 		bool ImportNeumann(int _fi, std::string _fname);	//Neumann境界条件を入力
 
@@ -55,6 +55,7 @@ namespace PANSFEM {
 		std::vector<Node*> pnodes;			//系を構成する節点
 		std::vector<Element*> pelements;	//系を構成する要素
 		std::vector<Field*> pfields;		//系を構成する場
+		std::vector<Neumann*> pneumanns;	//系に課せられたNeumann条件
 	};
 
 
@@ -105,7 +106,7 @@ namespace PANSFEM {
 
 
 	template<class E, class I>
-	inline bool System::ImportEquation(int _fi, std::vector<int> _plist, std::string _fname)	{
+	inline bool System::ImportEquation(int _fi, std::vector<int> _refulist, std::vector<int> _plist, std::string _fname)	{
 		std::ifstream ifs(_fname);
 
 		if (!ifs.is_open()) {
@@ -132,7 +133,7 @@ namespace PANSFEM {
 			Element* pelement = this->pelements[stoi(str)];
 
 			//.....要素―節点方程式を追加.....
-			this->pfields[_fi]->pequations.push_back(new E(pelement, this->pfields[_fi]->uf_to_us, _plist, new I()));
+			this->pfields[_fi]->pequations.push_back(new E(pelement, this->pfields[_fi]->uf_to_us, _refulist, _plist, new I()));
 		}
 
 		ifs.close();
