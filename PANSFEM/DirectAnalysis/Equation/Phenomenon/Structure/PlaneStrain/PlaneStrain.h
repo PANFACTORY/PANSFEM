@@ -10,7 +10,7 @@
 #include <vector>
 
 
-#include "../../../Core/Equation/Equation.h"
+#include "../../../Equation.h"
 
 
 namespace PANSFEM {

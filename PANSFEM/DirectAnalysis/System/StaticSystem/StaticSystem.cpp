@@ -25,12 +25,12 @@ void PANSFEM::StaticSystem::Schedule(){
 
 		//----------Kmapの作成----------
 		pfield->MakeKmap();
-
+		
 		//----------要素―節点方程式を計算----------
 		for (auto& pequation : pfield->pequations) {
 			pequation->SetEquation();
 		}
-
+		
 		//----------バンド幅の計算----------
 		pfield->GetBandwidth();
 

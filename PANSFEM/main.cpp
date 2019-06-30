@@ -9,25 +9,31 @@
 #include <vector>
 
 
-#include "Core/System/StaticSystem/StaticSystem.h"
-#include "Core/System/DynamicSystem/DynamicSystem.h"
+//**********順解析のサンプル用**********
+#include "DirectAnalysis/System/StaticSystem/StaticSystem.h"
+#include "DirectAnalysis/System/DynamicSystem/DynamicSystem.h"
 
 
-#include "Core/Field/LinearField/LinearField.h"
+#include "DirectAnalysis/Field/LinearField/LinearField.h"
 
 
-#include "Core/ShapeFunction/Parametric/Triangle/Triangle.h"
-#include "Core/ShapeFunction/Parametric/Quadrangle/Quadrangle.h"
+#include "DirectAnalysis/ShapeFunction/Parametric/Triangle/Triangle.h"
+#include "DirectAnalysis/ShapeFunction/Parametric/Quadrangle/Quadrangle.h"
 
 
-#include "Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
-#include "Phenomenon/HeatTransfer/Static2D/HeatTransferStatic2D.h"
-#include "Phenomenon/Structure/PlaneStrainWithHeat/PlaneStrainWithHeat.h"
-#include "Phenomenon/HeatTransfer/Dynamic2D/HeatTransferDynamic2D.h"
+#include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
+#include "DirectAnalysis/Equation/Phenomenon/HeatTransfer/Static2D/HeatTransferStatic2D.h"
+#include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrainWithHeat/PlaneStrainWithHeat.h"
+#include "DirectAnalysis/Equation/Phenomenon/HeatTransfer/Dynamic2D/HeatTransferDynamic2D.h"
 
 
-#include "Core/Integration/Gauss/Square/GaussSquare.h"
-#include "Core/Integration/Gauss/Triangle/GaussTriangle.h"
+#include "DirectAnalysis/Integration/Gauss/Square/GaussSquare.h"
+#include "DirectAnalysis/Integration/Gauss/Triangle/GaussTriangle.h"
+
+
+//**********逆解析のサンプル用**********
+#include "InverseAnalysis/System/OptimizedSystem.h"
+#include "InverseAnalysis/Function/Function.h"
 
 
 using namespace PANSFEM;
@@ -106,7 +112,7 @@ int main() {
 	*/
 
 	//----------非定常熱伝導モデル----------
-	std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
+	/*std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
 	DynamicSystem model5 = DynamicSystem(2, 1, 1000);
 	model5.ImportNode(model5_path + "Node.csv");
 	model5.ImportElement<Quadrangle, Quadrangle>({ 0 }, model5_path + "Element.csv");
@@ -117,6 +123,12 @@ int main() {
 	model5.ImportNeumann(0, model5_path + "Neumann.csv");
 	model5.Schedule();
 	model5.Export("Data/Output/model5");
+	*/
+
+	//----------トポロジー最適化モデル----------
+	std::string model7_path = "Data/Input/Optimize/CurveBeam/";
+	OptimizedSystem model7 = OptimizedSystem(2, 2);
+	model7.ImportNode(model7_path + "Node.csv");
 
 	return 0;
 }

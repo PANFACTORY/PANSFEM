@@ -7,7 +7,7 @@
 
 
 #pragma once
-#include "../../../Core/Equation/Equation.h"
+#include "../../../Equation.h"
 
 
 namespace PANSFEM {
