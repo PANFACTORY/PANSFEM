@@ -41,3 +41,12 @@ Eigen::VectorXd PANSFEM::GaussSquare::Integrate(std::function<Eigen::VectorXd(st
 	}
 	return v;
 }
+
+
+double PANSFEM::GaussSquare::Integrate(std::function<double(std::vector<double>)> _f) {
+	double d = GaussSquare::GW[0][0] * GaussSquare::GW[0][1] * _f(GaussSquare::GP[0]);
+	for (int i = 1; i < 4; i++) {
+		d += GaussSquare::GW[i][0] * GaussSquare::GW[i][1] * _f(GaussSquare::GP[i]);
+	}
+	return d;
+}

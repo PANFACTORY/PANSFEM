@@ -7,6 +7,7 @@
 
 
 #pragma once
+#include "../../../../DirectAnalysis/Integration/Integration.h"
 #include "../../Function.h"
 
 
@@ -17,10 +18,13 @@ namespace PANSFEM {
 	public:
 		Compliance();
 		virtual ~Compliance();
-		Compliance(std::vector<int> _plist);
+		Compliance(std::vector<int> _plist, std::vector<int> _refulist, std::vector<int> _refplist);
 
 
-		Eigen::VectorXd sensitivitis();		//関数感度ベクトルを返す
-		double value();						//関数値を返す
+		std::map<Element*, Integration*> pintegrations;		//要素毎の積分法
+
+
+		Eigen::VectorXd sensitivitis();						//関数感度ベクトルを返す
+		double value();										//関数値を返す
 	};
 }

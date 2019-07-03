@@ -21,5 +21,6 @@ namespace PANSFEM {
 
 		Eigen::MatrixXd Integrate(std::function<Eigen::MatrixXd(std::vector<double>)>);
 		Eigen::VectorXd Integrate(std::function<Eigen::VectorXd(std::vector<double>)>);
+		double Integrate(std::function<double(std::vector<double>)>);
 	};
 }

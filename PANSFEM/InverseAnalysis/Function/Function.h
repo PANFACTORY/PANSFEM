@@ -19,10 +19,17 @@ namespace PANSFEM {
 	public:
 		Function();
 		virtual ~Function();
-		Function(std::vector<int> _plist);
+		Function(std::vector<int> _plist, std::vector<int> _refulist, std::vector<int> _refplist, int _NOP, int _DOREFU, int _NOREFP);
+
+
+		const int NOP;									//一要素当たりの設計変数の数
+		const int DOREFU;								//参照する従属変数の数
+		const int NOREFP;								//参照するパラメータの数
 
 
 		std::vector<int> pf_to_ps;						//設計変数の関数内番号→系のパラメータ番号
+		std::vector<int> refuf_to_us;					//関数が参照する従属変数の関数内番号→系の従属変数番号
+		std::vector<int> refpf_to_us;					//関数が参照するパラメータの関数内番号→系のパラメータ番号
 		std::vector<Element*> pelements;				//設計変数の定義された要素
 
 

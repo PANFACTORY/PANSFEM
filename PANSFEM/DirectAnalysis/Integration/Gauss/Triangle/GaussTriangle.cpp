@@ -23,3 +23,8 @@ Eigen::MatrixXd PANSFEM::GaussTriangle::Integrate(std::function<Eigen::MatrixXd(
 Eigen::VectorXd PANSFEM::GaussTriangle::Integrate(std::function<Eigen::VectorXd(std::vector<double>)> _f) {
 	return 0.5*_f({ 0.0, 0.0 });
 }
+
+
+double PANSFEM::GaussTriangle::Integrate(std::function<double(std::vector<double>)> _f) {
+	return 0.5*_f({ 0.0, 0.0 });
+}
