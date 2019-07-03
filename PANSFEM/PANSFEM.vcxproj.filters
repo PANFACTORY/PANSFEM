@@ -23,6 +23,8 @@
     <ClCompile Include="DirectAnalysis\System\System.cpp" />
     <ClCompile Include="InverseAnalysis\System\OptimizedSystem.cpp" />
     <ClCompile Include="InverseAnalysis\Function\Function.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\Compliance.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Weight\Weight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
@@ -46,5 +48,7 @@
     <ClInclude Include="DirectAnalysis\System\System.h" />
     <ClInclude Include="InverseAnalysis\System\OptimizedSystem.h" />
     <ClInclude Include="InverseAnalysis\Function\Function.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\Compliance.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Weight\Weight.h" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,10 @@
 
 
 #pragma once
+#include <vector>
+
+
+#include "../../DirectAnalysis/Element/Element.h"
 
 
 namespace PANSFEM {
@@ -15,5 +19,14 @@ namespace PANSFEM {
 	public:
 		Function();
 		virtual ~Function();
+		Function(std::vector<int> _plist);
+
+
+		std::vector<int> pf_to_ps;						//設計変数の関数内番号→系のパラメータ番号
+		std::vector<Element*> pelements;				//設計変数の定義された要素
+
+
+		virtual Eigen::VectorXd sensitivitis() = 0;		//関数感度ベクトルを返す
+		virtual double value() = 0;						//関数値を返す		
 	};
 }

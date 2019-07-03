@@ -13,3 +13,8 @@ PANSFEM::Function::Function(){}
 
 
 PANSFEM::Function::~Function(){}
+
+
+PANSFEM::Function::Function(std::vector<int> _plist){
+	this->pf_to_ps = _plist;
+}
