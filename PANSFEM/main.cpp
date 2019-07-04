@@ -132,7 +132,8 @@ int main() {
 
 	//----------トポロジー最適化モデル（曲がり梁）----------
 	std::string model7_path = "Data/Input/Optimize/CurveBeam/";
-	OptimizedSystem model7 = OptimizedSystem(2, 2);
+	OptimizedSystem model7 = OptimizedSystem(2, 2, { 0 });
+
 	model7.ImportNode(model2_path + "Node.csv");
 	model7.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, model2_path + "Element.csv");
 	model7.ImportParameter({ 0, 1, 2 }, model2_path + "Parameter.csv");
@@ -140,8 +141,11 @@ int main() {
 	model7.ImportEquation<PlaneStrain, GaussSquare>(0, {}, { 0, 1, 2 }, model2_path + "Equation.csv");
 	model7.ImportDirichlet(model2_path + "Dirichlet.csv");
 	model7.ImportNeumann(0, model2_path + "Neumann.csv");
-	model7.ImportObjective<Compliance>({ 0 });
-	model7.ImportConstraint<Weight>({ 0 });
 
+	model7.ImportObjective<Compliance>({ 0, 1 }, { 0, 1, 2, 3, 4 });
+	model7.ImportElementToObjective<GaussSquare>(0, model2_path + "Equation.csv");
+	model7.ImportConstraint<Weight>({}, { 0, 4 });
+	model7.ImportElementToConstraint<GaussSquare>(0, model2_path + "Equation.csv");
+	model7.Schedule();
 	return 0;
 }

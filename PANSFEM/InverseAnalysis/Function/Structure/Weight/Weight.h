@@ -17,7 +17,7 @@ namespace PANSFEM {
 	public:
 		Weight();
 		virtual ~Weight();
-		Weight(std::vector<double> _plist);
+		Weight(std::vector<int> _plist, std::vector<int> _refulist, std::vector<int> _refplist);
 
 
 		Eigen::VectorXd sensitivitis();		//関数感度ベクトルを返す
