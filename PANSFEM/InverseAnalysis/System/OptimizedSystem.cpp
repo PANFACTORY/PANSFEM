@@ -20,6 +20,39 @@ PANSFEM::OptimizedSystem::OptimizedSystem(int _DOX, int _DOU, std::vector<int> _
 }
 
 
+bool PANSFEM::OptimizedSystem::ImportOptimizedElement(std::string _fname){
+	std::ifstream ifs(_fname);
+
+	if (!ifs.is_open()) {
+		std::cout << "Element file " << _fname << " open error!" << std::endl;
+		return false;
+	}
+
+	//.....一行読み飛ばす.....
+	std::string str0;
+	std::getline(ifs, str0);
+
+	while (!ifs.eof()) {
+		//.....一行分読み込む.....
+		std::string buf;
+		ifs >> buf;
+		std::istringstream sbuf(buf);
+		std::string str;
+
+		//.....IDを読み飛ばす.....
+		std::getline(sbuf, str, ',');
+
+		//.....対応する要素を指すポインタを最適化対象要素のリストに追加.....
+		std::getline(sbuf, str, ',');
+		this->poptimizedelements.push_back(this->pelements[stoi(str)]);
+	}
+
+	ifs.close();
+
+	return true;
+}
+
+
 void PANSFEM::OptimizedSystem::Schedule(){
 	//----------順解析の設定----------
 	for (auto pfield : this->pfields) {
@@ -34,10 +67,16 @@ void PANSFEM::OptimizedSystem::Schedule(){
 	}
 	
 	//----------設計変数の初期化----------
+	const int rholen = this->poptimizedelements.size() * this->plist.size();	//設計変数ベクトルの要素数
+	const int iterationmax = 10;				//最適化ループの最大反復数
+	const double valueconvergence = 1.0e-5;		//目的関数の収束判定値
+	const double lambdaconvergence = 1.0e-3;	//Lagrange乗数λの収束判定値
+	const double mvlmt = 0.15;					//ムーブリミット
+	const double iota = 0.75;					//ダンピング係数
 
 	//----------最適化の反復計算----------
 	double previousvalue = 0.0;		//1ステップ前の目的関数の値
-	for (int itr = 0; itr < 10; itr++) {
+	for (int itr = 0; itr < iterationmax; itr++) {
 		std::cout << "Iteration:" << itr << std::endl;
 
 		//----------順解析----------
@@ -58,7 +97,7 @@ void PANSFEM::OptimizedSystem::Schedule(){
 		std::cout << "\t" << "Objective function value:" << currentvalue << std::endl;
 
 		//----------収束判定----------
-		if (fabs(currentvalue - previousvalue) < 1.0e-5) {
+		if (fabs(currentvalue - previousvalue) < valueconvergence) {
 			//std::cout << "----------System is optimized----------" << std::endl;
 			//break;
 		}
@@ -66,14 +105,36 @@ void PANSFEM::OptimizedSystem::Schedule(){
 		//----------設計感度を計算----------
 		Eigen::VectorXd objectivesensitivity = this->pobjectives[0]->sensitivitis();
 		Eigen::VectorXd constraintsensitivity = this->pconstraints[0]->sensitivitis();
+
+		//----------現在の設計変数ベクトルを生成----------
+		Eigen::VectorXd rho = Eigen::VectorXd(rholen);
+		int pos = 0;
+		for (auto pelement : this->poptimizedelements) {
+			for (auto pi : this->plist) {
+				rho(pos) = pelement->parameters[pi];
+				pos++;
+			}
+		}
 				
 		//----------Lagrange乗数を二分探索----------
 		double lambda0 = 0.0, lambda1 = 1.0e4;
-		while ((lambda1 - lambda0)/(lambda1 + lambda0) > 1.0e-3) {
+		while ((lambda1 - lambda0)/(lambda1 + lambda0) > lambdaconvergence) {
 			double lambda = 0.5 * (lambda1 + lambda0);
-			Eigen::VectorXd B = pow((-objectivesensitivity.array() / constraintsensitivity.array()).array() / lambda, 0.75);
-			
-			
+			Eigen::VectorXd B = pow((-objectivesensitivity.array() / constraintsensitivity.array()).array() / lambda, iota)*rho.array();
+			Eigen::VectorXd rhonew = (((B.array().min(rho.array() + mvlmt)).array().min(Eigen::VectorXd::Ones(rholen).array())).array().max(rho.array() - mvlmt)).array().max(Eigen::VectorXd::Zero(rholen).array());
+			int pos2 = 0;
+			for (auto pelement : this->poptimizedelements) {
+				for (auto pi : this->plist) {
+					pelement->parameters[pi] = rhonew(pos2);
+					pos2++;
+				}
+			}
+			if (this->pconstraints[0]->value() > 0.8) {		//要修正
+				lambda0 = lambda;
+			}
+			else {
+				lambda1 = lambda;
+			}
 		}
 
 		//----------目的関数の値を更新----------
