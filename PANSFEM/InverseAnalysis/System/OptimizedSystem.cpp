@@ -68,8 +68,8 @@ void PANSFEM::OptimizedSystem::Schedule(){
 	
 	//----------設計変数の初期化----------
 	const int rholen = this->poptimizedelements.size() * this->plist.size();	//設計変数ベクトルの要素数
-	const int iterationmax = 10;				//最適化ループの最大反復数
-	const double valueconvergence = 1.0e-5;		//目的関数の収束判定値
+	const int iterationmax = 100;				//最適化ループの最大反復数
+	const double valueconvergence = 1.0e-3;		//目的関数の収束判定値
 	const double lambdaconvergence = 1.0e-3;	//Lagrange乗数λの収束判定値
 	const double mvlmt = 0.15;					//ムーブリミット
 	const double iota = 0.75;					//ダンピング係数
@@ -92,16 +92,18 @@ void PANSFEM::OptimizedSystem::Schedule(){
 		}
 		std::cout << " is done." << std::endl;
 		
-		//----------目的関数の計算----------
+		//----------目的関数，制約条件の計算----------
 		double currentvalue = this->pobjectives[0]->value();
 		std::cout << "\t" << "Objective function value:" << currentvalue << std::endl;
+		double constraintvalue = this->pconstraints[0]->value();
+		std::cout << "\t" << "Constraint function value:" << constraintvalue << std::endl;
 
 		//----------収束判定----------
 		if (fabs(currentvalue - previousvalue) < valueconvergence) {
 			//std::cout << "----------System is optimized----------" << std::endl;
 			//break;
 		}
-		
+	
 		//----------設計感度を計算----------
 		Eigen::VectorXd objectivesensitivity = this->pobjectives[0]->sensitivitis();
 		Eigen::VectorXd constraintsensitivity = this->pconstraints[0]->sensitivitis();
@@ -115,12 +117,12 @@ void PANSFEM::OptimizedSystem::Schedule(){
 				pos++;
 			}
 		}
-				
+						
 		//----------Lagrange乗数を二分探索----------
 		double lambda0 = 0.0, lambda1 = 1.0e4;
 		while ((lambda1 - lambda0)/(lambda1 + lambda0) > lambdaconvergence) {
 			double lambda = 0.5 * (lambda1 + lambda0);
-			Eigen::VectorXd B = pow((-objectivesensitivity.array() / constraintsensitivity.array()).array() / lambda, iota)*rho.array();
+			Eigen::VectorXd B = pow((-objectivesensitivity.array() / constraintsensitivity.array()).array() / lambda, iota).array()*rho.array();
 			Eigen::VectorXd rhonew = (((B.array().min(rho.array() + mvlmt)).array().min(Eigen::VectorXd::Ones(rholen).array())).array().max(rho.array() - mvlmt)).array().max(Eigen::VectorXd::Zero(rholen).array());
 			int pos2 = 0;
 			for (auto pelement : this->poptimizedelements) {
@@ -129,17 +131,21 @@ void PANSFEM::OptimizedSystem::Schedule(){
 					pos2++;
 				}
 			}
-			if (this->pconstraints[0]->value() > 0.8) {		//要修正
+			if (this->pconstraints[0]->value() > 0.0) {		//要修正
 				lambda0 = lambda;
 			}
 			else {
 				lambda1 = lambda;
 			}
 		}
+		std::cout << "\t" << "Lagrange value：" << lambda0 << std::endl;
 
 		//----------目的関数の値を更新----------
 		previousvalue = currentvalue;
 	}
+
+	//----------結果の出力----------
+	this->Export("Data/Output/model7");
 }
 
 

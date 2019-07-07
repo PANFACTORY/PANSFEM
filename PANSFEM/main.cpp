@@ -33,6 +33,7 @@
 
 //**********逆解析のサンプル用**********
 #include "InverseAnalysis/System/OptimizedSystem.h"
+#include "InverseAnalysis/Equation/Structure/OptimizedPlaneStrain/OptimizedPlaneStrain.h"
 #include "InverseAnalysis/Function/Structure/Compliance/Compliance.h"
 #include "InverseAnalysis/Function/Structure/Weight/Weight.h"
 
@@ -131,21 +132,34 @@ int main() {
 	*/
 
 	//----------トポロジー最適化モデル（曲がり梁）----------
+	//	パラメータ
+	//		0	:ρ		密度
+	//		1	:Emax	Young率最大値
+	//		2	:Emin	Young率最小値
+	//		3	:V		Poisson比
+	//		4	:t		厚さ
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//	設計パラメータ
+	//		0	:ρ		密度（パラメータ0番）
+	//------------------------------------------------------
 	std::string model7_path = "Data/Input/Optimize/CurveBeam/";
 	OptimizedSystem model7 = OptimizedSystem(2, 2, { 0 });
 
-	model7.ImportNode(model2_path + "Node.csv");
-	model7.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, model2_path + "Element.csv");
-	model7.ImportParameter({ 0, 1, 2 }, model2_path + "Parameter.csv");
+	model7.ImportNode(model7_path + "Node.csv");
+	model7.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, model7_path + "Element.csv");
+	model7.ImportParameter({ 0, 1, 2, 3, 4 }, model7_path + "Parameter.csv");
 	model7.ImportField<LinearField>({ 0, 1 });
-	model7.ImportEquation<PlaneStrain, GaussSquare>(0, {}, { 0, 1, 2 }, model2_path + "Equation.csv");
-	model7.ImportDirichlet(model2_path + "Dirichlet.csv");
-	model7.ImportNeumann(0, model2_path + "Neumann.csv");
+	model7.ImportEquation<OptimizedPlaneStrain, GaussSquare>(0, {}, { 0, 1, 2, 3, 4 }, model7_path + "Equation.csv");
+	model7.ImportDirichlet(model7_path + "Dirichlet.csv");
+	model7.ImportNeumann(0, model7_path + "Neumann.csv");
 
+	model7.ImportOptimizedElement(model7_path + "Equation.csv");
 	model7.ImportObjective<Compliance>({ 0, 1 }, { 0, 1, 2, 3, 4 });
-	model7.ImportElementToObjective<GaussSquare>(0, model2_path + "Equation.csv");
+	model7.ImportElementToObjective<GaussSquare>(0, model7_path + "Equation.csv");
 	model7.ImportConstraint<Weight>({}, { 0, 4 });
-	model7.ImportElementToConstraint<GaussSquare>(0, model2_path + "Equation.csv");
+	model7.ImportElementToConstraint<GaussSquare>(0, model7_path + "Equation.csv");
 	model7.Schedule();
 	return 0;
 }

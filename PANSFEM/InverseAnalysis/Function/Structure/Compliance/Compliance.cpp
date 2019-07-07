@@ -30,11 +30,11 @@ Eigen::VectorXd PANSFEM::Compliance::sensitivitis(){
 	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
-		double rho = 1.0;//pelement->parameters[this->refpf_to_us[0]];
-		double Emax = 1.0;//pelement->parameters[this->refpf_to_us[1]];
-		double Emin = 0.001;//pelement->parameters[this->refpf_to_us[2]];
-		double V = 0.3;// pelement->parameters[this->refpf_to_us[3]];
-		double t = 1.0;// pelement->parameters[this->refpf_to_us[4]];
+		double rho = pelement->parameters[this->refpf_to_us[0]];
+		double Emax = pelement->parameters[this->refpf_to_us[1]];
+		double Emin = pelement->parameters[this->refpf_to_us[2]];
+		double V = pelement->parameters[this->refpf_to_us[3]];
+		double t = pelement->parameters[this->refpf_to_us[4]];
 
 		//----------[D]の生成----------
 		double dE = 3.0 * (Emax - Emin)*pow(rho, 2.0);
@@ -72,11 +72,11 @@ double PANSFEM::Compliance::value(){
 
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
-		double rho = 1.0;//pelement->parameters[this->refpf_to_us[0]];
-		double Emax = 1.0;//pelement->parameters[this->refpf_to_us[1]];
-		double Emin = 0.001;//pelement->parameters[this->refpf_to_us[2]];
-		double V = 0.3;// pelement->parameters[this->refpf_to_us[3]];
-		double t = 1.0;// pelement->parameters[this->refpf_to_us[4]];
+		double rho = pelement->parameters[this->refpf_to_us[0]];
+		double Emax = pelement->parameters[this->refpf_to_us[1]];
+		double Emin = pelement->parameters[this->refpf_to_us[2]];
+		double V = pelement->parameters[this->refpf_to_us[3]];
+		double t = pelement->parameters[this->refpf_to_us[4]];
 
 		//----------[D]の生成----------
 		double E = (Emax - Emin)*pow(rho, 3.0) + Emin;

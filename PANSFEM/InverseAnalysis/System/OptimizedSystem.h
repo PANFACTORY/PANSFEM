@@ -51,18 +51,22 @@ namespace PANSFEM {
 
 	template<class F>
 	inline bool OptimizedSystem::ImportObjective(std::vector<int> _refulist, std::vector<int> _refplist){
-		this->pobjectives.push_back(new F(this->plist, _refulist, _refplist));
+		Function* tmpfunction = new F(this->plist, _refulist, _refplist);
+		tmpfunction->pelements = this->poptimizedelements;
+		this->pobjectives.push_back(tmpfunction);
 		return true;
 	}
 
 
 	template<class F>
 	inline bool OptimizedSystem::ImportConstraint(std::vector<int> _refulist, std::vector<int> _refplist){
-		this->pconstraints.push_back(new F(this->plist, _refulist, _refplist));
+		Function* tmpfunction = new F(this->plist, _refulist, _refplist);
+		tmpfunction->pelements = this->poptimizedelements;
+		this->pconstraints.push_back(tmpfunction);
 		return true;
 	}
 	
-	//↓要修正
+	
 	template<class I>
 	inline bool OptimizedSystem::ImportElementToObjective(int _id, std::string _fname){
 		std::ifstream ifs(_fname);
@@ -86,13 +90,9 @@ namespace PANSFEM {
 			//.....IDを読み飛ばす.....
 			std::getline(sbuf, str, ',');
 
-			//.....対応する要素を指すポインタを取得.....
+			//.....対応する要素に合わせて積分法を追加.....
 			std::getline(sbuf, str, ',');
-			Element* tmppelement = this->pelements[stoi(str)];
-
-			//.....目的関数に要素と積分法を追加.....
-			this->pobjectives[_id]->pelements.push_back(tmppelement);
-			this->pobjectives[_id]->pintegrations[tmppelement] = new I();
+			this->pobjectives[_id]->pintegrations[this->pelements[stoi(str)]] = new I();
 		}
 
 		ifs.close();
@@ -124,13 +124,9 @@ namespace PANSFEM {
 			//.....IDを読み飛ばす.....
 			std::getline(sbuf, str, ',');
 
-			//.....対応する要素を指すポインタを取得.....
+			//.....対応する要素に合わせて積分法を追加.....
 			std::getline(sbuf, str, ',');
-			Element* tmppelement = this->pelements[stoi(str)];
-
-			//.....目的関数に要素と積分法を追加.....
-			this->pconstraints[_id]->pelements.push_back(tmppelement);
-			this->pconstraints[_id]->pintegrations[tmppelement] = new I();
+			this->pconstraints[_id]->pintegrations[this->pelements[stoi(str)]] = new I();
 		}
 
 		ifs.close();

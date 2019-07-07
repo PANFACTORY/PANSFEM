@@ -24,7 +24,7 @@ Eigen::VectorXd PANSFEM::Weight::sensitivitis(){
 	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
-		double t = 1.0;// pelement->parameters[this->refpf_to_us[1]];
+		double t = pelement->parameters[this->refpf_to_us[1]];
 
 		//----------要素毎の重量感度計算----------
 		std::function<double(std::vector<double>) > f = [=](std::vector<double> _xi) {
@@ -44,12 +44,12 @@ double PANSFEM::Weight::value(){
 	double weight = 0.0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの代入----------
-		double rho = 1.0;// pelement->parameters[this->refpf_to_us[0]];
-		double t = 1.0;// pelement->parameters[this->refpf_to_us[1]];
+		double rho = pelement->parameters[this->refpf_to_us[0]];
+		double t = pelement->parameters[this->refpf_to_us[1]];
 
 		//----------要素毎の重量計算式----------
 		std::function<double(std::vector<double>) > f = [=](std::vector<double> _xi) {
-			return rho*pelement->Jacobian(_xi).determinant()*t;
+			return (rho - 0.5)*pelement->Jacobian(_xi).determinant()*t;			//ここでは例として重量制約50%とする。
 		};
 
 		//----------要素毎の積分計算----------
