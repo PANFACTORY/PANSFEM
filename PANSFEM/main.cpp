@@ -144,7 +144,7 @@ int main() {
 	//	設計パラメータ
 	//		0	:ρ		密度（パラメータ0番）
 	//------------------------------------------------------
-	std::string model7_path = "Data/Input/Optimize/CurveBeam/";
+	std::string model7_path = "Data/Input/Optimize/QuadrangleBeam/";
 	OptimizedSystem model7 = OptimizedSystem(2, 2, { 0 });
 
 	model7.ImportNode(model7_path + "Node.csv");
@@ -154,12 +154,15 @@ int main() {
 	model7.ImportEquation<OptimizedPlaneStrain, GaussSquare>(0, {}, { 0, 1, 2, 3, 4 }, model7_path + "Equation.csv");
 	model7.ImportDirichlet(model7_path + "Dirichlet.csv");
 	model7.ImportNeumann(0, model7_path + "Neumann.csv");
-
+	
 	model7.ImportOptimizedElement(model7_path + "Equation.csv");
 	model7.ImportObjective<Compliance>({ 0, 1 }, { 0, 1, 2, 3, 4 });
 	model7.ImportElementToObjective<GaussSquare>(0, model7_path + "Equation.csv");
 	model7.ImportConstraint<Weight>({}, { 0, 4 });
 	model7.ImportElementToConstraint<GaussSquare>(0, model7_path + "Equation.csv");
+	
 	model7.Schedule();
+	model7.Export("Data/Output/model7");
+
 	return 0;
 }
