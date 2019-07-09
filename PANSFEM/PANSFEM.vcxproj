@@ -131,11 +131,13 @@
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\Field\Field.cpp" />
     <ClCompile Include="DirectAnalysis\Field\LinearField\LinearField.cpp" />
+    <ClCompile Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square\GaussSquare.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Triangle\GaussTriangle.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Integration.cpp" />
     <ClCompile Include="DirectAnalysis\Neumann\Neumann.cpp" />
     <ClCompile Include="DirectAnalysis\Node\Node.cpp" />
+    <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle\Quadrangle.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Triangle\Triangle.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\ShapeFunction.cpp" />
@@ -158,11 +160,13 @@
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\Field\Field.h" />
     <ClInclude Include="DirectAnalysis\Field\LinearField\LinearField.h" />
+    <ClInclude Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square\GaussSquare.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Triangle\GaussTriangle.h" />
     <ClInclude Include="DirectAnalysis\Integration\Integration.h" />
     <ClInclude Include="DirectAnalysis\Neumann\Neumann.h" />
     <ClInclude Include="DirectAnalysis\Node\Node.h" />
+    <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle\Quadrangle.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Triangle\Triangle.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\ShapeFunction.h" />
@@ -174,6 +178,10 @@
     <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\Compliance.h" />
     <ClInclude Include="InverseAnalysis\Function\Structure\Weight\Weight.h" />
     <ClInclude Include="InverseAnalysis\System\OptimizedSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />
+    <None Include="Data\Input\TestFor1D2DConverter2\Node_modified.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

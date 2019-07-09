@@ -19,6 +19,7 @@
 
 #include "DirectAnalysis/ShapeFunction/Parametric/Triangle/Triangle.h"
 #include "DirectAnalysis/ShapeFunction/Parametric/Quadrangle/Quadrangle.h"
+#include "DirectAnalysis/ShapeFunction/Parametric/Quadrangle2/Quadrangle2.h"
 
 
 #include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
@@ -27,8 +28,9 @@
 #include "DirectAnalysis/Equation/Phenomenon/HeatTransfer/Dynamic2D/HeatTransferDynamic2D.h"
 
 
-#include "DirectAnalysis/Integration/Gauss/Square/GaussSquare.h"
 #include "DirectAnalysis/Integration/Gauss/Triangle/GaussTriangle.h"
+#include "DirectAnalysis/Integration/Gauss/Square/GaussSquare.h"
+#include "DirectAnalysis/Integration/Gauss/Square2/GaussSquare2.h"
 
 
 //**********逆解析のサンプル用**********
@@ -144,9 +146,9 @@ int main() {
 	//	設計パラメータ
 	//		0	:ρ		密度（パラメータ0番）
 	//------------------------------------------------------
-	std::string model7_path = "Data/Input/Optimize/QuadrangleBeam/";
+	/*std::string model7_path = "Data/Input/Optimize/QuadrangleBeam/";
 	OptimizedSystem model7 = OptimizedSystem(2, 2, { 0 });
-
+	
 	model7.ImportNode(model7_path + "Node.csv");
 	model7.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, model7_path + "Element.csv");
 	model7.ImportParameter({ 0, 1, 2, 3, 4 }, model7_path + "Parameter.csv");
@@ -163,6 +165,22 @@ int main() {
 	
 	model7.Schedule();
 	model7.Export("Data/Output/model7");
+	*/
+
+	//----------直梁（四角形要素）モデル----------
+	std::string model8_path = "Data/Input/Structure/QuadrangleBeam2/";
+	StaticSystem model8 = StaticSystem(2, 2);
+	model8.ImportNode(model8_path + "Node.csv");
+	model8.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, model8_path + "Element.csv");
+	model8.ImportParameter({ 0, 1, 2 }, model8_path + "Parameter.csv");
+	model8.ImportField<LinearField>({ 0, 1 });
+	model8.ImportEquation<PlaneStrain, GaussSquare2>(0, {}, { 0, 1, 2 }, model8_path + "Equation.csv");
+	model8.ImportDirichlet(model8_path + "Dirichlet.csv");
+	model8.ImportNeumann(0, model8_path + "Neumann.csv");
+	model8.Schedule();
+	model8.Show();
+	//model8.Export("Data/Output/model8");
+	
 
 	return 0;
 }

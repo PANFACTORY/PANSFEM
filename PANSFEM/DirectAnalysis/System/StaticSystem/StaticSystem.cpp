@@ -92,7 +92,7 @@ void PANSFEM::StaticSystem::Export(std::string _fname){
 	}
 
 	//----------節点の値を追加----------
-	fout << "\nPOINT_DATA\t" << this->pnodes.size() << "\n";
+	/*fout << "\nPOINT_DATA\t" << this->pnodes.size() << "\n";
 	for (int i = 0; i < this->pfields.size(); i++) {
 		//.....スカラー量.....
 		if (this->pfields[i]->uf_to_us.size() == 1) {
@@ -118,7 +118,7 @@ void PANSFEM::StaticSystem::Export(std::string _fname){
 				}
 			}
 		}
-	}
+	}*/
 	
 	fout.close();
 }
