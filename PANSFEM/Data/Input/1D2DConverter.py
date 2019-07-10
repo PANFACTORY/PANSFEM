@@ -50,7 +50,7 @@ class Quadrangle(Element):
         
 
 #**********メイン処理**********
-file_path = "TestFor1D2DConverter2/" #ファイルパス
+file_path = "Optimize/CurveBeam/" #ファイルパス
 DOF = 2                             #節点自由度
 #NOA = 2                             #一辺辺りに追加する節点数
 

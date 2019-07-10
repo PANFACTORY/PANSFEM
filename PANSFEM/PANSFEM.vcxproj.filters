@@ -28,6 +28,8 @@
     <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedPlaneStrain\OptimizedPlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.cpp" />
+    <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.cpp" />
+    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
@@ -56,6 +58,8 @@
     <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedPlaneStrain\OptimizedPlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.h" />
+    <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.h" />
+    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

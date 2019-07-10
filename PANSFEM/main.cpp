@@ -20,6 +20,7 @@
 #include "DirectAnalysis/ShapeFunction/Parametric/Triangle/Triangle.h"
 #include "DirectAnalysis/ShapeFunction/Parametric/Quadrangle/Quadrangle.h"
 #include "DirectAnalysis/ShapeFunction/Parametric/Quadrangle2/Quadrangle2.h"
+#include "DirectAnalysis/ShapeFunction/Parametric/Cubic/Cubic.h"
 
 
 #include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
@@ -146,14 +147,14 @@ int main() {
 	//	設計パラメータ
 	//		0	:ρ		密度（パラメータ0番）
 	//------------------------------------------------------
-	/*std::string model7_path = "Data/Input/Optimize/QuadrangleBeam/";
+	/*std::string model7_path = "Data/Input/Optimize/CurveBeam/";
 	OptimizedSystem model7 = OptimizedSystem(2, 2, { 0 });
 	
 	model7.ImportNode(model7_path + "Node.csv");
-	model7.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, model7_path + "Element.csv");
+	model7.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, model7_path + "Element.csv");
 	model7.ImportParameter({ 0, 1, 2, 3, 4 }, model7_path + "Parameter.csv");
 	model7.ImportField<LinearField>({ 0, 1 });
-	model7.ImportEquation<OptimizedPlaneStrain, GaussSquare>(0, {}, { 0, 1, 2, 3, 4 }, model7_path + "Equation.csv");
+	model7.ImportEquation<OptimizedPlaneStrain, GaussSquare2>(0, {}, { 0, 1, 2, 3, 4 }, model7_path + "Equation.csv");
 	model7.ImportDirichlet(model7_path + "Dirichlet.csv");
 	model7.ImportNeumann(0, model7_path + "Neumann.csv");
 	
@@ -169,7 +170,7 @@ int main() {
 
 	//----------直梁（四角形要素）モデル----------
 	std::string model8_path = "Data/Input/Structure/QuadrangleBeam2/";
-	StaticSystem model8 = StaticSystem(2, 2);
+	/*StaticSystem model8 = StaticSystem(2, 2);
 	model8.ImportNode(model8_path + "Node.csv");
 	model8.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, model8_path + "Element.csv");
 	model8.ImportParameter({ 0, 1, 2 }, model8_path + "Parameter.csv");
@@ -178,9 +179,18 @@ int main() {
 	model8.ImportDirichlet(model8_path + "Dirichlet.csv");
 	model8.ImportNeumann(0, model8_path + "Neumann.csv");
 	model8.Schedule();
-	model8.Show();
-	//model8.Export("Data/Output/model8");
-	
+	//model8.Show();
+	model8.Export("Data/Output/model8");
+	*/
+
+	//----------直梁（直方体要素）モデル----------
+	std::string model9_path = "Data/Input/Structure/CubicBeam/";
+	StaticSystem model9 = StaticSystem(3, 3);
+	model9.ImportNode(model9_path + "Node.csv");
+	model9.ImportElement<Cubic, Cubic, Cubic, Cubic>({ 0, 1 }, model9_path + "Element.csv");
+	model9.ImportParameter({ 0, 1 }, model9_path + "Parameter.csv");
+	model9.ImportField<LinearField>({ 0, 1, 2 });
+	model9.ImportEquation
 
 	return 0;
 }

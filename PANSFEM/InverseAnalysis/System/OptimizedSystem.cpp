@@ -69,7 +69,7 @@ void PANSFEM::OptimizedSystem::Schedule(){
 	//----------設計変数の初期化----------
 	const int rholen = this->poptimizedelements.size() * this->plist.size();	//設計変数ベクトルの要素数
 	const int iterationmax = 100;				//最適化ループの最大反復数
-	const double valueconvergence = 1.0e-5;		//目的関数の収束判定値
+	const double valueconvergence = 1.0e-6;		//目的関数の収束判定値
 	const double lambdaconvergence = 1.0e-3;	//Lagrange乗数λの収束判定値
 	const double mvlmt = 0.15;					//ムーブリミット
 	const double iota = 0.75;					//ダンピング係数
@@ -101,7 +101,7 @@ void PANSFEM::OptimizedSystem::Schedule(){
 		std::cout << "\t" << "Constraint function value:" << constraintvalue << std::endl;
 
 		//----------収束判定----------
-		if (fabs(currentvalue - previousvalue) < valueconvergence) {
+		if (fabs((currentvalue - previousvalue) / (currentvalue + previousvalue)) < valueconvergence) {
 			std::cout << "----------System is optimized----------" << std::endl;
 			break;
 		}

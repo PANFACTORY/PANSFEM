@@ -88,11 +88,11 @@ void PANSFEM::StaticSystem::Export(std::string _fname){
 	//要修正
 	fout << "\nCELL_TYPES\t" << this->pelements.size() << "\n";
 	for (auto pelement : this->pelements) {
-		fout << "9\n";
+		fout << "23\n";
 	}
 
 	//----------節点の値を追加----------
-	/*fout << "\nPOINT_DATA\t" << this->pnodes.size() << "\n";
+	fout << "\nPOINT_DATA\t" << this->pnodes.size() << "\n";
 	for (int i = 0; i < this->pfields.size(); i++) {
 		//.....スカラー量.....
 		if (this->pfields[i]->uf_to_us.size() == 1) {
@@ -118,7 +118,7 @@ void PANSFEM::StaticSystem::Export(std::string _fname){
 				}
 			}
 		}
-	}*/
+	}
 	
 	fout.close();
 }

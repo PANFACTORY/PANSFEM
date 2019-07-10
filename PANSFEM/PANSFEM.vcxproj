@@ -127,6 +127,7 @@
     <ClCompile Include="DirectAnalysis\Equation\Equation.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.cpp" />
+    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\Field\Field.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="DirectAnalysis\Integration\Integration.cpp" />
     <ClCompile Include="DirectAnalysis\Neumann\Neumann.cpp" />
     <ClCompile Include="DirectAnalysis\Node\Node.cpp" />
+    <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle\Quadrangle.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Triangle\Triangle.cpp" />
@@ -156,6 +158,7 @@
     <ClInclude Include="DirectAnalysis\Equation\Equation.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.h" />
+    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\Field\Field.h" />
@@ -166,6 +169,7 @@
     <ClInclude Include="DirectAnalysis\Integration\Integration.h" />
     <ClInclude Include="DirectAnalysis\Neumann\Neumann.h" />
     <ClInclude Include="DirectAnalysis\Node\Node.h" />
+    <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle\Quadrangle.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Triangle\Triangle.h" />
