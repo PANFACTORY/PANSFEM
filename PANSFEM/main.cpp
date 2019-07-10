@@ -27,11 +27,13 @@
 #include "DirectAnalysis/Equation/Phenomenon/HeatTransfer/Static2D/HeatTransferStatic2D.h"
 #include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrainWithHeat/PlaneStrainWithHeat.h"
 #include "DirectAnalysis/Equation/Phenomenon/HeatTransfer/Dynamic2D/HeatTransferDynamic2D.h"
+#include "DirectAnalysis/Equation/Phenomenon/Structure/IsotropicElastic/IsotropicElastic.h"
 
 
 #include "DirectAnalysis/Integration/Gauss/Triangle/GaussTriangle.h"
 #include "DirectAnalysis/Integration/Gauss/Square/GaussSquare.h"
 #include "DirectAnalysis/Integration/Gauss/Square2/GaussSquare2.h"
+#include "DirectAnalysis/Integration/Gauss/Cubic/GaussCubic.h"
 
 
 //**********ãtâêÕÇÃÉTÉìÉvÉãóp**********
@@ -187,10 +189,15 @@ int main() {
 	std::string model9_path = "Data/Input/Structure/CubicBeam/";
 	StaticSystem model9 = StaticSystem(3, 3);
 	model9.ImportNode(model9_path + "Node.csv");
-	model9.ImportElement<Cubic, Cubic, Cubic, Cubic>({ 0, 1 }, model9_path + "Element.csv");
+	model9.ImportElement<Cubic, Cubic, Cubic, Cubic>({ 0, 1, 2 }, model9_path + "Element.csv");
 	model9.ImportParameter({ 0, 1 }, model9_path + "Parameter.csv");
 	model9.ImportField<LinearField>({ 0, 1, 2 });
-	model9.ImportEquation
+	model9.ImportEquation<IsotropicElastic, GaussCubic>(0, {}, { 0, 1 }, model9_path + "Equation.csv");
+	model9.ImportDirichlet(model9_path + "Dirichlet.csv");
+	model9.ImportNeumann(0, model9_path + "Neumann.csv");
+	model9.Schedule();
+	//model9.Show();
+	model9.Export("Data/Output/model9");
 
 	return 0;
 }

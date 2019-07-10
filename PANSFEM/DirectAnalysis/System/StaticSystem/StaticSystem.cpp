@@ -88,7 +88,7 @@ void PANSFEM::StaticSystem::Export(std::string _fname){
 	//óvèCê≥
 	fout << "\nCELL_TYPES\t" << this->pelements.size() << "\n";
 	for (auto pelement : this->pelements) {
-		fout << "23\n";
+		fout << "12\n";
 	}
 
 	//----------êﬂì_ÇÃílÇí«â¡----------

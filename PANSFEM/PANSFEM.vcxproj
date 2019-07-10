@@ -132,6 +132,7 @@
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\Field\Field.cpp" />
     <ClCompile Include="DirectAnalysis\Field\LinearField\LinearField.cpp" />
+    <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square\GaussSquare.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Triangle\GaussTriangle.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\Field\Field.h" />
     <ClInclude Include="DirectAnalysis\Field\LinearField\LinearField.h" />
+    <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square\GaussSquare.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Triangle\GaussTriangle.h" />
