@@ -21,6 +21,7 @@
 #include "DirectAnalysis/ShapeFunction/Parametric/Quadrangle/Quadrangle.h"
 #include "DirectAnalysis/ShapeFunction/Parametric/Quadrangle2/Quadrangle2.h"
 #include "DirectAnalysis/ShapeFunction/Parametric/Cubic/Cubic.h"
+#include "DirectAnalysis/ShapeFunction/Parametric/Cubic2/Cubic2.h"
 
 
 #include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrain/PlaneStrain.h"
@@ -34,6 +35,7 @@
 #include "DirectAnalysis/Integration/Gauss/Square/GaussSquare.h"
 #include "DirectAnalysis/Integration/Gauss/Square2/GaussSquare2.h"
 #include "DirectAnalysis/Integration/Gauss/Cubic/GaussCubic.h"
+#include "DirectAnalysis/Integration/Gauss/Cubic2/GaussCubic2.h"
 
 
 //**********‹t‰ğÍ‚ÌƒTƒ“ƒvƒ‹—p**********

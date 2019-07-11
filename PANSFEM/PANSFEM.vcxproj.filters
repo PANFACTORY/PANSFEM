@@ -31,6 +31,8 @@
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.cpp" />
+    <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic2\Cubic2.cpp" />
+    <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic2\GaussCubic2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
@@ -62,6 +64,8 @@
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.h" />
+    <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic2\Cubic2.h" />
+    <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic2\GaussCubic2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

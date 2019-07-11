@@ -132,6 +132,7 @@
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\Field\Field.cpp" />
     <ClCompile Include="DirectAnalysis\Field\LinearField\LinearField.cpp" />
+    <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic2\GaussCubic2.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square\GaussSquare.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="DirectAnalysis\Integration\Integration.cpp" />
     <ClCompile Include="DirectAnalysis\Neumann\Neumann.cpp" />
     <ClCompile Include="DirectAnalysis\Node\Node.cpp" />
+    <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic2\Cubic2.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle\Quadrangle.cpp" />
@@ -164,6 +166,7 @@
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\Field\Field.h" />
     <ClInclude Include="DirectAnalysis\Field\LinearField\LinearField.h" />
+    <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic2\GaussCubic2.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square\GaussSquare.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="DirectAnalysis\Integration\Integration.h" />
     <ClInclude Include="DirectAnalysis\Neumann\Neumann.h" />
     <ClInclude Include="DirectAnalysis\Node\Node.h" />
+    <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic2\Cubic2.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle\Quadrangle.h" />
