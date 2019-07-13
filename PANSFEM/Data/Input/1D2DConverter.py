@@ -70,7 +70,7 @@ class Cubic(Element):
         
 
 #**********メイン処理**********
-file_path = "Structure/CubicBeam/" #ファイルパス
+file_path = "Structure/CubicBeam3/" #ファイルパス
 DOF = 3                             #節点自由度
 #NOA = 2                             #一辺辺りに追加する節点数
 
