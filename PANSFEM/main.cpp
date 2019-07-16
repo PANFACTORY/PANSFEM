@@ -29,6 +29,7 @@
 #include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrainWithHeat/PlaneStrainWithHeat.h"
 #include "DirectAnalysis/Equation/Phenomenon/HeatTransfer/Dynamic2D/HeatTransferDynamic2D.h"
 #include "DirectAnalysis/Equation/Phenomenon/Structure/IsotropicElastic/IsotropicElastic.h"
+#include "DirectAnalysis/Equation/StructuralElement/Beam2D/Beam2D.h"
 
 
 #include "DirectAnalysis/Integration/Gauss/Triangle/GaussTriangle.h"
@@ -111,7 +112,7 @@ int main() {
 
 	//----------熱はり曲げモデル----------
 	std::string model4_path = "Data/Input/HeatAndStructure/StaticHeatBeam/";
-	/*StaticSystem model4 = StaticSystem(2, 3);
+	StaticSystem model4 = StaticSystem(2, 3);
 	model4.ImportNode(model4_path + "Node.csv");
 	model4.ImportElement<Quadrangle, Quadrangle, Quadrangle, Quadrangle>({ 0, 1, 2 }, model4_path + "Element.csv");
 	model4.ImportParameter({ 0, 1, 2, 3, 4 }, model4_path + "Parameter.csv");
@@ -124,7 +125,7 @@ int main() {
 	model4.ImportNeumann(1, model4_path + "Neumann1.csv");
 	model4.Schedule();
 	model4.Export("Data/Output/model4");
-	*/
+	
 
 	//----------非定常熱伝導モデル----------
 	std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
@@ -140,7 +141,7 @@ int main() {
 	model5.Export("Data/Output/model5");
 	*/
 
-	//----------トポロジー最適化モデル（曲がり梁）----------
+	//----------トポロジー最適化モデル（2D曲がり梁）----------
 	//	パラメータ
 	//		0	:ρ		密度
 	//		1	:Emax	Young率最大値
@@ -157,7 +158,7 @@ int main() {
 	//	NB=5974
 	//------------------------------------------------------
 	std::string model7_path = "Data/Input/Optimize/QuadrangleBeam/";
-	OptimizedSystem model7 = OptimizedSystem(2, 2, { 0 });
+	/*OptimizedSystem model7 = OptimizedSystem(2, 2, { 0 });
 	
 	model7.ImportNode(model7_path + "Node.csv");
 	model7.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, model7_path + "Element.csv");
@@ -175,7 +176,7 @@ int main() {
 	
 	model7.Schedule();
 	model7.Export("Data/Output/model7");
-	
+	*/
 
 	//----------直梁（四角形要素）モデル----------
 	std::string model8_path = "Data/Input/Structure/QuadrangleBeam2/";
@@ -216,8 +217,8 @@ int main() {
 	//	N = 167680
 	//	NB= 10438
 	//	☞14GB
-	std::string model10_path = "Data/Input/Structure/CubicBeam2/";
-	/*StaticSystem model10 = StaticSystem(3, 3);
+	/*std::string model10_path = "Data/Input/Structure/CubicBeam2/";
+	StaticSystem model10 = StaticSystem(3, 3);
 	std::cout << "Import Node" << std::endl;
 	model10.ImportNode(model10_path + "Node.csv");
 	std::cout << "Import Element" << std::endl;
@@ -235,10 +236,61 @@ int main() {
 	std::cout << "Solve" << std::endl;
 	model10.Schedule();
 	std::cout << "Export" << std::endl;
-	//model9.Show();
+	//model10.Show();
 	model10.Export("Data/Output/model11");
-	std::cout << "--------------------Finish--------------------" << std::endl;
 	*/
+
+	//----------二次元ラーメンモデル----------
+	std::string model12_path = "Data/Input/StructuralElement/Ramen/";
+	/*StaticSystem model12 = StaticSystem(2, 3);
+	model12.ImportNode(model12_path + "Node.csv");
+	model12.ImportElement<Cubic, Cubic, Cubic, Cubic>({ 0, 1, 2 }, model12_path + "Element.csv");
+	model12.ImportParameter({ 0, 1, 2 }, model12_path + "Parameter.csv");
+	model12.ImportField<LinearField>({ 0, 1, 2 });
+	model12.ImportEquation<Beam2D, GaussCubic>(0, {}, { 0, 1, 2 }, model12_path + "Equation.csv");
+	model12.ImportDirichlet(model12_path + "Dirichlet.csv");
+	model12.ImportNeumann(0, model12_path + "Neumann.csv");
+	model12.Schedule();
+	model12.Show();
+	//model12.Export("Data/Output/model12");
+	*/
+
+	//----------トポロジー最適化モデル（2D曲がり梁）----------
+	//	パラメータ
+	//		0	:ρ		密度
+	//		1	:Emax	Young率最大値
+	//		2	:Emin	Young率最小値
+	//		3	:V		Poisson比
+	//		4	:t		厚さ
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//	設計パラメータ
+	//		0	:ρ		密度（パラメータ0番）
+	//
+	//	N=59004
+	//	NB=5974
+	//------------------------------------------------------
+	std::string model13_path = "Data/Input/Optimize/Bridge/";
+	/*OptimizedSystem model13 = OptimizedSystem(2, 2, { 0 });
+	//StaticSystem model13 = StaticSystem(2, 2);
+	model13.ImportNode(model13_path + "Node2.csv");
+	model13.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, model13_path + "Element2.csv");
+	model13.ImportParameter({ 0, 1, 2, 3, 4 }, model13_path + "Parameter.csv");
+	model13.ImportField<LinearField>({ 0, 1 });
+	model13.ImportEquation<OptimizedPlaneStrain, GaussSquare2>(0, {}, { 0, 1, 2, 3, 4 }, model13_path + "Equation.csv");
+	model13.ImportDirichlet(model13_path + "Dirichlet.csv");
+	model13.ImportNeumann(0, model13_path + "Neumann.csv");
 	
+	model13.ImportOptimizedElement(model13_path + "Equation.csv");
+	model13.ImportObjective<Compliance>({ 0, 1 }, { 0, 1, 2, 3, 4 });
+	model13.ImportElementToObjective<GaussSquare2>(0, model13_path + "Equation.csv");
+	model13.ImportConstraint<Weight>({}, { 0, 4 });
+	model13.ImportElementToConstraint<GaussSquare2>(0, model13_path + "Equation.csv");
+	
+	model13.Schedule();
+	model13.Export("Data/Output/model13");
+	*/
+	std::cout << "--------------------Finish--------------------" << std::endl;
 	return 0;
 }

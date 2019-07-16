@@ -69,7 +69,7 @@ void PANSFEM::OptimizedSystem::Schedule(){
 	//----------設計変数の初期化----------
 	const int rholen = this->poptimizedelements.size() * this->plist.size();	//設計変数ベクトルの要素数
 	const int iterationmax = 100;				//最適化ループの最大反復数
-	const double valueconvergence = 1.0e-6;		//目的関数の収束判定値
+	const double valueconvergence = 1.0e-5;		//目的関数の収束判定値
 	const double lambdaconvergence = 1.0e-3;	//Lagrange乗数λの収束判定値
 	const double mvlmt = 0.15;					//ムーブリミット
 	const double iota = 0.75;					//ダンピング係数
@@ -119,13 +119,14 @@ void PANSFEM::OptimizedSystem::Schedule(){
 				pos++;
 			}
 		}
-						
+		
 		//----------Lagrange乗数を二分探索----------
-		double lambda0 = 0.0, lambda1 = 1.0e4;
+		double lambda0 = 1.0e-10, lambda1 = 1.0e4;
 		while ((lambda1 - lambda0)/(lambda1 + lambda0) > lambdaconvergence) {
 			double lambda = 0.5 * (lambda1 + lambda0);
 			Eigen::VectorXd B = pow((-objectivesensitivity.array() / constraintsensitivity.array()).array() / lambda, iota).array()*rho.array();
-			Eigen::VectorXd rhonew = (((B.array().min(rho.array() * (1.0 + mvlmt))).array().min(Eigen::VectorXd::Ones(rholen).array())).array().max(rho.array() * (1.0 - mvlmt))).array().max(Eigen::VectorXd::Constant(rholen, 1.0e-10).array());
+			//Eigen::VectorXd rhonew = (((B.array().min(rho.array() + mvlmt)).array().min(Eigen::VectorXd::Ones(rholen).array())).array().max(rho.array() - mvlmt)).array().max(Eigen::VectorXd::Constant(rholen, 1.0e-10).array());
+			Eigen::VectorXd rhonew = (((B.array().min(rho.array() + mvlmt)).array().min(Eigen::VectorXd::Ones(rholen).array())).array().max(rho.array() - mvlmt)).array().max(Eigen::VectorXd::Constant(rholen, 1.0e-10).array());
 			int pos2 = 0;
 			for (auto pelement : this->poptimizedelements) {
 				for (auto pi : this->plist) {
@@ -141,7 +142,7 @@ void PANSFEM::OptimizedSystem::Schedule(){
 			}
 		}
 		std::cout << "\t" << "Lagrange value：" << lambda0 << std::endl;
-
+		
 		//----------目的関数の値を更新----------
 		previousvalue = currentvalue;
 	}
@@ -206,6 +207,34 @@ void PANSFEM::OptimizedSystem::Export(std::string _fname){
 
 	for (auto pelement : this->pelements) {
 		fout << pelement->parameters[this->plist[0]] << std::endl;
+	}
+
+	fout << "\nPOINT_DATA\t" << this->pnodes.size() << "\n";
+	for (int i = 0; i < this->pfields.size(); i++) {
+		//.....スカラー量.....
+		if (this->pfields[i]->uf_to_us.size() == 1) {
+			fout << "SCALARS u" << i << " float\n";
+			fout << "LOOKUP_TABLE default\n";
+
+			for (auto pnode : this->pnodes) {
+				fout << pnode->u[this->pfields[i]->uf_to_us[0]] << std::endl;
+			}
+		}
+
+		//.....ベクトル量.....
+		else {
+			fout << "VECTORS u" << i << " float\n";
+			if (this->pfields[i]->uf_to_us.size() == 2) {
+				for (auto pnode : this->pnodes) {
+					fout << pnode->u[this->pfields[i]->uf_to_us[0]] << "\t" << pnode->u[this->pfields[i]->uf_to_us[1]] << "\t" << "0" << std::endl;
+				}
+			}
+			else if (this->pfields[i]->uf_to_us.size() == 3) {
+				for (auto pnode : this->pnodes) {
+					fout << pnode->u[this->pfields[i]->uf_to_us[0]] << "\t" << pnode->u[this->pfields[i]->uf_to_us[1]] << "\t" << pnode->u[this->pfields[i]->uf_to_us[2]] << std::endl;
+				}
+			}
+		}
 	}
 
 	fout.close();

@@ -142,8 +142,6 @@ bool PANSFEM::System::ImportDirichlet(std::string _fname){
 		Node* pnode = this->pnodes[stoi(str)];
 
 		//.....ß“_‚Ì]‘®•Ï”‚Ì’l‚ğ“Ç‚İ‚Ş.....
-		std::vector<bool> is_fixed = std::vector<bool>(this->DOU, false);
-		std::vector<double> fixedvalue = std::vector<double>(this->DOU, false);
 		for (int i = 0; i < this->DOU; i++) {
 			std::getline(sbuf, str, ',');
 			if (str != "free") {

@@ -39,10 +39,10 @@ Eigen::VectorXd PANSFEM::Compliance::sensitivitis(){
 		//----------[D]の生成----------
 		double dE = 3.0 * (Emax - Emin)*pow(rho, 2.0);
 		Eigen::MatrixXd dD = Eigen::MatrixXd(3, 3);
-		dD(0, 0) = 1.0;	dD(0, 1) = V;	dD(0, 2) = 0.0;
-		dD(1, 0) = V;	dD(1, 1) = 1.0;	dD(1, 2) = 0.0;
-		dD(2, 0) = 0.0;	dD(2, 1) = 0.0;	dD(2, 2) = 0.5*(1.0 - V);
-		dD *= dE / (1.0 - pow(V, 2.0));
+		dD(0, 0) = 1.0 - V;	dD(0, 1) = V;		dD(0, 2) = 0.0;
+		dD(1, 0) = V;		dD(1, 1) = 1.0 - V;	dD(1, 2) = 0.0;
+		dD(2, 0) = 0.0;		dD(2, 1) = 0.0;		dD(2, 2) = (1.0 - 2.0*V) / 2.0;
+		dD *= dE / ((1.0 - 2.0*V)*(1.0 + V));
 
 		//----------要素毎のコンプライアンスを計算----------
 		std::function<Eigen::VectorXd(std::vector<double>) > f = [=](std::vector<double> _xi) {
@@ -81,11 +81,11 @@ double PANSFEM::Compliance::value(){
 		//----------[D]の生成----------
 		double E = (Emax - Emin)*pow(rho, 3.0) + Emin;
 		Eigen::MatrixXd D = Eigen::MatrixXd(3, 3);
-		D(0, 0) = 1.0;	D(0, 1) = V;	D(0, 2) = 0.0;
-		D(1, 0) = V;	D(1, 1) = 1.0;	D(1, 2) = 0.0;
-		D(2, 0) = 0.0;	D(2, 1) = 0.0;	D(2, 2) = 0.5*(1.0 - V);
-		D *= E / (1.0 - pow(V, 2.0));
- 
+		D(0, 0) = 1.0 - V;	D(0, 1) = V;		D(0, 2) = 0.0;
+		D(1, 0) = V;		D(1, 1) = 1.0 - V;	D(1, 2) = 0.0;
+		D(2, 0) = 0.0;		D(2, 1) = 0.0;		D(2, 2) = (1.0 - 2.0*V) / 2.0;
+		D *= E / ((1.0 - 2.0*V)*(1.0 + V));
+
 		//----------要素毎のコンプライアンスを計算----------
 		std::function<double(std::vector<double>) > f = [=](std::vector<double> _xi) {
 			Eigen::MatrixXd B = pelement->dTrialdx(this->refuf_to_us, _xi);

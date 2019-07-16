@@ -34,10 +34,10 @@ Eigen::MatrixXd PANSFEM::OptimizedPlaneStrain::GetKe(std::vector<double> _xi){
 	//----------[D]‚Ì¶¬----------
 	double E = (Emax - Emin)*pow(rho, 3.0) + Emin;
 	Eigen::MatrixXd D = Eigen::MatrixXd(3, 3);
-	D(0, 0) = 1.0;	D(0, 1) = V;	D(0, 2) = 0.0;
-	D(1, 0) = V;	D(1, 1) = 1.0;	D(1, 2) = 0.0;
-	D(2, 0) = 0.0;	D(2, 1) = 0.0;	D(2, 2) = 0.5*(1.0 - V);
-	D *= E / (1.0 - pow(V, 2.0));
+	D(0, 0) = 1.0 - V;	D(0, 1) = V;		D(0, 2) = 0.0;
+	D(1, 0) = V;		D(1, 1) = 1.0 - V;	D(1, 2) = 0.0;
+	D(2, 0) = 0.0;		D(2, 1) = 0.0;		D(2, 2) = (1.0 - 2.0*V) / 2.0;
+	D *= E / ((1.0 - 2.0*V)*(1.0 + V));
 	
 	Eigen::MatrixXd B = A * this->pelement->dTrialdx(this->ueq_to_us, _xi);
 	return B.transpose() * D * B * t * this->pelement->Jacobian(_xi).determinant();

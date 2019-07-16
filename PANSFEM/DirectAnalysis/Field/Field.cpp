@@ -177,7 +177,7 @@ void PANSFEM::Field::SolveEquation(){
 			int Ki = this->Kmap[pnodei].first;						//全体―節点方程式の行インデックス
 			for (auto usi : this->uf_to_us) {
 				if (pnodei->us_to_un.find(usi) != pnodei->us_to_un.end()) {
-
+					
 					//***Dirichlet条件が課されていないとき***
 					if (!pnodei->is_ufixed[pnodei->us_to_un[usi]]) {
 						//.....係数行列.....
@@ -191,15 +191,15 @@ void PANSFEM::Field::SolveEquation(){
 										Kj++;
 									}
 									Kej++;
-								}
+								}				
 							}
 						}
 						//.....係数ベクトル.....
 						F[Ki] += pequation->Fe[Kei];
 						Ki++;
 					}
-
-					//***Dirichlet条件が課されているとき***
+									   					 
+					//***Dirichlet条件が課されているとき***					
 					else {
 						int Kej = 0;								//要素―節点方程式の列インデックス
 						for (auto pnodej : pequation->pelement->pnodes) {
@@ -207,7 +207,7 @@ void PANSFEM::Field::SolveEquation(){
 							for (auto usj : this->uf_to_us) {
 								if (pnodej->us_to_un.find(usj) != pnodej->us_to_un.end()) {
 									if (!pnodej->is_ufixed[pnodej->us_to_un[usj]]) {
-										F[Kj] -= pequation->Ke(Kei, Kej) * pnodei->u(pnodej->us_to_un[usj]);
+										F[Kj] -= pequation->Ke(Kej, Kei) * pnodei->u(pnodei->us_to_un[usi]);
 										Kj++;
 									}
 									Kej++;
@@ -216,6 +216,12 @@ void PANSFEM::Field::SolveEquation(){
 						}
 					}
 
+
+
+
+
+
+					
 					Kei++;
 				}
 			}

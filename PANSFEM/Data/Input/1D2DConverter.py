@@ -70,8 +70,8 @@ class Cubic(Element):
         
 
 #**********メイン処理**********
-file_path = "Structure/CubicBeam3/" #ファイルパス
-DOF = 3                             #節点自由度
+file_path = "Optimize/Bridge/" #ファイルパス
+DOF = 2                             #節点自由度
 #NOA = 2                             #一辺辺りに追加する節点数
 
 #----------ファイルから節点生成----------
@@ -92,7 +92,7 @@ with open(file_path + "Element.csv", 'r') as gp:
         line = gp.readline()
         if(not line):
             break
-        elements.append(Cubic(line))
+        elements.append(Quadrangle(line))
 
 #----------節点の追加----------
 for i in range(len(elements)):

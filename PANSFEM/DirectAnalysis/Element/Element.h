@@ -25,7 +25,7 @@ namespace PANSFEM {
 		Element(std::vector<Node*> _pnodes, std::vector<int> _ulist);
 
 
-		const int NON;									//要素を構成する節点数（＝形状関数の数）
+		const int NON;									//要素を構成する節点数
 
 
 		std::vector<Node*> pnodes;						//要素を構成する節点を指すポインタ
