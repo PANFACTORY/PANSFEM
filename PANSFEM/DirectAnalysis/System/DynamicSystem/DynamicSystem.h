@@ -17,13 +17,13 @@ namespace PANSFEM {
 	public:
 		DynamicSystem();
 		virtual ~DynamicSystem();
-		DynamicSystem(int _DOX, int _DOU, int _INC);
+		DynamicSystem(int _DOX, int _DOU, int _INC, std::string _fname);
 
 
-		const int INC;		//インクリメント数
+		const int INC;				//インクリメント数
+		const std::string FNAME;	//出力ファイル名のヘッダ部分
 
 
 		void Schedule();
-		void Export(std::string _fname);
 	};
 }

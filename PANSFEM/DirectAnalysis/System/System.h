@@ -36,7 +36,7 @@ namespace PANSFEM {
 
 		bool ImportNode(std::string _fname);				//節点を追加
 		template<class ...Ns>
-		bool ImportElement(std::vector<int> _ulist, std::string _fname);	//要素を追加
+		bool ImportElement(std::vector<int> _ulist, int _paraviewtype, std::string _fname);						//要素を追加
 		bool ImportParameter(std::vector<int> _plist, std::string _fname);	//要素パラメータを追加
 		template<class F>
 		bool ImportField(std::vector<int> _ulist);			//場を追加
@@ -48,7 +48,7 @@ namespace PANSFEM {
 
 		virtual void Schedule() = 0;						//場の方程式を解く順番，タイミングを管理
 		virtual void Show();								//結果を標準出力に掃出す
-		virtual void Export(std::string _fname) = 0;		//結果をVTKファイルに書き出す	
+		virtual void Export(std::string _fname);			//結果をVTKファイルに書き出す	
 				
 
 	protected:
@@ -60,7 +60,7 @@ namespace PANSFEM {
 
 
 	template<class ...Ns>
-	inline bool System::ImportElement(std::vector<int> _ulist, std::string _fname) {
+	inline bool System::ImportElement(std::vector<int> _ulist, int _paraviewtype, std::string _fname) {
 		std::ifstream ifs(_fname);
 
 		if (!ifs.is_open()) {
@@ -94,7 +94,7 @@ namespace PANSFEM {
 			}
 
 			//.....節点を追加.....
-			Element *tmppelement = new Element(tmppnodes, _ulist);
+			Element *tmppelement = new Element(tmppnodes, _ulist, _paraviewtype);
 			tmppelement->SetShapeFunction<Ns...>();
 			this->pelements.push_back(tmppelement);
 		}

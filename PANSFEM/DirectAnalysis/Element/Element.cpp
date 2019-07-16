@@ -9,7 +9,7 @@
 #include "Element.h"
 
 
-PANSFEM::Element::Element() : NON(0){
+PANSFEM::Element::Element() : NON(0), PARAVIEWTYPE(0){
 	this->pmapping = nullptr;
 }
 
@@ -22,7 +22,7 @@ PANSFEM::Element::~Element(){
 }
 
 
-PANSFEM::Element::Element(std::vector<Node*> _pnodes, std::vector<int> _ulist) : NON(_pnodes.size()){
+PANSFEM::Element::Element(std::vector<Node*> _pnodes, std::vector<int> _ulist, int _paraviewtype) : NON(_pnodes.size()), PARAVIEWTYPE(_paraviewtype){
 	//----------節点を指すポインタの代入----------
 	this->pnodes = _pnodes;
 

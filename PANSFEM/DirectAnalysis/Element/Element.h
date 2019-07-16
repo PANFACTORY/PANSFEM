@@ -22,10 +22,11 @@ namespace PANSFEM {
 	public:
 		Element();
 		virtual ~Element();
-		Element(std::vector<Node*> _pnodes, std::vector<int> _ulist);
+		Element(std::vector<Node*> _pnodes, std::vector<int> _ulist, int _paraviewtype);
 
 
 		const int NON;									//要素を構成する節点数
+		const int PARAVIEWTYPE;							//Paraviewで描画するための要素タイプ番号
 
 
 		std::vector<Node*> pnodes;						//要素を構成する節点を指すポインタ

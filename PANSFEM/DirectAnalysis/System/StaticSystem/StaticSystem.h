@@ -21,6 +21,5 @@ namespace PANSFEM {
 
 
 		void Schedule();						//場の方程式を解く順番，タイミングを管理
-		void Export(std::string _fname);		//結果をVTKファイルに出力
 	};
 }
