@@ -131,8 +131,10 @@
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\StructuralElement\Beam2D\Beam2D.cpp" />
+    <ClCompile Include="DirectAnalysis\Field\EigenvalueField\EigenvalueField.cpp" />
     <ClCompile Include="DirectAnalysis\Field\Field.cpp" />
     <ClCompile Include="DirectAnalysis\Field\LinearField\LinearField.cpp" />
+    <ClCompile Include="DirectAnalysis\Field\NonLinearField\NonLinearField.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic2\GaussCubic2.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.cpp" />
@@ -166,8 +168,10 @@
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\Equation\StructuralElement\Beam2D\Beam2D.h" />
+    <ClInclude Include="DirectAnalysis\Field\EigenvalueField\EigenvalueField.h" />
     <ClInclude Include="DirectAnalysis\Field\Field.h" />
     <ClInclude Include="DirectAnalysis\Field\LinearField\LinearField.h" />
+    <ClInclude Include="DirectAnalysis\Field\NonLinearField\NonLinearField.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic2\GaussCubic2.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.h" />

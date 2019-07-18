@@ -24,7 +24,5 @@ namespace PANSFEM {
 
 
 		void SetEquation();			//—v‘f\ß“_•û’ö®‚ğİ’è
-		virtual Eigen::MatrixXd GetKe(std::vector<double> _xi);
-		virtual Eigen::VectorXd GetFe(std::vector<double> _xi);
 	};
 }

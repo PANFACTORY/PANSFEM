@@ -215,12 +215,6 @@ void PANSFEM::Field::SolveEquation(){
 							}
 						}
 					}
-
-
-
-
-
-
 					
 					Kei++;
 				}

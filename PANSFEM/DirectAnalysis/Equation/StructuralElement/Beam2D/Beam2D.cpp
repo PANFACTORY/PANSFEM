@@ -55,13 +55,3 @@ void PANSFEM::Beam2D::SetEquation(){
 	this->Ke = T.transpose() * Kel * T;
 	this->Fe = Eigen::VectorXd::Zero(6);
 }
-
-
-Eigen::MatrixXd PANSFEM::Beam2D::GetKe(std::vector<double> _xi){
-	return Eigen::MatrixXd();
-}
-
-
-Eigen::VectorXd PANSFEM::Beam2D::GetFe(std::vector<double> _xi){
-	return Eigen::VectorXd();
-}

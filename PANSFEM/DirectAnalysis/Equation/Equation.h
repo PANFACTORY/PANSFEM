@@ -41,8 +41,6 @@ namespace PANSFEM {
 		Eigen::VectorXd Fe;	//要素―節点方程式の係数ベクトル
 
 
-		virtual void SetEquation();			//要素―節点方程式を設定
-		virtual Eigen::MatrixXd GetKe(std::vector<double> _xi) = 0;
-		virtual Eigen::VectorXd GetFe(std::vector<double> _xi) = 0;
+		virtual void SetEquation() = 0;		//要素―節点方程式を設定
 	};
 }

@@ -38,14 +38,3 @@ PANSFEM::Equation::Equation(Element * _pelement, std::vector<int> _ulist, std::v
 		std::cout << "Error in Equation" << std::endl;
 	}
 }
-
-
-void PANSFEM::Equation::SetEquation(){
-	//----------[Ke]‚ðŒvŽZ----------
-	std::function<Eigen::MatrixXd(std::vector<double>)> ke = [&](std::vector<double> _xi) {return GetKe(_xi); };
-	this->Ke = this->pintegration->Integrate(ke);
-
-	//----------{Fe}‚ðŒvŽZ----------
-	std::function<Eigen::VectorXd(std::vector<double>)> fe = [&](std::vector<double> _xi) {return GetFe(_xi); };
-	this->Fe = this->pintegration->Integrate(fe);
-}

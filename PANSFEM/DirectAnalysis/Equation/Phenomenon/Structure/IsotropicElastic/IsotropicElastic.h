@@ -23,11 +23,6 @@ namespace PANSFEM {
 		IsotropicElastic(Element *_pelement, std::vector<int> _ulist, std::vector<int> _refulist, std::vector<int> _plist, Integration* _pintegration);
 
 
-		double E;	//要素のYoung率
-		double V;	//要素のPoisson比
-		
-
-		virtual Eigen::MatrixXd GetKe(std::vector<double> _xi);
-		virtual Eigen::VectorXd GetFe(std::vector<double> _xi);
+		void SetEquation();			//要素―節点方程式を設定
 	};
 }

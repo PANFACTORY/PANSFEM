@@ -23,12 +23,6 @@ namespace PANSFEM {
 		PlaneStrain(Element *_pelement, std::vector<int> _ulist, std::vector<int> _refulist, std::vector<int> _plist, Integration* _pintegration);
 
 
-		double E;	//—v‘f‚ÌYoung—¦
-		double V;	//—v‘f‚ÌPoisson”ä
-		double t;	//—v‘f‚ÌŒú‚³
-
-
-		virtual Eigen::MatrixXd GetKe(std::vector<double> _xi);
-		virtual Eigen::VectorXd GetFe(std::vector<double> _xi);
+		void SetEquation();			//—v‘f\ß“_•û’ö®‚ğİ’è
 	};
 }

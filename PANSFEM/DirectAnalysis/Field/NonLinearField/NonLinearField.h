@@ -1,5 +1,5 @@
 //*****************************************************************************
-//Title		:PANSFEM/DirectAnalysis/Field/LinearField/LinearField.h
+//Title		:PANSFEM/DirectAnalysis/Field/NonLinearField/NonLinearField.h
 //Author	:Tanabe Yuta
 //Date		:2019/06/12
 //Copyright	:(C)2019 TanabeYuta
@@ -7,19 +7,19 @@
 
 
 #pragma once
-#include <vector>
-
-
 #include "../Field.h"
 
 
 namespace PANSFEM {
-	class LinearField : 
+	class NonLinearField :
 		public Field
 	{
 	public:
-		LinearField();
-		virtual ~LinearField();
-		LinearField(std::vector<int> _ulist);
+		NonLinearField();
+		virtual ~NonLinearField();
+		NonLinearField(std::vector<int> _ulist);
+
+
+		void SolveEquation();			//全体―節点方程式を解く（非線形連立方程式）
 	};
 }

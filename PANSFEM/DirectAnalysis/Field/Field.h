@@ -16,6 +16,9 @@
 #include "../Neumann/Neumann.h"
 
 
+
+
+
 namespace PANSFEM {
 	class Field
 	{
@@ -37,8 +40,7 @@ namespace PANSFEM {
 		void Initialize();						//場に属する要素、節点を指すポインタを集める
 		void MakeKmap();						//Kmapの作成
 		void GetBandwidth();					//バンド幅を計算
-		void SolveEquation();					//全体―節点方程式を解く（連立方程式）
-		//void SolveEigen();					//全体―節点方程式を解く（固有値問題）
+		virtual void SolveEquation();			//全体―節点方程式を解く（線形連立方程式）
 		
 
 		std::vector<Equation*> pequations;		//場を記述する要素―節点方程式を指すポインタ

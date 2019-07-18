@@ -3,10 +3,8 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DirectAnalysis\Element\Element.cpp" />
-    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
-    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Equation.cpp" />
     <ClCompile Include="DirectAnalysis\Field\LinearField\LinearField.cpp" />
     <ClCompile Include="DirectAnalysis\Field\Field.cpp" />
@@ -25,22 +23,24 @@
     <ClCompile Include="InverseAnalysis\Function\Function.cpp" />
     <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\Compliance.cpp" />
     <ClCompile Include="InverseAnalysis\Function\Structure\Weight\Weight.cpp" />
-    <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedPlaneStrain\OptimizedPlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.cpp" />
-    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic2\Cubic2.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Cubic2\GaussCubic2.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\StructuralElement\Beam2D\Beam2D.cpp" />
+    <ClCompile Include="DirectAnalysis\Field\EigenvalueField\EigenvalueField.cpp" />
+    <ClCompile Include="DirectAnalysis\Field\NonLinearField\NonLinearField.cpp" />
+    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.cpp" />
+    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.cpp" />
+    <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedPlaneStrain\OptimizedPlaneStrain.cpp" />
+    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
-    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
-    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.h" />
     <ClInclude Include="DirectAnalysis\Equation\Equation.h" />
     <ClInclude Include="DirectAnalysis\Field\LinearField\LinearField.h" />
     <ClInclude Include="DirectAnalysis\Field\Field.h" />
@@ -59,15 +59,19 @@
     <ClInclude Include="InverseAnalysis\Function\Function.h" />
     <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\Compliance.h" />
     <ClInclude Include="InverseAnalysis\Function\Structure\Weight\Weight.h" />
-    <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedPlaneStrain\OptimizedPlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square2\GaussSquare2.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.h" />
-    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic\GaussCubic.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic2\Cubic2.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Cubic2\GaussCubic2.h" />
     <ClInclude Include="DirectAnalysis\Equation\StructuralElement\Beam2D\Beam2D.h" />
+    <ClInclude Include="DirectAnalysis\Field\EigenvalueField\EigenvalueField.h" />
+    <ClInclude Include="DirectAnalysis\Field\NonLinearField\NonLinearField.h" />
+    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.h" />
+    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.h" />
+    <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedPlaneStrain\OptimizedPlaneStrain.h" />
+    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

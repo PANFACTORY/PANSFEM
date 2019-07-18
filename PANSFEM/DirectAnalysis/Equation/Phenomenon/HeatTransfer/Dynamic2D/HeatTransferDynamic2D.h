@@ -19,16 +19,8 @@ namespace PANSFEM {
 		virtual ~HeatTransferDynamic2D();
 		HeatTransferDynamic2D(Element *_pelement, std::vector<int> _ulist, std::vector<int> _refulist, std::vector<int> _plist, Integration* _pintegration);
 	
-	
-		double rho;
-		double c;
-		double k;
-		double dt;
-		double theta;
 
-
-		Eigen::MatrixXd GetKe(std::vector<double> _xi);
-		Eigen::VectorXd GetFe(std::vector<double> _xi);
+		void SetEquation();			//—v‘f\ß“_•û’ö®‚ğİ’è
 	};
 }
 

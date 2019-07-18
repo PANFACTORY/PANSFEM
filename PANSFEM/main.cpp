@@ -129,8 +129,8 @@ int main() {
 	*/
 
 	//----------非定常熱伝導モデル----------
-	/*std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
-	DynamicSystem model5 = DynamicSystem(2, 1, 1000, "Data/Output/model5/model5");
+	std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
+	/*DynamicSystem model5 = DynamicSystem(2, 1, 1000, "Data/Output/model5/model5");
 	model5.ImportNode(model5_path + "Node.csv");
 	model5.ImportElement<Quadrangle, Quadrangle>({ 0 }, 9, model5_path + "Element.csv");
 	model5.ImportParameter({ 0, 1, 2, 3, 4 }, model5_path + "Parameter.csv");
