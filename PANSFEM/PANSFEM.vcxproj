@@ -128,6 +128,7 @@
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.cpp" />
+    <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainVibration\PlaneStrainVibration.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\StructuralElement\Beam2D\Beam2D.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Dynamic2D\HeatTransferDynamic2D.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\HeatTransfer\Static2D\HeatTransferStatic2D.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.h" />
+    <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainVibration\PlaneStrainVibration.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainWithHeat\PlaneStrainWithHeat.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrain\PlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\Equation\StructuralElement\Beam2D\Beam2D.h" />

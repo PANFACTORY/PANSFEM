@@ -15,6 +15,7 @@
 
 
 #include "DirectAnalysis/Field/LinearField/LinearField.h"
+#include "DirectAnalysis/Field/EigenvalueField/EigenvalueField.h"
 
 
 #include "DirectAnalysis/ShapeFunction/Parametric/Triangle/Triangle.h"
@@ -30,6 +31,7 @@
 #include "DirectAnalysis/Equation/Phenomenon/HeatTransfer/Dynamic2D/HeatTransferDynamic2D.h"
 #include "DirectAnalysis/Equation/Phenomenon/Structure/IsotropicElastic/IsotropicElastic.h"
 #include "DirectAnalysis/Equation/StructuralElement/Beam2D/Beam2D.h"
+#include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrainVibration/PlaneStrainVibration.h"
 
 
 #include "DirectAnalysis/Integration/Gauss/Triangle/GaussTriangle.h"
@@ -286,7 +288,7 @@ int main() {
 
 	//----------梁モデル（ビーム要素）----------
 	std::string model12_path = "Data/Input/StructuralElement/Beam/";
-	StaticSystem model12 = StaticSystem(2, 3);
+	/*StaticSystem model12 = StaticSystem(2, 3);
 	model12.ImportNode(model12_path + "Node.csv");
 	model12.ImportElement<Cubic, Cubic, Cubic, Cubic>({ 0, 1, 2 }, 3, model12_path + "Element.csv");
 	model12.ImportParameter({ 0, 1, 2 }, model12_path + "Parameter.csv");
@@ -297,8 +299,23 @@ int main() {
 	model12.Schedule();
 	model12.Show();
 	model12.Export("Data/Output/model12");
+	*/
+
+	//----------固有値解析（平面ひずみモデル）----------
+	std::string model13_path = "Data/Input/Vibration/Beam/";
+	StaticSystem model13 = StaticSystem(2, 3);
+	model13.ImportNode(model13_path + "Node.csv");
+	model13.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, 5, model13_path + "Element.csv");
+	model13.ImportParameter({ 0, 1, 2, 3 }, model13_path + "Parameter.csv");
+	model13.ImportField<EigenvalueField>({ 0, 1 });
+	model13.ImportEquation<PlaneStrainVibration, GaussSquare>(0, {}, { 0, 1, 2, 3 }, model13_path + "Equation.csv");
+	model13.ImportDirichlet(model13_path + "Dirichlet.csv");
+	model13.Schedule();
+	//model13.Show();
+	model13.Export("Data/Output/model13");
 	
 
 	std::cout << "--------------------Finish--------------------" << std::endl;
+
 	return 0;
 }

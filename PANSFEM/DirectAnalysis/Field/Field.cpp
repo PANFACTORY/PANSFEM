@@ -153,7 +153,7 @@ void PANSFEM::Field::SolveEquation(){
 	integer NRHS = 1;							//係数ベクトルの数
 
 	std::vector<double> K = std::vector<double>(NB * N, 0.0);		//係数行列（帯行列）
-	std::vector<double> F = std::vector<double>(N * NRHS, 0.0);		//係数ベクトル
+	std::vector<double> F = std::vector<double>(N, 0.0);			//係数ベクトル
 
 	//.....Neumann境界条件の設定.....
 	for (auto pneumann : this->pneumanns) {
@@ -195,7 +195,7 @@ void PANSFEM::Field::SolveEquation(){
 							}
 						}
 						//.....係数ベクトル.....
-						F[Ki] += pequation->Fe[Kei];
+						F[Ki] += pequation->Fe(Kei, 0);
 						Ki++;
 					}
 									   					 

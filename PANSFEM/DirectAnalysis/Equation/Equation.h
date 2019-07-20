@@ -37,8 +37,8 @@ namespace PANSFEM {
 		Integration* pintegration;			//要素―節点方程式を生成するときの積分法
 				
 
-		Eigen::MatrixXd Ke;	//要素―節点方程式の係数行列
-		Eigen::VectorXd Fe;	//要素―節点方程式の係数ベクトル
+		Eigen::MatrixXd Ke;	//要素―節点方程式の左辺係数行列
+		Eigen::MatrixXd Fe;	//要素―節点方程式の右辺係数行列（連立方程式の場合はベクトル）
 
 
 		virtual void SetEquation() = 0;		//要素―節点方程式を設定

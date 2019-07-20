@@ -16,15 +16,15 @@ PANSFEM::GaussTriangle::~GaussTriangle(){}
 
 
 Eigen::MatrixXd PANSFEM::GaussTriangle::Integrate(std::function<Eigen::MatrixXd(std::vector<double>)> _f){
-	return 0.5*_f({ 0.0, 0.0 });
+	return 0.5*_f({ 1.0 / 3.0, 1.0 / 3.0 });
 }
 
 
 Eigen::VectorXd PANSFEM::GaussTriangle::Integrate(std::function<Eigen::VectorXd(std::vector<double>)> _f) {
-	return 0.5*_f({ 0.0, 0.0 });
+	return 0.5*_f({ 1.0 / 3.0, 1.0 / 3.0 });
 }
 
 
 double PANSFEM::GaussTriangle::Integrate(std::function<double(std::vector<double>)> _f) {
-	return 0.5*_f({ 0.0, 0.0 });
+	return 0.5*_f({ 1.0 / 3.0, 1.0 / 3.0 });
 }
