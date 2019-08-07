@@ -70,9 +70,9 @@ class Cubic(Element):
         
 
 #**********メイン処理**********
-file_path = "Optimize/Bridge/" #ファイルパス
-DOF = 2                             #節点自由度
-#NOA = 2                             #一辺辺りに追加する節点数
+file_path = "Optimize/AlternativeBeam/" #ファイルパス
+DOF = 2                        #節点自由度
+#NOA = 2                       #一辺辺りに追加する節点数
 
 #----------ファイルから節点生成----------
 nodes = []

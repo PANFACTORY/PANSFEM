@@ -37,6 +37,12 @@
     <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedPlaneStrain\OptimizedPlaneStrain.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainVibration\PlaneStrainVibration.cpp" />
+    <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedAlternative2D\OptimizedAlternative2D.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\ComplianceAlternative.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Weight\WeightAlternative.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\ComplianceAlternative3Phase.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Weight\WeightAlternative3Phase.cpp" />
+    <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedAlternative2D\OptimizedAlternative3Phase2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
@@ -74,6 +80,12 @@
     <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedPlaneStrain\OptimizedPlaneStrain.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\IsotropicElastic\IsotropicElastic.h" />
     <ClInclude Include="DirectAnalysis\Equation\Phenomenon\Structure\PlaneStrainVibration\PlaneStrainVibration.h" />
+    <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedAlternative2D\OptimizedAlternative2D.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\ComplianceAlternative.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Weight\WeightAlternative.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\ComplianceAlternative3Phase.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Weight\WeightAlternative3Phase.h" />
+    <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedAlternative2D\OptimizedAlternative3Phase2D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

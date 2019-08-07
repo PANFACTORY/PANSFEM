@@ -110,7 +110,7 @@ void PANSFEM::EigenvalueField::SolveEquation(){
 		for (auto us : this->uf_to_us) {
 			if (pnode->us_to_un.find(us) != pnode->us_to_un.end()) {
 				if (!pnode->is_ufixed[pnode->us_to_un[us]]) {
-					pnode->u[pnode->us_to_un[us]] = Z[this->Kmap[pnode].first + ui + 1*N];
+					pnode->u[pnode->us_to_un[us]] = Z[this->Kmap[pnode].first + ui + 2*N];
 					ui++;
 				}
 			}

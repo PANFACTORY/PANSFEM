@@ -46,6 +46,14 @@
 #include "InverseAnalysis/Equation/Structure/OptimizedPlaneStrain/OptimizedPlaneStrain.h"
 #include "InverseAnalysis/Function/Structure/Compliance/Compliance.h"
 #include "InverseAnalysis/Function/Structure/Weight/Weight.h"
+#include "InverseAnalysis/Equation/Structure/OptimizedAlternative2D/OptimizedAlternative2D.h"
+#include "InverseAnalysis/Function/Structure/Compliance/ComplianceAlternative.h"
+#include "InverseAnalysis/Function/Structure/Weight/WeightAlternative.h"
+#include "InverseAnalysis/Equation/Structure/OptimizedAlternative2D/OptimizedAlternative3Phase2D.h"
+#include "InverseAnalysis/Function/Structure/Compliance/ComplianceAlternative3Phase.h"
+#include "InverseAnalysis/Function/Structure/Weight/WeightAlternative3Phase.h"
+
+
 
 
 using namespace PANSFEM;
@@ -160,7 +168,7 @@ int main() {
 	//	N=59004
 	//	NB=5974
 	//------------------------------------------------------
-	std::string model6_path = "Data/Input/Optimize/CurveBeam/";
+	std::string model6_path = "Data/Input/Optimize/QuadrangleBeam/";
 	/*OptimizedSystem model6 = OptimizedSystem(2, 2, { 0 });
 	
 	model6.ImportNode(model6_path + "Node.csv");
@@ -303,16 +311,91 @@ int main() {
 
 	//----------固有値解析（平面ひずみモデル）----------
 	std::string model13_path = "Data/Input/Vibration/Beam/";
-	StaticSystem model13 = StaticSystem(2, 3);
+	/*StaticSystem model13 = StaticSystem(2, 3);
 	model13.ImportNode(model13_path + "Node.csv");
-	model13.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, 5, model13_path + "Element.csv");
+	model13.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 23, model13_path + "Element.csv");
 	model13.ImportParameter({ 0, 1, 2, 3 }, model13_path + "Parameter.csv");
 	model13.ImportField<EigenvalueField>({ 0, 1 });
-	model13.ImportEquation<PlaneStrainVibration, GaussSquare>(0, {}, { 0, 1, 2, 3 }, model13_path + "Equation.csv");
+	model13.ImportEquation<PlaneStrainVibration, GaussSquare2>(0, {}, { 0, 1, 2, 3 }, model13_path + "Equation.csv");
 	model13.ImportDirichlet(model13_path + "Dirichlet.csv");
 	model13.Schedule();
 	//model13.Show();
 	model13.Export("Data/Output/model13");
+	*/
+
+	//----------トポロジー最適化モデル（代替要素梁）----------
+	//	パラメータ
+	//		0	:s		設計変数
+	//		1	:E		材料Young率
+	//		2	:l		Lattice梁の対角半長さ
+	//		3	:rho	材料密度
+	//		4	:dmax	Lattice梁最大幅
+	//		5	:dmin	Lattice梁最小幅
+	//		6	:t		Lattice梁厚さ
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//	設計パラメータ
+	//		0	:s		密度（パラメータ0番）
+	//------------------------------------------------------
+	std::string model14_path = "Data/Input/Optimize/AlternativeBeam/";
+	/*OptimizedSystem model14 = OptimizedSystem(2, 2, { 0 });
+	model14.ImportNode(model14_path + "Node.csv");
+	model14.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 23, model14_path + "Element.csv");
+	model14.ImportParameter({ 0, 1, 2, 3, 4, 5, 6 }, model14_path + "Parameter.csv");
+	model14.ImportField<LinearField>({ 0, 1 });
+	model14.ImportEquation<OptimizedAlternative2D, GaussSquare2>(0, {}, { 0, 1, 2, 4, 5, 6 }, model14_path + "Equation.csv");
+	model14.ImportDirichlet(model14_path + "Dirichlet.csv");
+	model14.ImportNeumann(0, model14_path + "Neumann.csv");
+
+	model14.ImportOptimizedElement(model14_path + "Equation.csv");
+	model14.ImportObjective<ComplianceAlternative>({ 0, 1 }, { 0, 1, 2, 4, 5, 6 });
+	model14.ImportElementToObjective<GaussSquare2>(0, model14_path + "Equation.csv");
+	model14.ImportConstraint<WeightAlternative>({}, { 0, 2, 3, 4, 5, 6 });
+	model14.ImportElementToConstraint<GaussSquare2>(0, model14_path + "Equation.csv");
+
+	model14.Schedule();
+	//model14.Show();
+	model14.Export("Data/Output/model14");
+	*/
+
+	//----------トポロジー最適化モデル（代替要素梁）----------
+	//	パラメータ
+	//		0	:s0		設計変数0
+	//		1	:s1		設計変数1
+	//		2	:E		材料Young率
+	//		3	:l		Lattice梁の対角半長さ
+	//		4	:rho	材料密度
+	//		5	:dmax	Lattice梁最大幅
+	//		6	:dmin	Lattice梁最小幅
+	//		7	:d0 	Lattice梁0幅
+	//		8	:t		Lattice梁厚さ
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//	設計パラメータ
+	//		0	:s0		正規化梁幅0（パラメータ0番）
+	//		1	:s1		正規化梁幅1（パラメータ1番）
+	//------------------------------------------------------
+	std::string model15_path = "Data/Input/Optimize/AlternativeBeam/";
+	OptimizedSystem model15 = OptimizedSystem(2, 2, { 0, 1 });
+	model15.ImportNode(model15_path + "Node.csv");
+	model15.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 23, model15_path + "Element.csv");
+	model15.ImportParameter({ 0, 1, 2, 3, 4, 5, 6, 7, 8 }, model15_path + "Parameter.csv");
+	model15.ImportField<LinearField>({ 0, 1 });
+	model15.ImportEquation<OptimizedAlternative3Phase2D, GaussSquare2>(0, {}, { 0, 1, 2, 3, 5, 6, 7, 8 }, model15_path + "Equation.csv");
+	model15.ImportDirichlet(model15_path + "Dirichlet.csv");
+	model15.ImportNeumann(0, model15_path + "Neumann.csv");
+
+	model15.ImportOptimizedElement(model15_path + "Equation.csv");
+	model15.ImportObjective<ComplianceAlternative3Phase>({ 0, 1 }, { 0, 1, 2, 3, 5, 6, 7, 8 });
+	model15.ImportElementToObjective<GaussSquare2>(0, model15_path + "Equation.csv");
+	model15.ImportConstraint<WeightAlternative3Phase>({}, { 0, 1, 3, 4, 5, 6, 7, 8 });
+	model15.ImportElementToConstraint<GaussSquare2>(0, model15_path + "Equation.csv");
+
+	model15.Schedule();
+	//model15.Show();
+	model15.Export("Data/Output/model15");
 	
 
 	std::cout << "--------------------Finish--------------------" << std::endl;

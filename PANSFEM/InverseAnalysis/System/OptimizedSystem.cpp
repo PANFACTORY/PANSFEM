@@ -68,9 +68,9 @@ void PANSFEM::OptimizedSystem::Schedule(){
 	
 	//----------設計変数の初期化----------
 	const int rholen = this->poptimizedelements.size() * this->plist.size();	//設計変数ベクトルの要素数
-	const int iterationmax = 100;				//最適化ループの最大反復数
+	const int iterationmax = 1000;				//最適化ループの最大反復数
 	const double valueconvergence = 1.0e-5;		//目的関数の収束判定値
-	const double lambdaconvergence = 1.0e-3;	//Lagrange乗数λの収束判定値
+	const double lambdaconvergence = 1.0e-9;	//Lagrange乗数λの収束判定値
 	const double mvlmt = 0.15;					//ムーブリミット
 	const double iota = 0.75;					//ダンピング係数
 
@@ -121,7 +121,7 @@ void PANSFEM::OptimizedSystem::Schedule(){
 		}
 		
 		//----------Lagrange乗数を二分探索----------
-		double lambda0 = 1.0e-10, lambda1 = 1.0e4;
+		double lambda0 = 1.0e-10, lambda1 = 1.0e10;
 		while ((lambda1 - lambda0)/(lambda1 + lambda0) > lambdaconvergence) {
 			double lambda = 0.5 * (lambda1 + lambda0);
 			Eigen::VectorXd B = pow((-objectivesensitivity.array() / constraintsensitivity.array()).array() / lambda, iota).array()*rho.array();
@@ -200,14 +200,17 @@ void PANSFEM::OptimizedSystem::Export(std::string _fname){
 		fout << "9\n";
 	}
 
-	//----------節点の値を追加----------
+	//----------設計変数の値を追加----------
 	fout << "\nCELL_DATA\t" << this->pelements.size() << "\n";
-	fout << "SCALARS Rho float\n";
-	fout << "LOOKUP_TABLE default\n";
+	for (int i = 0; i < this->plist.size(); i++) {
+		fout << "SCALARS Rho" << i << " float\n";
+		fout << "LOOKUP_TABLE default\n";
 
-	for (auto pelement : this->pelements) {
-		fout << pelement->parameters[this->plist[0]] << std::endl;
-	}
+		for (auto pelement : this->pelements) {
+			fout << pelement->parameters[this->plist[i]] << std::endl;
+		}
+		fout << std::endl;
+	}	
 
 	fout << "\nPOINT_DATA\t" << this->pnodes.size() << "\n";
 	for (int i = 0; i < this->pfields.size(); i++) {
