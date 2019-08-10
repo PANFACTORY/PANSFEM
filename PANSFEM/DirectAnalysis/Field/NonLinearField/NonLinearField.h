@@ -7,12 +7,12 @@
 
 
 #pragma once
-#include "../Field.h"
+#include "../../Field/LinearField/LinearField.h"
 
 
 namespace PANSFEM {
 	class NonLinearField :
-		public Field
+		public LinearField
 	{
 	public:
 		NonLinearField();
@@ -20,6 +20,6 @@ namespace PANSFEM {
 		NonLinearField(std::vector<int> _ulist);
 
 
-		void SolveEquation();			//全体―節点方程式を解く（非線形連立方程式）
+		virtual void SolveEquation();			//全体―節点方程式を解く（非線形連立方程式）
 	};
 }

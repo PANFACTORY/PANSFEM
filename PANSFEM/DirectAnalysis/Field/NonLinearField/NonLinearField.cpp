@@ -9,13 +9,13 @@
 #include "NonLinearField.h"
 
 
-PANSFEM::NonLinearField::NonLinearField() : Field() {}
+PANSFEM::NonLinearField::NonLinearField() : LinearField() {}
 
 
 PANSFEM::NonLinearField::~NonLinearField() {}
 
 
-PANSFEM::NonLinearField::NonLinearField(std::vector<int> _ulist) : Field(_ulist) {}
+PANSFEM::NonLinearField::NonLinearField(std::vector<int> _ulist) : LinearField(_ulist) {}
 
 
 void PANSFEM::NonLinearField::SolveEquation() {}

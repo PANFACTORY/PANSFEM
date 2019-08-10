@@ -23,6 +23,6 @@ namespace PANSFEM {
 		int NOE;				//求める固有値の数
 
 
-		void SolveEquation();	//全体―節点方程式を解く（固有値問題）
+		virtual void SolveEquation();	//全体―節点方程式を解く（固有値問題）
 	};
 }

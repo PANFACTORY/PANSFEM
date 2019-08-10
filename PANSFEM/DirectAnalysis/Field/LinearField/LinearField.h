@@ -21,5 +21,8 @@ namespace PANSFEM {
 		LinearField();
 		virtual ~LinearField();
 		LinearField(std::vector<int> _ulist);
+
+
+		virtual void SolveEquation();
 	};
 }
