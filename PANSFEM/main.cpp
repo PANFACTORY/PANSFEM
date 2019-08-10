@@ -42,7 +42,7 @@
 
 
 //**********逆解析のサンプル用**********
-#include "InverseAnalysis/System/OptimizedSystem.h"
+#include "InverseAnalysis/System/OCSystem/OCSystem.h"
 #include "InverseAnalysis/Equation/Structure/OptimizedPlaneStrain/OptimizedPlaneStrain.h"
 #include "InverseAnalysis/Function/Structure/Compliance/Compliance.h"
 #include "InverseAnalysis/Function/Structure/Weight/Weight.h"
@@ -359,7 +359,7 @@ int main() {
 	model14.Export("Data/Output/model14");
 	*/
 
-	//----------トポロジー最適化モデル（代替要素梁）----------
+	//----------トポロジー最適化モデル（代替要素梁三相モデル）----------
 	//	パラメータ
 	//		0	:s0		設計変数0
 	//		1	:s1		設計変数1
@@ -378,7 +378,7 @@ int main() {
 	//		1	:s1		正規化梁幅1（パラメータ1番）
 	//------------------------------------------------------
 	std::string model15_path = "Data/Input/Optimize/AlternativeBeam/";
-	OptimizedSystem model15 = OptimizedSystem(2, 2, { 0, 1 });
+	OCSystem model15 = OCSystem(2, 2, { 0, 1 });
 	model15.ImportNode(model15_path + "Node.csv");
 	model15.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 23, model15_path + "Element.csv");
 	model15.ImportParameter({ 0, 1, 2, 3, 4, 5, 6, 7, 8 }, model15_path + "Parameter.csv");

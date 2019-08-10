@@ -29,7 +29,8 @@ void PANSFEM::OptimizedAlternative3Phase2D::SetEquation() {
 	double d0 = pelement->parameters[this->peq_to_ps[6]];
 	double t = pelement->parameters[this->peq_to_ps[7]];
 
-	double d = (((dmax - dmin)*s1 + dmin) - d0)*s0 + d0;
+	double p = 3.0;
+	double d = (((dmax - dmin)*s1 + dmin) - d0)*pow(s0, p) + d0;
 	double dl = d / l;
 	double dl3 = pow(dl, 3.0);
 	double dlpdl3 = dl + dl3;

@@ -32,10 +32,12 @@ Eigen::VectorXd PANSFEM::WeightAlternative3Phase::sensitivitis() {
 		double dmin = pelement->parameters[this->refpf_to_us[5]];
 		double d0 = pelement->parameters[this->refpf_to_us[6]];
 		double t = pelement->parameters[this->refpf_to_us[7]];
-
-		double d = (((dmax - dmin)*s1 + dmin) - d0)*s0 + d0;
+		
+		double p = 3.0;
+		double d = (((dmax - dmin)*s1 + dmin) - d0)*pow(s0, p) + d0;
 		Eigen::MatrixXd ddds = Eigen::MatrixXd::Zero(2, 1);
-		ddds(0, 0) = (dmax - dmin)*s1 + dmin - d0;	ddds(1, 0) = (dmax - dmin)*s0;
+		ddds(0, 0) = p*((dmax - dmin)*s1 + dmin - d0)*pow(s0, p - 1.0);
+		ddds(1, 0) = (dmax - dmin)*pow(s0, p);
 		
 		//----------—v‘f–ˆ‚ÌŠ´“xŒvZ----------
 		dweight.block(i*this->NOP, 0, this->NOP, 1) += ddds * 4.0*(l - d)*t*rho;
@@ -59,7 +61,8 @@ double PANSFEM::WeightAlternative3Phase::value() {
 		double d0 = pelement->parameters[this->refpf_to_us[6]];
 		double t = pelement->parameters[this->refpf_to_us[7]];
 
-		double d = (((dmax - dmin)*s1 + dmin) - d0)*s0 + d0;
+		double p = 3.0;
+		double d = (((dmax - dmin)*s1 + dmin) - d0)*pow(s0, p) + d0;
 		double w = 2.0*(2.0*l - d)*d*t*rho;
 
 		//----------—v‘f–ˆ‚Ìd—ÊŒvZ®----------
@@ -68,7 +71,7 @@ double PANSFEM::WeightAlternative3Phase::value() {
 		};
 
 		//----------—v‘f–ˆ‚Ìd—ÊŒvZ----------
-		weight += w - 0.08*this->pintegrations[pelement]->Integrate(f);
+		weight += w - 0.1*this->pintegrations[pelement]->Integrate(f);
 	}
 
 	return weight;

@@ -39,14 +39,16 @@ Eigen::VectorXd PANSFEM::ComplianceAlternative3Phase::sensitivitis() {
 		double d0 = pelement->parameters[this->refpf_to_us[6]];
 		double t = pelement->parameters[this->refpf_to_us[7]];
 
-		double d = (((dmax - dmin)*s1 + dmin) - d0)*s0 + d0;
+		double p = 3.0;
+		double d = (((dmax - dmin)*s1 + dmin) - d0)*pow(s0, p) + d0;
 		double dl = d / l;
 		double dl2 = pow(dl, 3.0);
 		double onepdl2 = 1.0 + dl2;
 		double onemdl2 = 1.0 - dl2;
 
 		Eigen::MatrixXd ddds = Eigen::MatrixXd::Zero(2, 1);
-		ddds(0, 0) = (dmax - dmin)*s1 + dmin - d0;	ddds(1, 0) = (dmax - dmin)*s0;
+		ddds(0, 0) = p * ((dmax - dmin)*s1 + dmin - d0)*pow(s0, p - 1.0);
+		ddds(1, 0) = (dmax - dmin)*pow(s0, p);
 
 		//----------[D]‚Ì¶¬----------
 		Eigen::MatrixXd dD = Eigen::MatrixXd(3, 3);
@@ -92,7 +94,8 @@ double PANSFEM::ComplianceAlternative3Phase::value() {
 		double d0 = pelement->parameters[this->refpf_to_us[6]];
 		double t = pelement->parameters[this->refpf_to_us[7]];
 
-		double d = (((dmax - dmin)*s1 + dmin) - d0)*s0 + d0;
+		double p = 3.0;
+		double d = (((dmax - dmin)*s1 + dmin) - d0)*pow(s0, p) + d0;
 		double dl = d / l;
 		double dl3 = pow(dl, 3.0);
 		double dlpdl3 = dl + dl3;

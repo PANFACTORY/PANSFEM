@@ -36,10 +36,10 @@ namespace PANSFEM {
 		bool ImportElementToConstraint(int _id, std::string _fname);	//制約条件に要素に合わせた積分法を追加
 
 
-		void Schedule();							//順解析，感度計算を行う順番，タイミングを管理
+		virtual void Schedule() = 0;				//順解析，感度計算を行う順番，タイミングを管理
 													//本来なら最適化手法によって変えるべき部分，具体的なイメージをつかむため今はこうする
 		void Export(std::string _fname);			//最適化の結果を出力
-
+		
 
 	protected:
 		std::vector<int> plist;						//最適化されるパラメータ
