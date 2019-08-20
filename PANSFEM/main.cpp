@@ -52,7 +52,7 @@
 #include "InverseAnalysis/Equation/Structure/OptimizedAlternative2D/OptimizedAlternative3Phase2D.h"
 #include "InverseAnalysis/Function/Structure/Compliance/ComplianceAlternative3Phase.h"
 #include "InverseAnalysis/Function/Structure/Weight/WeightAlternative3Phase.h"
-
+#include "InverseAnalysis/System/CONLINSystem/CONLINSystem.h"
 
 
 
@@ -378,7 +378,7 @@ int main() {
 	//		1	:s1		正規化梁幅1（パラメータ1番）
 	//------------------------------------------------------
 	std::string model15_path = "Data/Input/Optimize/AlternativeBeam/";
-	OCSystem model15 = OCSystem(2, 2, { 0, 1 });
+	/*OCSystem model15 = OCSystem(2, 2, { 0, 1 });
 	model15.ImportNode(model15_path + "Node.csv");
 	model15.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 23, model15_path + "Element.csv");
 	model15.ImportParameter({ 0, 1, 2, 3, 4, 5, 6, 7, 8 }, model15_path + "Parameter.csv");
@@ -396,8 +396,56 @@ int main() {
 	model15.Schedule();
 	//model15.Show();
 	model15.Export("Data/Output/model15");
-	
+	*/
 
+	//----------固有値解析（平面ひずみモデル）----------
+	std::string model16_path = "Data/Input/Optimize/Vibration/";
+	/*StaticSystem model16 = StaticSystem(2, 2);
+	model16.ImportNode(model16_path + "Node.csv");
+	model16.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 23, model16_path + "Element.csv");
+	model16.ImportParameter({ 0, 1, 2, 3 }, model16_path + "Parameter.csv");
+	model16.ImportField<EigenvalueField>({ 0, 1 });
+	model16.ImportEquation<PlaneStrainVibration, GaussSquare2>(0, {}, { 0, 1, 2, 3 }, model16_path + "Equation.csv");
+	model16.ImportDirichlet(model16_path + "Dirichlet.csv");
+	model16.Schedule();
+	//model16.Show();
+	model16.Export("Data/Output/model16");
+	*/
+
+	//----------トポロジー最適化モデル（2D曲がり梁）----------
+	//	パラメータ
+	//		0	:ρ		密度
+	//		1	:Emax	Young率最大値
+	//		2	:Emin	Young率最小値
+	//		3	:V		Poisson比
+	//		4	:t		厚さ
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//	設計パラメータ
+	//		0	:ρ		密度（パラメータ0番）
+	//
+	//	N=59004
+	//	NB=5974
+	//------------------------------------------------------
+	std::string model17_path = "Data/Input/Optimize/Bridge/";
+	CONLINSystem model17 = CONLINSystem(2, 2, { 0 });
+	model17.ImportNode(model17_path + "Node2.csv");
+	model17.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 9, model17_path + "Element2.csv");
+	model17.ImportParameter({ 0, 1, 2, 3, 4 }, model17_path + "Parameter.csv");
+	model17.ImportField<LinearField>({ 0, 1 });
+	model17.ImportEquation<OptimizedPlaneStrain, GaussSquare2>(0, {}, { 0, 1, 2, 3, 4 }, model17_path + "Equation.csv");
+	model17.ImportDirichlet(model17_path + "Dirichlet.csv");
+	model17.ImportNeumann(0, model17_path + "Neumann.csv");
+
+	model17.ImportOptimizedElement(model17_path + "Equation.csv");
+	model17.ImportObjective<Compliance>({ 0, 1 }, { 0, 1, 2, 3, 4 });
+	model17.ImportElementToObjective<GaussSquare2>(0, model17_path + "Equation.csv");
+	model17.ImportConstraint<Weight>({}, { 0, 4 });
+	model17.ImportElementToConstraint<GaussSquare2>(0, model17_path + "Equation.csv");
+
+	model17.Schedule();
+	model17.Export("Data/Output/model17");
 	std::cout << "--------------------Finish--------------------" << std::endl;
 
 	return 0;
