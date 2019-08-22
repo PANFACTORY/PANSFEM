@@ -16,6 +16,7 @@
 
 #include "DirectAnalysis/Field/LinearField/LinearField.h"
 #include "DirectAnalysis/Field/EigenvalueField/EigenvalueField.h"
+#include "DirectAnalysis/Field/NonLinearField/NonLinearField.h"
 
 
 #include "DirectAnalysis/ShapeFunction/Parametric/Triangle/Triangle.h"
@@ -32,6 +33,7 @@
 #include "DirectAnalysis/Equation/Phenomenon/Structure/IsotropicElastic/IsotropicElastic.h"
 #include "DirectAnalysis/Equation/StructuralElement/Beam2D/Beam2D.h"
 #include "DirectAnalysis/Equation/Phenomenon/Structure/PlaneStrainVibration/PlaneStrainVibration.h"
+#include "DirectAnalysis/Equation/StructuralElement/ElasticPlasticTruss2D/ElasticPlasticTruss2D.h"
 
 
 #include "DirectAnalysis/Integration/Gauss/Triangle/GaussTriangle.h"
@@ -429,7 +431,7 @@ int main() {
 	//	NB=5974
 	//------------------------------------------------------
 	std::string model17_path = "Data/Input/Optimize/Bridge/";
-	CONLINSystem model17 = CONLINSystem(2, 2, { 0 });
+	/*CONLINSystem model17 = CONLINSystem(2, 2, { 0 });
 	model17.ImportNode(model17_path + "Node2.csv");
 	model17.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 9, model17_path + "Element2.csv");
 	model17.ImportParameter({ 0, 1, 2, 3, 4 }, model17_path + "Parameter.csv");
@@ -446,6 +448,29 @@ int main() {
 
 	model17.Schedule();
 	model17.Export("Data/Output/model17");
+	*/
+
+	//----------弾塑性トラス（二次元弾塑性トラスモデル）----------
+	//	パラメータ
+	//		0	:A		要素初期断面積
+	//		1	:E		材料Young率
+	//		2	:H		材料塑性係数
+	//		3	:tauy0	初期降伏応力
+	//------------------------------------------------------------
+	std::string model18_path = "Data/Input/StructuralElement/ElasticPlasticTruss/";
+	StaticSystem model18 = StaticSystem(2, 2);
+	model18.ImportNode(model18_path + "Node.csv");
+	model18.ImportElement<Triangle, Triangle, Triangle>({ 0, 1 }, 3, model18_path + "Element.csv");
+	model18.ImportParameter({ 0, 1, 2, 3 }, model18_path + "Parameter.csv");
+	model18.ImportField<NonLinearField>({ 0, 1 });
+	model18.ImportEquation<ElasticPlasticTruss2D, GaussTriangle>(0, {}, { 0, 1, 2, 3 }, model18_path + "Equation.csv");
+	model18.ImportDirichlet(model18_path + "Dirichlet.csv");
+	model18.ImportNeumann(0, model18_path + "Neumann.csv");
+	model18.Schedule();
+	//model18.Show();
+	model18.Export("Data/Output/model18");
+	
+
 	std::cout << "--------------------Finish--------------------" << std::endl;
 
 	return 0;

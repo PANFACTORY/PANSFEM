@@ -35,11 +35,6 @@ void PANSFEM::DynamicSystem::Schedule(){
 	for (int i = 0; i < this->INC; i++) {
 		std::cout << "inclement:\t" << i << std::endl;
 		for (auto pfield : this->pfields) {
-			//.....要素―節点方程式を計算.....
-			for (auto& pequation : pfield->pequations) {
-				pequation->SetEquation();
-			}
-
 			//.....全体―節点方程式を解く.....
 			pfield->SolveEquation();
 

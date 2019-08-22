@@ -30,6 +30,11 @@ PANSFEM::LinearField::LinearField(std::vector<int> _ulist) : Field(_ulist){}
 
 
 void PANSFEM::LinearField::SolveEquation(){
+	//----------要素―節点方程式の計算----------
+	for (auto& pequation : this->pequations) {
+		pequation->SetEquation();
+	}
+
 	//----------全体―節点方程式のアセンブリング----------
 	integer N = (integer)this->KDEGREE;			//方程式の数
 	integer KL = (integer)this->BANDWIDTHL;		//帯行列の下側幅（対角は除く）

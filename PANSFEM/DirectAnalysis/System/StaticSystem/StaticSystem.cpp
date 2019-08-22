@@ -28,22 +28,7 @@ void PANSFEM::StaticSystem::Schedule(){
 
 		//----------Kmapの作成----------
 		pfield->MakeKmap();
-		
-		//----------要素―節点方程式を計算----------
-		std::chrono::system_clock::time_point start, end;
-		start = std::chrono::system_clock::now();
-
-
-		for (auto& pequation : pfield->pequations) {
-			pequation->SetEquation();
-		}
-
-
-		end = std::chrono::system_clock::now();
-		double time = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0);
-		printf("time %lf[ms]\n", time);
-
-		
+				
 		//----------バンド幅の計算----------
 		pfield->GetBandwidth();
 

@@ -30,6 +30,11 @@ PANSFEM::EigenvalueField::EigenvalueField(std::vector<int> _ulist) : Field(_ulis
 
 
 void PANSFEM::EigenvalueField::SolveEquation(){
+	//----------要素―節点方程式の計算----------
+	for (auto& pequation : this->pequations) {
+		pequation->SetEquation();
+	}
+
 	//----------要素―節点方程式のアセンブリング----------
 	integer N = (integer)this->KDEGREE;							//方程式の数
 	integer KA = (integer)this->BANDWIDTHL;						//行列Aの上対角 or 下対角要素の数(input)
