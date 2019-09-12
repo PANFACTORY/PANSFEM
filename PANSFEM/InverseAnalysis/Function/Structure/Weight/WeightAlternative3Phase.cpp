@@ -71,7 +71,7 @@ double PANSFEM::WeightAlternative3Phase::value() {
 		};
 
 		//----------—v‘f–ˆ‚Ìd—ÊŒvZ----------
-		weight += w - 0.1*this->pintegrations[pelement]->Integrate(f);
+		weight += w - 0.08*this->pintegrations[pelement]->Integrate(f);
 	}
 
 	return weight;

@@ -46,6 +46,7 @@
     <ClCompile Include="InverseAnalysis\System\OCSystem\OCSystem.cpp" />
     <ClCompile Include="InverseAnalysis\System\CONLINSystem\CONLINSystem.cpp" />
     <ClCompile Include="DirectAnalysis\Equation\StructuralElement\ElasticPlasticTruss2D\ElasticPlasticTruss2D.cpp" />
+    <ClCompile Include="LinearAlgebra\CSR.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
@@ -92,6 +93,8 @@
     <ClInclude Include="InverseAnalysis\System\OCSystem\OCSystem.h" />
     <ClInclude Include="InverseAnalysis\System\CONLINSystem\CONLINSystem.h" />
     <ClInclude Include="DirectAnalysis\Equation\StructuralElement\ElasticPlasticTruss2D\ElasticPlasticTruss2D.h" />
+    <ClInclude Include="LinearAlgebra\BiCGSTAB.h" />
+    <ClInclude Include="LinearAlgebra\CSR.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

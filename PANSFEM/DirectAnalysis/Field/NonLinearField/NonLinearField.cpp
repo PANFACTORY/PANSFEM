@@ -36,7 +36,7 @@ void PANSFEM::NonLinearField::SolveEquation() {
 		//----------荷重更新----------
 		//----------残差計算----------
 		//----------Newton-Raphson法のループ----------
-		for(int i = 0; i < 10; i++){
+		for(int i = 0; i < 100; i++){
 			//----------要素―節点方程式の計算----------
 			for (auto& pequation : this->pequations) {
 				pequation->SetEquation();
@@ -119,10 +119,16 @@ void PANSFEM::NonLinearField::SolveEquation() {
 				}
 			}
 
+
+
+
+
 			//----------収束判定----------
-			for (auto f : F) {
-				std::cout << f << std::endl;
-			}
+			std::cout << F[3] << std::endl;
+			
+
+
+
 
 			//----------連立方程式を解く----------
 			integer LDK = (integer)NB;			//係数行列の寸法

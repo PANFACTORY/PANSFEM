@@ -81,10 +81,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\clapack-3.2.1-CMAKE\clapack-3.2.1-CMAKE\INCLUDE;C:\Users\youat\eigen-eigen-323c052e1731.tar\eigen-eigen-323c052e1731;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\buildx64\SRC\Release;C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\buildx64\F2CLIBS\libf2c\Release;C:\Users\youat\OpenBLAS\OpenBLAS-v0.2.19-Win64-int32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -114,6 +115,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\youat\CLAPACK\clapack-3.2.1-CMAKE\clapack-3.2.1-CMAKE\clapack-3.2.1-CMAKE\INCLUDE;C:\Users\youat\eigen-eigen-323c052e1731.tar\eigen-eigen-323c052e1731;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -167,6 +169,7 @@
     <ClCompile Include="InverseAnalysis\System\CONLINSystem\CONLINSystem.cpp" />
     <ClCompile Include="InverseAnalysis\System\OCSystem\OCSystem.cpp" />
     <ClCompile Include="InverseAnalysis\System\OptimizedSystem.cpp" />
+    <ClCompile Include="LinearAlgebra\CSR.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +217,8 @@
     <ClInclude Include="InverseAnalysis\System\CONLINSystem\CONLINSystem.h" />
     <ClInclude Include="InverseAnalysis\System\OCSystem\OCSystem.h" />
     <ClInclude Include="InverseAnalysis\System\OptimizedSystem.h" />
+    <ClInclude Include="LinearAlgebra\BiCGSTAB.h" />
+    <ClInclude Include="LinearAlgebra\CSR.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

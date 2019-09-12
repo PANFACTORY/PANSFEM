@@ -171,7 +171,7 @@ int main() {
 	//	NB=5974
 	//------------------------------------------------------
 	std::string model6_path = "Data/Input/Optimize/QuadrangleBeam/";
-	/*OptimizedSystem model6 = OptimizedSystem(2, 2, { 0 });
+	/*OCSystem model6 = OCSystem(2, 2, { 0 });
 	
 	model6.ImportNode(model6_path + "Node.csv");
 	model6.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 9, model6_path + "Element.csv");
@@ -208,7 +208,7 @@ int main() {
 
 	//----------直梁（直方体要素）モデル----------
 	std::string model8_path = "Data/Input/Structure/CubicBeam/";
-	/*StaticSystem model8 = StaticSystem(3, 3);
+	StaticSystem model8 = StaticSystem(3, 3);
 	model8.ImportNode(model8_path + "Node.csv");
 	model8.ImportElement<Cubic, Cubic, Cubic, Cubic>({ 0, 1, 2 }, 12, model8_path + "Element.csv");
 	model8.ImportParameter({ 0, 1 }, model8_path + "Parameter.csv");
@@ -219,7 +219,7 @@ int main() {
 	model8.Schedule();
 	//model8.Show();
 	model8.Export("Data/Output/model8");
-	*/
+	
 
 	//----------直梁（直方体2次要素）モデル----------
 	//	N = 167680
@@ -241,7 +241,7 @@ int main() {
 	model9.ImportNeumann(0, model9_path + "Neumann.csv");
 	model9.Schedule();
 	//model9.Show();
-	model9.Export("Data/Output/model9");
+	model9.Export("Data/Output/model9mod");
 	*/
 
 	//----------二次元ラーメンモデル----------
@@ -379,8 +379,8 @@ int main() {
 	//		0	:s0		正規化梁幅0（パラメータ0番）
 	//		1	:s1		正規化梁幅1（パラメータ1番）
 	//------------------------------------------------------
-	std::string model15_path = "Data/Input/Optimize/AlternativeBeam/";
-	/*OCSystem model15 = OCSystem(2, 2, { 0, 1 });
+	/*std::string model15_path = "Data/Input/Optimize/AlternativeBeam/";
+	OCSystem model15 = OCSystem(2, 2, { 0, 1 });
 	model15.ImportNode(model15_path + "Node.csv");
 	model15.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 23, model15_path + "Element.csv");
 	model15.ImportParameter({ 0, 1, 2, 3, 4, 5, 6, 7, 8 }, model15_path + "Parameter.csv");
@@ -458,7 +458,7 @@ int main() {
 	//		3	:tauy0	初期降伏応力
 	//------------------------------------------------------------
 	std::string model18_path = "Data/Input/StructuralElement/ElasticPlasticTruss/";
-	StaticSystem model18 = StaticSystem(2, 2);
+	/*StaticSystem model18 = StaticSystem(2, 2);
 	model18.ImportNode(model18_path + "Node.csv");
 	model18.ImportElement<Triangle, Triangle, Triangle>({ 0, 1 }, 3, model18_path + "Element.csv");
 	model18.ImportParameter({ 0, 1, 2, 3 }, model18_path + "Parameter.csv");
@@ -469,7 +469,7 @@ int main() {
 	model18.Schedule();
 	//model18.Show();
 	model18.Export("Data/Output/model18");
-	
+	*/
 
 	std::cout << "--------------------Finish--------------------" << std::endl;
 

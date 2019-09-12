@@ -42,7 +42,7 @@ void PANSFEM::CONLINSystem::Schedule(){
 	const double EPS = 1.0e-8;		//≒0
 	const double movelimit = 0.1;	//ムーブリミット
 
-	Eigen::VectorXd r = Eigen::VectorXd::Constant(NOOBJ + NOCON, 1.0e-5);
+	Eigen::VectorXd r = Eigen::VectorXd::Constant(NOOBJ + NOCON, 1.0e-2);
 	r.segment(0, NOOBJ).array() = 1.0;										//Lagrange乗数
 	
 	//----------最適化の反復計算----------
