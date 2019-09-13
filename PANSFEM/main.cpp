@@ -154,7 +154,7 @@ int main() {
 	model5.Export("Data/Output/model5");
 	*/
 
-	//----------トポロジー最適化モデル（2D曲がり梁）----------
+	//----------トポロジー最適化モデル（梁）----------
 	//	パラメータ
 	//		0	:ρ		密度
 	//		1	:Emax	Young率最大値
@@ -230,6 +230,11 @@ int main() {
 	//	N = 167680
 	//	NB= 10438
 	//	☞14GB
+
+	//CSR format
+	//	N = 167680
+	//	data = 27010462
+	//	☞325MB
 	std::string model9_path = "Data/Input/Structure/CubicBeam2/";
 	/*StaticSystem model9 = StaticSystem(3, 3);
 	model9.ImportNode(model9_path + "Node.csv");

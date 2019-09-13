@@ -170,6 +170,7 @@
     <ClCompile Include="InverseAnalysis\System\OCSystem\OCSystem.cpp" />
     <ClCompile Include="InverseAnalysis\System\OptimizedSystem.cpp" />
     <ClCompile Include="LinearAlgebra\CSR.cpp" />
+    <ClCompile Include="LinearAlgebra\PreCSR.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +220,7 @@
     <ClInclude Include="InverseAnalysis\System\OptimizedSystem.h" />
     <ClInclude Include="LinearAlgebra\BiCGSTAB.h" />
     <ClInclude Include="LinearAlgebra\CSR.h" />
+    <ClInclude Include="LinearAlgebra\PreCSR.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

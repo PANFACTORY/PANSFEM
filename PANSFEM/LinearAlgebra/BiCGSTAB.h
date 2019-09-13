@@ -73,7 +73,7 @@ inline std::vector<T> subtract(std::vector<T> &_a, T _beta, std::vector<T> &_b) 
 template<class T>
 std::vector<T> BiCGSTAB(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps) {
 	//----------‰Šú‰»----------
-	std::vector<T> xk(_b.size(), 0.0);
+	std::vector<T> xk(_b.size(), T());
 	std::vector<T> rk = subtract(_b, _A*xk);
 	std::vector<T> rdash = rk;
 	std::vector<T> pk = rk;

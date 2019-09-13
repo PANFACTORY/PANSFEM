@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <thread>
 #include <omp.h>
+#include "PreCSR.h"
 
 
 
@@ -22,6 +23,7 @@ public:
 	CSR();
 	~CSR();
 	CSR(int _rows, int _cols);	//_rows：行数，_cols：列数
+	CSR(PreCSR<T>& _matrix);	//PreCSRからCSRを生成
 
 
 	const int ROWS;				//行数
@@ -59,6 +61,22 @@ inline CSR<T>::CSR(int _rows, int _cols) : ROWS(_rows), COLS(_cols) {
 
 
 template<class T>
+inline CSR<T>::CSR(PreCSR<T>& _matrix) : ROWS(_matrix.ROWS), COLS(_matrix.COLS) {
+	this->indptr = std::vector<int>(this->ROWS + 1, 0);
+
+	for (int i = 0; i < this->ROWS; i++) {
+		this->indptr[i + 1] = this->indptr[i] + _matrix.data[i].size();
+
+		std::sort(_matrix.data[i].begin(), _matrix.data[i].end());
+		for (auto matrixj : _matrix.data[i]) {
+			this->indices.push_back(matrixj.first);
+			this->data.push_back(matrixj.second);
+		}
+	}
+}
+
+
+template<class T>
 inline const std::vector<T> CSR<T>::operator*(const std::vector<T> &_vec) {
 	std::vector<T> v(this->ROWS, T());
 
@@ -77,7 +95,7 @@ inline const std::vector<T> CSR<T>::operator*(const std::vector<T> &_vec) {
 
 template<class T>
 inline bool CSR<T>::set(int _row, int _col, T _data) {
-	int j = this->indptr[_row];
+	/*int j = this->indptr[_row];
 
 	for (int jend = this->indptr[_row + 1]; j < jend; ++j) {
 		if (this->indices[j] == _col) {
@@ -94,6 +112,30 @@ inline bool CSR<T>::set(int _row, int _col, T _data) {
 	for (auto i = this->indptr.begin() + (_row + 1), iend = this->indptr.end(); i != iend; ++i) {
 		*i += 1;
 	}
+	*/
+
+	auto colbegin = this->indices.begin() + this->indptr[_row], colend = this->indices.begin() + this->indptr[_row + 1];
+	auto colnow = std::lower_bound(colbegin, colend, _col);
+	if (colnow == colend) {
+		this->data.insert(this->data.begin() + std::distance(this->indices.begin(), colnow), _data);
+		this->indices.insert(colnow, _col);
+		for (auto i = this->indptr.begin() + (_row + 1), iend = this->indptr.end(); i != iend; ++i) {
+			*i += 1;
+		}
+		return false;
+	}
+	else if (*colnow == _col) {
+		*(this->data.begin() + std::distance(this->indices.begin(), colnow)) = _data;
+		return true;
+	}
+	else {
+		this->data.insert(this->data.begin() + std::distance(this->indices.begin(), colnow), _data);
+		this->indices.insert(colnow, _col);
+		for (auto i = this->indptr.begin() + (_row + 1), iend = this->indptr.end(); i != iend; ++i) {
+			*i += 1;
+		}
+		return false;
+	}
 
 	return false;
 }
@@ -101,12 +143,23 @@ inline bool CSR<T>::set(int _row, int _col, T _data) {
 
 template<class T>
 inline T CSR<T>::get(int _row, int _col) const {
-	for (int j = this->indptr[_row], jend = this->indptr[_row + 1]; j < jend; j++) {
+	/*for (int j = this->indptr[_row], jend = this->indptr[_row + 1]; j < jend; j++) {
 		if (this->indices[j] == _col) {
 			return this->data[j];
 		}
+	}*/
+
+	auto colbegin = this->indices.begin() + this->indptr[_row], colend = this->indices.begin() + this->indptr[_row + 1];
+	auto colnow = std::lower_bound(colbegin, colend, _col);
+	if (colnow == colend) {
+		return T();
 	}
-	return T();
+	else if (*colnow == _col) {
+		return *(this->data.begin() + std::distance(this->indices.begin(), colnow));
+	}
+	else {
+		return T();
+	}
 }
 
 

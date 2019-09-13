@@ -8,6 +8,7 @@
 
 #include "LinearField.h"
 #include "../../../LinearAlgebra/CSR.h"
+#include "../../../LinearAlgebra/PreCSR.h"
 #include "../../../LinearAlgebra/BiCGSTAB.h"
 
 
@@ -38,7 +39,7 @@ void PANSFEM::LinearField::SolveEquation() {
 	}
 
 	//----------全体―節点方程式のアセンブリング----------
-	CSR<double> K = CSR<double>(this->KDEGREE, this->KDEGREE);			//係数行列
+	PreCSR<double> K = PreCSR<double>(this->KDEGREE, this->KDEGREE);	//係数行列
 	std::vector<double> F = std::vector<double>(this->KDEGREE, 0.0);	//係数ベクトル
 
 	//.....Neumann境界条件の設定.....
@@ -109,7 +110,8 @@ void PANSFEM::LinearField::SolveEquation() {
 	}
 
 	//----------連立方程式を解く----------
-	std::vector<double> res = BiCGSTAB(K, F, 100000, 1.0e-8);
+	CSR<double> K2 = CSR<double>(K);
+	std::vector<double> res = BiCGSTAB(K2, F, 20000, 1.0e-8);
 
 	//----------解の代入----------
 	int iresult = 0;
