@@ -15,6 +15,9 @@
 #include "PreCSR.h"
 
 
+template<class T>
+class PreCSR;
+
 
 template<class T>
 class CSR
@@ -23,20 +26,33 @@ public:
 	CSR();
 	~CSR();
 	CSR(int _rows, int _cols);	//_rows：行数，_cols：列数
-	CSR(PreCSR<T>& _matrix);	//PreCSRからCSRを生成
+	CSR(PreCSR<T> _matrix);		//PreCSRからCSRを生成
 
 
 	const int ROWS;				//行数
 	const int COLS;				//列数
 
 
-	const std::vector<T> operator*(const std::vector<T> &_vec);					//ベクトルとの積
+	const std::vector<T> operator*(const std::vector<T> &_vec);			//ベクトルとの積
+	const CSR<T> operator*(const CSR<T> &_mat);							//CSR行列との積
 	template<class F>
 	friend std::ostream& operator << (std::ostream &_out, const CSR<F> &_mat);	//streamに出力
 
 
 	bool set(int _row, int _col, T _data);		//値のセット
 	T get(int _row, int _col) const;			//値の取得
+
+
+	template<class F>
+	friend CSR<F> ILU0(CSR<F>& _A);				//不完全LU(0)分解
+	template<class F>
+	friend std::vector<F> PreILU0(CSR<F> &_A, std::vector<F> &_b);		//不完全LU(0)分解前処理
+	template<class T>
+	friend std::vector<T> SOR(CSR<T> &_A, std::vector<T> &_b, T _w, int _itrmax, T _eps);	//SOR法
+
+
+	template<class F>
+	friend class PreCSR;
 
 
 private:
@@ -61,7 +77,7 @@ inline CSR<T>::CSR(int _rows, int _cols) : ROWS(_rows), COLS(_cols) {
 
 
 template<class T>
-inline CSR<T>::CSR(PreCSR<T>& _matrix) : ROWS(_matrix.ROWS), COLS(_matrix.COLS) {
+inline CSR<T>::CSR(PreCSR<T> _matrix) : ROWS(_matrix.ROWS), COLS(_matrix.COLS) {
 	this->indptr = std::vector<int>(this->ROWS + 1, 0);
 
 	for (int i = 0; i < this->ROWS; i++) {
@@ -90,6 +106,34 @@ inline const std::vector<T> CSR<T>::operator*(const std::vector<T> &_vec) {
 	}
 
 	return v;
+}
+
+
+template<class T>
+inline const CSR<T> CSR<T>::operator*(const CSR<T>& _mat) {
+	PreCSR<T> m = PreCSR<T>(this->ROWS, _mat.COLS);
+
+	int iend = this->ROWS;
+#pragma omp parallel for
+	for (int i = 0; i < iend; i++) {
+		for (int j = 0, jend = _mat.COLS; j < jend; j++) {
+			T dataij = T();
+			bool isset = false;
+			for (int k = this->indptr[i], kend = this->indptr[i + 1]; k < kend; k++) {
+				auto colbegin = _mat.indices.begin() + _mat.indptr[this->indices[k]], colend = _mat.indices.begin() + _mat.indptr[this->indices[k] + 1];
+				auto datapos = std::find(colbegin, colend, j);
+				if (datapos != colend) {
+					dataij += this->data[k] * (*(_mat.data.begin() + std::distance(_mat.indices.begin(), datapos)));
+					isset = true;
+				}
+			}
+			if (isset) {
+				m.set(i, j, dataij);
+			}
+		}
+	}
+
+	return CSR<T>(m);
 }
 
 

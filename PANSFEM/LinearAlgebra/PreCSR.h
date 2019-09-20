@@ -12,6 +12,13 @@
 #include <algorithm>
 
 
+#include "CSR.h"
+
+
+template<class T>
+class CSR;
+
+
 template<class T>
 class PreCSR
 {
@@ -19,6 +26,7 @@ public:
 	PreCSR();
 	~PreCSR();
 	PreCSR(int _rows, int _cols);
+	PreCSR(CSR<T> _matrix);						//CSRÇ©ÇÁPreCSRÇê∂ê¨
 
 
 	const int ROWS;			//çsêî
@@ -34,7 +42,11 @@ public:
 	T get(int _row, int _col) const;			//ílÇÃéÊìæ
 
 
-//private:
+	template<class F>
+	friend class CSR;
+
+
+private:
 	std::vector<std::vector<std::pair<int, T> > > data;
 };
 
@@ -50,6 +62,17 @@ inline PreCSR<T>::~PreCSR() {}
 template<class T>
 inline PreCSR<T>::PreCSR(int _rows, int _cols) : ROWS(_rows), COLS(_cols) {
 	this->data = std::vector<std::vector<std::pair<int, T> > >(_rows);
+}
+
+
+template<class T>
+inline PreCSR<T>::PreCSR(CSR<T> _matrix) : ROWS(_matrix.ROWS), COLS(_matrix.COLS) {
+	this->data = std::vector<std::vector<std::pair<int, T> > >(_matrix.ROWS);
+	for (int i = 0; i < _matrix.ROWS; i++) {
+		for (int k = _matrix.indptr[i]; k < _matrix.indptr[i + 1]; k++) {
+			this->data[i].push_back(std::pair<int, T>(_matrix.indices[k], _matrix.data[k]));
+		}
+	}
 }
 
 

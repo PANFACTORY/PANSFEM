@@ -111,7 +111,11 @@ void PANSFEM::LinearField::SolveEquation() {
 
 	//----------˜A—§•û’öŽ®‚ð‰ð‚­----------
 	CSR<double> K2 = CSR<double>(K);
-	std::vector<double> res = BiCGSTAB(K2, F, 20000, 1.0e-8);
+	//CSR<double> M = ILU0(K2);
+	//std::vector<double> res = CG(K2, F, 100000, 1.0e-10);
+	std::vector<double> res = SORCG(K2, F, 100000, 1.0e-10);
+	//std::vector<double> res = ILU0CG(K2, M, F, 100000, 1.0e-10);
+	//std::vector<double> res = ILU0BiCGSTAB(K2, M, F, 100000, 1.0e-10);
 
 	//----------‰ð‚Ì‘ã“ü----------
 	int iresult = 0;
