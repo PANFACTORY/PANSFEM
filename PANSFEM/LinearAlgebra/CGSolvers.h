@@ -1,5 +1,5 @@
 //*****************************************************************************
-//Title		:BiCGSTAB.h
+//Title		:LinearAlgebra/CGSolvers.h
 //Author	:Tanabe Yuta
 //Date		:2019/09/09
 //Copyright	:(C)2019 TanabeYuta
@@ -355,25 +355,24 @@ std::vector<T> SOR(CSR<T> &_A, std::vector<T> &_b, T _w, int _itrmax, T _eps) {
 
 //********************SOR法前処理付きCG法********************
 template<class T>
-std::vector<T> SORCG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps) {
+std::vector<T> SORCG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps, T _omega) {
 	//----------初期化----------
-	T omega = 1.7;
 	std::vector<T> xk(_b.size(), T());
 	std::vector<T> rk = subtract(_b, _A*xk);
-	std::vector<T> pk = SOR(_A, rk, omega, 50, 1.0e-10);				//前処理
+	std::vector<T> pk = SOR(_A, rk, _omega, 100, 1.0e-10);				//前処理
 	T bnorm = std::inner_product(_b.begin(), _b.end(), _b.begin(), T());
 
 	//----------反復計算----------
 	for (int k = 0; k < _itrmax; ++k) {
 		std::vector<T> Apk = _A * pk;
 
-		std::vector<T> Mrk = SOR(_A, rk, omega, 50, 1.0e-10);			//前処理
+		std::vector<T> Mrk = SOR(_A, rk, _omega, 100, 1.0e-10);			//前処理
 
 		T alpha = std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T()) / std::inner_product(pk.begin(), pk.end(), Apk.begin(), T());
 		std::vector<T> xkp1 = add(xk, alpha, pk);
 		std::vector<T> rkp1 = subtract(rk, alpha, Apk);
 
-		std::vector<T> Mrkp1 = SOR(_A, rkp1, omega, 50, 1.0e-10);		//前処理
+		std::vector<T> Mrkp1 = SOR(_A, rkp1, _omega, 100, 1.0e-10);		//前処理
 
 		T beta = std::inner_product(Mrkp1.begin(), Mrkp1.end(), rkp1.begin(), T()) / std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T());
 		std::vector<T> pkp1 = add(Mrkp1, beta, pk);

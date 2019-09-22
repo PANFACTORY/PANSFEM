@@ -235,7 +235,7 @@ int main() {
 	//	N = 167680
 	//	data = 27010462
 	//	☞325MB
-	std::string model9_path = "Data/Input/Structure/CubicBeam3/";
+	std::string model9_path = "Data/Input/Structure/CubicBeam2/";
 	StaticSystem model9 = StaticSystem(3, 3);
 	model9.ImportNode(model9_path + "Node.csv");
 	model9.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model9_path + "Element.csv");

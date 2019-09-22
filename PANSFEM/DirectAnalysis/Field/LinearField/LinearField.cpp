@@ -9,7 +9,7 @@
 #include "LinearField.h"
 #include "../../../LinearAlgebra/CSR.h"
 #include "../../../LinearAlgebra/PreCSR.h"
-#include "../../../LinearAlgebra/BiCGSTAB.h"
+#include "../../../LinearAlgebra/CGSolvers.h"
 
 
 //**********CLAPACK‚¨‚æ‚ÑOpenBLAS‚Ìİ’è**********
@@ -112,12 +112,12 @@ void PANSFEM::LinearField::SolveEquation() {
 	//----------˜A—§•û’ö®‚ğ‰ğ‚­----------
 	CSR<double> K2 = CSR<double>(K);
 
-	Scaling(K2, F);
+	//Scaling(K2, F);
 
-	CSR<double> M = ILU0(K2);
-	//std::vector<double> res = CG(K2, F, 100000, 1.0e-10);
-	//std::vector<double> res = SORCG(K2, F, 100000, 1.0e-10);
-	std::vector<double> res = ILU0CG(K2, M, F, 100000, 1.0e-10);
+	//CSR<double> M = ILU0(K2);
+	std::vector<double> res = CG(K2, F, 100000, 1.0e-10);
+	//std::vector<double> res = SORCG(K2, F, 100000, 1.0e-10, 1.7);
+	//std::vector<double> res = ILU0CG(K2, M, F, 100000, 1.0e-10);
 	//std::vector<double> res = ILU0BiCGSTAB(K2, M, F, 100000, 1.0e-10);
 
 	//----------‰ğ‚Ì‘ã“ü----------
