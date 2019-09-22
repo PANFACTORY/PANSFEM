@@ -208,7 +208,7 @@ int main() {
 
 	//----------直梁（直方体要素）モデル----------
 	std::string model8_path = "Data/Input/Structure/CubicBeam/";
-	StaticSystem model8 = StaticSystem(3, 3);
+	/*StaticSystem model8 = StaticSystem(3, 3);
 	model8.ImportNode(model8_path + "Node.csv");
 	model8.ImportElement<Cubic, Cubic, Cubic, Cubic>({ 0, 1, 2 }, 12, model8_path + "Element.csv");
 	model8.ImportParameter({ 0, 1 }, model8_path + "Parameter.csv");
@@ -219,7 +219,7 @@ int main() {
 	model8.Schedule();
 	//model8.Show();
 	model8.Export("Data/Output/model8");
-	
+	*/
 
 	//----------直梁（直方体2次要素）モデル----------
 	//	N = 167680
@@ -235,8 +235,8 @@ int main() {
 	//	N = 167680
 	//	data = 27010462
 	//	☞325MB
-	std::string model9_path = "Data/Input/Structure/CubicBeam2/";
-	/*StaticSystem model9 = StaticSystem(3, 3);
+	std::string model9_path = "Data/Input/Structure/CubicBeam3/";
+	StaticSystem model9 = StaticSystem(3, 3);
 	model9.ImportNode(model9_path + "Node.csv");
 	model9.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model9_path + "Element.csv");
 	model9.ImportParameter({ 0, 1 }, model9_path + "Parameter.csv");
@@ -247,7 +247,7 @@ int main() {
 	model9.Schedule();
 	//model9.Show();
 	model9.Export("Data/Output/model9mod");
-	*/
+	
 
 	//----------二次元ラーメンモデル----------
 	std::string model10_path = "Data/Input/StructuralElement/Ramen/";

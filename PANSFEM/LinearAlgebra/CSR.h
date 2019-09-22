@@ -49,6 +49,8 @@ public:
 	friend std::vector<F> PreILU0(CSR<F> &_A, std::vector<F> &_b);		//不完全LU(0)分解前処理
 	template<class T>
 	friend std::vector<T> SOR(CSR<T> &_A, std::vector<T> &_b, T _w, int _itrmax, T _eps);	//SOR法
+	template<class T>
+	friend void Scaling(CSR<T>& _A, std::vector<T>& _b);				//連立方程式のスケーリング
 
 
 	template<class F>

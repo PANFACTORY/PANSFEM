@@ -57,21 +57,24 @@ class Cubic(Element):
         self.Edges.append([self.Nodes[1], self.Nodes[2]])
         self.Edges.append([self.Nodes[2], self.Nodes[3]])
         self.Edges.append([self.Nodes[3], self.Nodes[0]])
-        self.Edges.append([self.Nodes[0], self.Nodes[4]])
-        self.Edges.append([self.Nodes[1], self.Nodes[5]])
-        self.Edges.append([self.Nodes[2], self.Nodes[6]])
-        self.Edges.append([self.Nodes[3], self.Nodes[7]])
+        
         self.Edges.append([self.Nodes[4], self.Nodes[5]])
         self.Edges.append([self.Nodes[5], self.Nodes[6]])
         self.Edges.append([self.Nodes[6], self.Nodes[7]])
         self.Edges.append([self.Nodes[7], self.Nodes[4]])
+
+        self.Edges.append([self.Nodes[0], self.Nodes[4]])
+        self.Edges.append([self.Nodes[1], self.Nodes[5]])
+        self.Edges.append([self.Nodes[2], self.Nodes[6]])
+        self.Edges.append([self.Nodes[3], self.Nodes[7]])
+
         for i in range(12):
             self.AdditionalNodes.append(None)
         
 
 #**********メイン処理**********
-file_path = "Optimize/AlternativeBeam/" #ファイルパス
-DOF = 2                        #節点自由度
+file_path = ""                #ファイルパス
+DOF = 3                        #節点自由度
 #NOA = 2                       #一辺辺りに追加する節点数
 
 #----------ファイルから節点生成----------
@@ -92,7 +95,7 @@ with open(file_path + "Element.csv", 'r') as gp:
         line = gp.readline()
         if(not line):
             break
-        elements.append(Quadrangle(line))
+        elements.append(Cubic(line))
 
 #----------節点の追加----------
 for i in range(len(elements)):
