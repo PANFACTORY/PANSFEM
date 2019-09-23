@@ -109,7 +109,7 @@ std::vector<T> CG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps) {
 
 		//----------収束判定----------
 		T rnorm = std::inner_product(rk.begin(), rk.end(), rk.begin(), T());
-		std::cout << "k = " << k << "\teps = " << rnorm / bnorm << std::endl;
+		//std::cout << "k = " << k << "\teps = " << rnorm / bnorm << std::endl;
 		if (rnorm < _eps*bnorm) {
 			std::cout << "\tConvergence:" << k << std::endl;
 			return xk;
@@ -353,34 +353,102 @@ std::vector<T> SOR(CSR<T> &_A, std::vector<T> &_b, T _w, int _itrmax, T _eps) {
 }
 
 
-//********************SOR法前処理付きCG法********************
+//********************対角行列（ベクトル形式）の取得********************
 template<class T>
-std::vector<T> SORCG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps, T _omega) {
+std::vector<T> GetScaling(CSR<T>& _A) {
+	std::vector<T> v(_A.ROWS);
+	for (int i = 0; i < _A.ROWS; i++) {
+		v[i] = _A.get(i, i);
+	}
+	return v;
+}
+
+
+//********************対角スケーリング********************
+template<class T>
+std::vector<T> Scaling(std::vector<T>& _D, std::vector<T>& _b) {
+	std::vector<T> v(_D.size());
+	for (int i = 0; i < _D.size(); i++) {
+		v[i] = _b[i] / _D[i];
+	}
+	return v;
+}
+
+
+//********************対角スケーリング前処理付きCG法********************
+template<class T>
+std::vector<T> ScalingCG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps) {
 	//----------初期化----------
+	std::vector<T> D = GetScaling(_A);					//前処理用対角行列
 	std::vector<T> xk(_b.size(), T());
 	std::vector<T> rk = subtract(_b, _A*xk);
-	std::vector<T> pk = SOR(_A, rk, _omega, 100, 1.0e-10);				//前処理
+	std::vector<T> pk = Scaling(D, rk);				//前処理
 	T bnorm = std::inner_product(_b.begin(), _b.end(), _b.begin(), T());
+
+	std::vector<T> Mrk = Scaling(D, rk);			//前処理
+	T Mrkdotrk = std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T());
 
 	//----------反復計算----------
 	for (int k = 0; k < _itrmax; ++k) {
 		std::vector<T> Apk = _A * pk;
-
-		std::vector<T> Mrk = SOR(_A, rk, _omega, 100, 1.0e-10);			//前処理
-
-		T alpha = std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T()) / std::inner_product(pk.begin(), pk.end(), Apk.begin(), T());
+		T alpha = Mrkdotrk / std::inner_product(pk.begin(), pk.end(), Apk.begin(), T());
 		std::vector<T> xkp1 = add(xk, alpha, pk);
 		std::vector<T> rkp1 = subtract(rk, alpha, Apk);
-
-		std::vector<T> Mrkp1 = SOR(_A, rkp1, _omega, 100, 1.0e-10);		//前処理
-
-		T beta = std::inner_product(Mrkp1.begin(), Mrkp1.end(), rkp1.begin(), T()) / std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T());
+		std::vector<T> Mrkp1 = Scaling(D, rkp1);	//前処理
+		T Mrkp1dotrkp1 = std::inner_product(Mrkp1.begin(), Mrkp1.end(), rkp1.begin(), T());
+		T beta = Mrkp1dotrkp1 / Mrkdotrk;
 		std::vector<T> pkp1 = add(Mrkp1, beta, pk);
 
 		//----------値の更新----------
 		xk = xkp1;
 		rk = rkp1;
 		pk = pkp1;
+		Mrk = Mrkp1;
+		Mrkdotrk = Mrkp1dotrkp1;
+
+		//----------収束判定----------
+		T rnorm = std::inner_product(rk.begin(), rk.end(), rk.begin(), T());
+		//std::cout << "k = " << k << "\teps = " << rnorm / bnorm << std::endl;
+		if (rnorm < _eps*bnorm) {
+			std::cout << "\tConvergence:" << k << std::endl;
+			return xk;
+		}
+	}
+
+	std::cout << "\nConvergence:faild" << std::endl;
+	return xk;
+}
+
+
+//********************SOR法前処理付きCG法********************
+template<class T>
+std::vector<T> SORCG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps, T _omega) {
+	//----------初期化----------
+	std::vector<T> xk(_b.size(), T());
+	std::vector<T> rk = subtract(_b, _A*xk);
+	std::vector<T> pk = SOR(_A, rk, _omega, 50, 1.0e-10);				//前処理
+	T bnorm = std::inner_product(_b.begin(), _b.end(), _b.begin(), T());
+
+	std::vector<T> Mrk = SOR(_A, rk, _omega, 50, 1.0e-10);				//前処理
+	T Mrkdotrk = std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T());
+
+	//----------反復計算----------
+	for (int k = 0; k < _itrmax; ++k) {
+		std::vector<T> Apk = _A * pk;
+		T alpha = Mrkdotrk / std::inner_product(pk.begin(), pk.end(), Apk.begin(), T());
+		std::vector<T> xkp1 = add(xk, alpha, pk);
+		std::vector<T> rkp1 = subtract(rk, alpha, Apk);
+		std::vector<T> Mrkp1 = SOR(_A, rkp1, _omega, 50, 1.0e-10);		//前処理
+		T Mrkp1dotrkp1 = std::inner_product(Mrkp1.begin(), Mrkp1.end(), rkp1.begin(), T());
+		T beta = Mrkp1dotrkp1 / Mrkdotrk;
+		std::vector<T> pkp1 = add(Mrkp1, beta, pk);
+
+		//----------値の更新----------
+		xk = xkp1;
+		rk = rkp1;
+		pk = pkp1;
+		Mrk = Mrkp1;
+		Mrkdotrk = Mrkp1dotrkp1;
 
 		//----------収束判定----------
 		T rnorm = std::inner_product(rk.begin(), rk.end(), rk.begin(), T());
@@ -393,28 +461,4 @@ std::vector<T> SORCG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps, T _ome
 
 	std::cout << "\nConvergence:faild" << std::endl;
 	return xk;
-}
-
-
-//********************連立方程式のスケーリング********************
-template<class T>
-void Scaling(CSR<T>& _A, std::vector<T>& _b) {
-	for (int i = 0; i < _A.ROWS; i++) {
-		//----------第i行目の最大値取得----------
-		T largest = T();
-		for (int k = _A.indptr[i]; k < _A.indptr[i + 1]; k++) {
-			if (largest < fabs(_A.data[k])) {
-				largest = fabs(_A.data[k]);
-			}
-		}
-		if (fabs(largest) < fabs(_b[i])) {
-			largest = _b[i];
-		}
-
-		//----------第i行目を最大値で割る----------
-		for (int k = _A.indptr[i]; k < _A.indptr[i + 1]; k++) {
-			_A.data[k] /= largest;
-		}
-		_b[i] /= largest;
-	}
 }

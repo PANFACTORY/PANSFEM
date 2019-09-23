@@ -6,6 +6,9 @@
 //*****************************************************************************
 
 
+#include <chrono>
+
+
 #include "LinearField.h"
 #include "../../../LinearAlgebra/CSR.h"
 #include "../../../LinearAlgebra/PreCSR.h"
@@ -34,8 +37,12 @@ PANSFEM::LinearField::LinearField(std::vector<int> _ulist) : Field(_ulist){}
 
 void PANSFEM::LinearField::SolveEquation() {
 	//----------要素―節点方程式の計算----------
-	for (auto& pequation : this->pequations) {
+	/*for (auto& pequation : this->pequations) {
 		pequation->SetEquation();
+	}*/
+#pragma omp parallel for
+	for (int i = 0; i < this->pequations.size(); i++) {
+		this->pequations[i]->SetEquation();
 	}
 
 	//----------全体―節点方程式のアセンブリング----------
@@ -114,11 +121,18 @@ void PANSFEM::LinearField::SolveEquation() {
 
 	//Scaling(K2, F);
 
+	std::chrono::system_clock::time_point start, end;
+	start = std::chrono::system_clock::now();
+
 	//CSR<double> M = ILU0(K2);
-	std::vector<double> res = CG(K2, F, 100000, 1.0e-10);
-	//std::vector<double> res = SORCG(K2, F, 100000, 1.0e-10, 1.7);
-	//std::vector<double> res = ILU0CG(K2, M, F, 100000, 1.0e-10);
-	//std::vector<double> res = ILU0BiCGSTAB(K2, M, F, 100000, 1.0e-10);
+	//std::vector<double> res = CG(K2, F, this->KDEGREE, 1.0e-10);
+	//std::vector<double> res = SORCG(K2, F, this->KDEGREE, 1.0e-10, 1.7);
+	std::vector<double> res = ScalingCG(K2, F, this->KDEGREE, 1.0e-10);
+	//std::vector<double> res = ILU0CG(K2, M, F, this->KDEGREE, 1.0e-10);
+	//std::vector<double> res = ILU0BiCGSTAB(K2, M, F, this->KDEGREE, 1.0e-10);
+
+	end = std::chrono::system_clock::now();
+	std::cout << static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0) << std::endl;
 
 	//----------解の代入----------
 	int iresult = 0;

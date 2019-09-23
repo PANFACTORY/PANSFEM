@@ -48,6 +48,9 @@
     <ClCompile Include="DirectAnalysis\Equation\StructuralElement\ElasticPlasticTruss2D\ElasticPlasticTruss2D.cpp" />
     <ClCompile Include="LinearAlgebra\CSR.cpp" />
     <ClCompile Include="LinearAlgebra\PreCSR.cpp" />
+    <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedIsotropicElastic\OptimizedIsotropicElastic.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\ComplianceIsotropicElastic.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Weight\WeightIsotropicElastic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
@@ -97,6 +100,9 @@
     <ClInclude Include="LinearAlgebra\CSR.h" />
     <ClInclude Include="LinearAlgebra\PreCSR.h" />
     <ClInclude Include="LinearAlgebra\CGSolvers.h" />
+    <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedIsotropicElastic\OptimizedIsotropicElastic.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\ComplianceIsotropicElastic.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Weight\WeightIsotropicElastic.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

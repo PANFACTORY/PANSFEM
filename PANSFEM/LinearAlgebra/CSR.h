@@ -50,7 +50,7 @@ public:
 	template<class T>
 	friend std::vector<T> SOR(CSR<T> &_A, std::vector<T> &_b, T _w, int _itrmax, T _eps);	//SOR法
 	template<class T>
-	friend void Scaling(CSR<T>& _A, std::vector<T>& _b);				//連立方程式のスケーリング
+	friend std::vector<T> GetScaling(CSR<T>& _A);						//連立方程式のスケーリング
 
 
 	template<class F>

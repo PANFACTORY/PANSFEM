@@ -57,6 +57,10 @@
 #include "InverseAnalysis/System/CONLINSystem/CONLINSystem.h"
 
 
+#include "InverseAnalysis/Equation/Structure/OptimizedIsotropicElastic/OptimizedIsotropicElastic.h"
+#include "InverseAnalysis/Function/Structure/Compliance/ComplianceIsotropicElastic.h"
+#include "InverseAnalysis/Function/Structure/Weight/WeightIsotropicElastic.h"
+
 
 using namespace PANSFEM;
 
@@ -236,7 +240,7 @@ int main() {
 	//	data = 27010462
 	//	☞325MB
 	std::string model9_path = "Data/Input/Structure/CubicBeam2/";
-	StaticSystem model9 = StaticSystem(3, 3);
+	/*StaticSystem model9 = StaticSystem(3, 3);
 	model9.ImportNode(model9_path + "Node.csv");
 	model9.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model9_path + "Element.csv");
 	model9.ImportParameter({ 0, 1 }, model9_path + "Parameter.csv");
@@ -246,8 +250,8 @@ int main() {
 	model9.ImportNeumann(0, model9_path + "Neumann.csv");
 	model9.Schedule();
 	//model9.Show();
-	model9.Export("Data/Output/model9mod");
-	
+	model9.Export("Data/Output/model9");
+	*/
 
 	//----------二次元ラーメンモデル----------
 	std::string model10_path = "Data/Input/StructuralElement/Ramen/";
@@ -264,7 +268,7 @@ int main() {
 	model10.Export("Data/Output/model10");
 	*/
 
-	//----------トポロジー最適化モデル（2D曲がり梁）----------
+	//----------トポロジー最適化モデル（2D橋）----------
 	//	パラメータ
 	//		0	:ρ		密度
 	//		1	:Emax	Young率最大値
@@ -475,6 +479,41 @@ int main() {
 	//model18.Show();
 	model18.Export("Data/Output/model18");
 	*/
+
+	//----------トポロジー最適化モデル（3D梁）----------
+	//	パラメータ
+	//		0	:ρ		密度
+	//		1	:Emax	Young率最大値
+	//		2	:Emin	Young率最小値
+	//		3	:V		Poisson比
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//		2	:uz		z軸方向変位
+	//	設計パラメータ
+	//		0	:ρ		密度（パラメータ0番）
+	//
+	//------------------------------------------------------
+	std::string model19_path = "Data/Input/Optimize/Beam3D/";
+	OCSystem model19 = OCSystem(3, 3, { 0 });
+
+	model19.ImportNode(model19_path + "Node.csv");
+	model19.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model19_path + "Element.csv");
+	model19.ImportParameter({ 0, 1, 2, 3 }, model19_path + "Parameter.csv");
+	model19.ImportField<LinearField>({ 0, 1, 2 });
+	model19.ImportEquation<OptimizedIsotropicElastic, GaussCubic2>(0, {}, { 0, 1, 2, 3 }, model19_path + "Equation.csv");
+	model19.ImportDirichlet(model19_path + "Dirichlet.csv");
+	model19.ImportNeumann(0, model19_path + "Neumann.csv");
+
+	model19.ImportOptimizedElement(model19_path + "Equation.csv");
+	model19.ImportObjective<ComplianceIsotropicElastic>({ 0, 1, 2 }, { 0, 1, 2, 3 });
+	model19.ImportElementToObjective<GaussCubic2>(0, model19_path + "Equation.csv");
+	model19.ImportConstraint<WeightIsotropicElastic>({}, { 0 });
+	model19.ImportElementToConstraint<GaussCubic2>(0, model19_path + "Equation.csv");
+
+	model19.Schedule();
+	model19.Export("Data/Output/model19");
+	
 
 	std::cout << "--------------------Finish--------------------" << std::endl;
 
