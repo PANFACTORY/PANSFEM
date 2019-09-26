@@ -18,9 +18,8 @@ PANSFEM::WeightIsotropicElastic::WeightIsotropicElastic(std::vector<int> _plist,
 
 
 Eigen::VectorXd PANSFEM::WeightIsotropicElastic::sensitivitis() {
-	Eigen::VectorXd dweight = Eigen::VectorXd::Zero(this->NOP*this->pelements.size());
+	Eigen::VectorXd dweight = Eigen::VectorXd::Zero(this->NOP*this->parametersindex.size());
 
-	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
 
@@ -30,8 +29,7 @@ Eigen::VectorXd PANSFEM::WeightIsotropicElastic::sensitivitis() {
 		};
 
 		//----------要素毎の積分計算----------
-		dweight[i] += this->pintegrations[pelement]->Integrate(f);
-		i++;
+		dweight[this->parametersindex[pelement->pparameter]] += this->pintegrations[pelement]->Integrate(f);
 	}
 
 	return dweight;

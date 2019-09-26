@@ -18,7 +18,6 @@
 #include "../Element/Element.h"
 #include "../Field/Field.h"
 #include "../Equation/Equation.h"
-#include "../Neumann/Neumann.h"
 
 
 namespace PANSFEM {
@@ -43,7 +42,7 @@ namespace PANSFEM {
 		template<class E, class I>
 		bool ImportEquation(int _fi, std::vector<int> _refulist, std::vector<int> _plist, std::string _fname);	//場を構成する方程式を入力
 		bool ImportDirichlet(std::string _fname);			//Dirichlet境界条件を入力
-		bool ImportNeumann(int _fi, std::string _fname);	//Neumann境界条件を入力
+		bool ImportNeumann(std::string _fname);				//Neumann境界条件を入力
 
 
 		virtual void Schedule() = 0;						//場の方程式を解く順番，タイミングを管理
@@ -55,7 +54,6 @@ namespace PANSFEM {
 		std::vector<Node*> pnodes;				//系を構成する節点
 		std::vector<Element*> pelements;		//系を構成する要素
 		std::vector<Field*> pfields;			//系を構成する場
-		std::vector<Neumann*> pneumanns;		//系に課せられたNeumann条件
 		std::vector<Parameter*> pparameters;	//系内の要素に割り当てられたパラメータ
 	};
 

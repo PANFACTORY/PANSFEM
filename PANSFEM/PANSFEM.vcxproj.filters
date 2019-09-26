@@ -11,7 +11,6 @@
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Square\GaussSquare.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Gauss\Triangle\GaussTriangle.cpp" />
     <ClCompile Include="DirectAnalysis\Integration\Integration.cpp" />
-    <ClCompile Include="DirectAnalysis\Neumann\Neumann.cpp" />
     <ClCompile Include="DirectAnalysis\Node\Node.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle\Quadrangle.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Triangle\Triangle.cpp" />
@@ -63,7 +62,6 @@
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Square\GaussSquare.h" />
     <ClInclude Include="DirectAnalysis\Integration\Gauss\Triangle\GaussTriangle.h" />
     <ClInclude Include="DirectAnalysis\Integration\Integration.h" />
-    <ClInclude Include="DirectAnalysis\Neumann\Neumann.h" />
     <ClInclude Include="DirectAnalysis\Node\Node.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle\Quadrangle.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Triangle\Triangle.h" />

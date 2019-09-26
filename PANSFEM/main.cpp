@@ -129,20 +129,20 @@ int main() {
 
 	//----------熱はり曲げモデル----------
 	std::string model4_path = "Data/Input/HeatAndStructure/StaticHeatBeam/";
-	/*StaticSystem model4 = StaticSystem(2, 3);
+	StaticSystem model4 = StaticSystem(2, 3);
 	model4.ImportNode(model4_path + "Node.csv");
-	model4.ImportElement<Quadrangle, Quadrangle, Quadrangle, Quadrangle>({ 0, 1, 2 }, 9, model4_path + "Element.csv");
 	model4.ImportParameter({ 0, 1, 2, 3, 4 }, model4_path + "Parameter.csv");
+	model4.ImportElement<Quadrangle, Quadrangle, Quadrangle, Quadrangle>({ 0, 1, 2 }, 9, model4_path + "Element.csv");
 	model4.ImportField<LinearField>({ 2 });		//熱伝導場
 	model4.ImportEquation<HeatTransferStatic2D, GaussSquare>(0, {}, { 4 }, model4_path + "Equation.csv");
 	model4.ImportField<LinearField>({ 0, 1 });	//熱応力場
 	model4.ImportEquation<PlaneStrainWithHeat, GaussSquare>(1, { 2 }, { 0, 1, 2, 3 }, model4_path + "Equation.csv");
 	model4.ImportDirichlet(model4_path + "Dirichlet.csv");
-	model4.ImportNeumann(0, model4_path + "Neumann2.csv");
-	model4.ImportNeumann(1, model4_path + "Neumann1.csv");
+	model4.ImportNeumann(model4_path + "Neumann2.csv");
+	model4.ImportNeumann(model4_path + "Neumann1.csv");
 	model4.Schedule();
 	model4.Export("Data/Output/model4");
-	*/
+	
 
 	//----------非定常熱伝導モデル----------
 	std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
@@ -175,7 +175,7 @@ int main() {
 	//	NB=5974
 	//------------------------------------------------------
 	std::string model6_path = "Data/Input/Optimize/QuadrangleBeam/";
-	OCSystem model6 = OCSystem(2, 2, { 0 });
+	/*OCSystem model6 = OCSystem(2, 2, { 0 });
 	
 	model6.ImportNode(model6_path + "Node.csv");
 	model6.ImportParameter({ 0, 1, 2, 3, 4 }, model6_path + "Parameter.csv");
@@ -183,7 +183,7 @@ int main() {
 	model6.ImportField<LinearField>({ 0, 1 });
 	model6.ImportEquation<OptimizedPlaneStrain, GaussSquare2>(0, {}, { 0, 1, 2, 3, 4 }, model6_path + "Equation.csv");
 	model6.ImportDirichlet(model6_path + "Dirichlet.csv");
-	model6.ImportNeumann(0, model6_path + "Neumann.csv");
+	model6.ImportNeumann(model6_path + "Neumann.csv");
 	
 	model6.ImportOptimizedParameter(model6_path + "Equation.csv");
 	model6.ImportObjective<Compliance>({ 0, 1 }, { 0, 1, 2, 3, 4 });
@@ -193,7 +193,7 @@ int main() {
 	
 	model6.Schedule();
 	model6.Export("Data/Output/model6");
-	
+	*/
 
 	//----------直梁（四角形要素）モデル----------
 	std::string model7_path = "Data/Input/Structure/QuadrangleBeam2/";
@@ -469,12 +469,12 @@ int main() {
 	std::string model18_path = "Data/Input/StructuralElement/ElasticPlasticTruss/";
 	/*StaticSystem model18 = StaticSystem(2, 2);
 	model18.ImportNode(model18_path + "Node.csv");
-	model18.ImportElement<Triangle, Triangle, Triangle>({ 0, 1 }, 3, model18_path + "Element.csv");
 	model18.ImportParameter({ 0, 1, 2, 3 }, model18_path + "Parameter.csv");
+	model18.ImportElement<Triangle, Triangle, Triangle>({ 0, 1 }, 3, model18_path + "Element.csv");
 	model18.ImportField<NonLinearField>({ 0, 1 });
 	model18.ImportEquation<ElasticPlasticTruss2D, GaussTriangle>(0, {}, { 0, 1, 2, 3 }, model18_path + "Equation.csv");
 	model18.ImportDirichlet(model18_path + "Dirichlet.csv");
-	model18.ImportNeumann(0, model18_path + "Neumann.csv");
+	model18.ImportNeumann(model18_path + "Neumann.csv");
 	model18.Schedule();
 	//model18.Show();
 	model18.Export("Data/Output/model18");
@@ -498,14 +498,14 @@ int main() {
 	/*OCSystem model19 = OCSystem(3, 3, { 0 });
 
 	model19.ImportNode(model19_path + "Node.csv");
-	model19.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model19_path + "Element.csv");
 	model19.ImportParameter({ 0, 1, 2, 3 }, model19_path + "Parameter.csv");
+	model19.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model19_path + "Element.csv");
 	model19.ImportField<LinearField>({ 0, 1, 2 });
 	model19.ImportEquation<OptimizedIsotropicElastic, GaussCubic2>(0, {}, { 0, 1, 2, 3 }, model19_path + "Equation.csv");
 	model19.ImportDirichlet(model19_path + "Dirichlet.csv");
 	model19.ImportNeumann(0, model19_path + "Neumann.csv");
 
-	model19.ImportOptimizedElement(model19_path + "Equation.csv");
+	model19.ImportOptimizedParameter(model19_path + "Equation.csv");
 	model19.ImportObjective<ComplianceIsotropicElastic>({ 0, 1, 2 }, { 0, 1, 2, 3 });
 	model19.ImportElementToObjective<GaussCubic2>(0, model19_path + "Equation.csv");
 	model19.ImportConstraint<WeightIsotropicElastic>({}, { 0 });

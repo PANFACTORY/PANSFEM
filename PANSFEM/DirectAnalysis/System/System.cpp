@@ -161,7 +161,7 @@ bool PANSFEM::System::ImportDirichlet(std::string _fname){
 }
 
 
-bool PANSFEM::System::ImportNeumann(int _fi, std::string _fname){
+bool PANSFEM::System::ImportNeumann(std::string _fname){
 	//----------Neumann境界条件を読み込む----------
 	std::ifstream ifs(_fname);
 
@@ -188,21 +188,16 @@ bool PANSFEM::System::ImportNeumann(int _fi, std::string _fname){
 			std::getline(sbuf, str, ',');
 			Node* pnode = this->pnodes[stoi(str)];
 
-			//.....Neumann境界値を定める.....
-			std::vector<double> q;
-			std::vector<int> qlist;
+			//.....節点の従属変数の等価フラックスの値を読み込む.....
 			for (int i = 0; i < this->DOU; i++) {
 				std::getline(sbuf, str, ',');
 				if (str != "free") {
 					if (pnode->us_to_un.find(i) != pnode->us_to_un.end()) {
-						qlist.push_back(i);
-						q.push_back(stod(str));
+						pnode->is_qfixed[pnode->us_to_un[i]] = true;
+						pnode->q[pnode->us_to_un[i]] = stod(str);
 					}
 				}
 			}
-
-			//.....節点のNeumann境界条件値を読み込む.....
-			this->pfields[_fi]->pneumanns.push_back(new Neumann(pnode, q, qlist));
 		}		
 	}
 

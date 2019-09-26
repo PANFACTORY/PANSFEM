@@ -19,9 +19,8 @@ PANSFEM::WeightAlternative::WeightAlternative(std::vector<int> _plist, std::vect
 
 
 Eigen::VectorXd PANSFEM::WeightAlternative::sensitivitis(){
-	Eigen::VectorXd dweight = Eigen::VectorXd::Zero(this->NOP*this->pelements.size());
+	Eigen::VectorXd dweight = Eigen::VectorXd::Zero(this->NOP*this->parametersindex.size());
 
-	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
 		double s = pelement->pparameter->parameters[this->refpf_to_us[0]];
@@ -34,8 +33,7 @@ Eigen::VectorXd PANSFEM::WeightAlternative::sensitivitis(){
 		double d = (dmax - dmin)*s + dmin;
 
 		//----------要素毎の感度計算----------
-		dweight[i] += 4.0*(dmax - dmin)*(l - d)*t*rho;
-		i++;
+		dweight[this->parametersindex[pelement->pparameter]] += 4.0*(dmax - dmin)*(l - d)*t*rho;
 	}
 
 	return dweight;

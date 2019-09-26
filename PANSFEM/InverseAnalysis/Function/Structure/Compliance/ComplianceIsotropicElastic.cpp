@@ -19,7 +19,7 @@ PANSFEM::ComplianceIsotropicElastic::ComplianceIsotropicElastic(std::vector<int>
 
 
 Eigen::VectorXd PANSFEM::ComplianceIsotropicElastic::sensitivitis() {
-	Eigen::VectorXd dcompliance = Eigen::VectorXd::Zero(this->NOP*this->pelements.size());
+	Eigen::VectorXd dcompliance = Eigen::VectorXd::Zero(this->NOP*this->parametersindex.size());
 
 	//----------[A]の生成----------
 	Eigen::MatrixXd A = Eigen::MatrixXd(6, 9);
@@ -30,7 +30,6 @@ Eigen::VectorXd PANSFEM::ComplianceIsotropicElastic::sensitivitis() {
 	A(4, 0) = 0.0;	A(4, 1) = 0.0;	A(4, 2) = 0.0;	A(4, 3) = 0.0;	A(4, 4) = 0.0;	A(4, 5) = 1.0;	A(4, 6) = 0.0;	A(4, 7) = 1.0;	A(4, 8) = 0.0;
 	A(5, 0) = 0.0;	A(5, 1) = 0.0;	A(5, 2) = 1.0;	A(5, 3) = 0.0;	A(5, 4) = 0.0;	A(5, 5) = 0.0;	A(5, 6) = 1.0;	A(5, 7) = 0.0;	A(5, 8) = 0.0;
 
-	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
 		double rho = pelement->pparameter->parameters[this->refpf_to_us[0]];
@@ -58,8 +57,7 @@ Eigen::VectorXd PANSFEM::ComplianceIsotropicElastic::sensitivitis() {
 		};
 
 		//----------要素毎の積分計算----------
-		dcompliance.block(i*this->NOP, 0, this->NOP, 1) += this->pintegrations[pelement]->Integrate(f);
-		i++;
+		dcompliance.block(this->parametersindex[pelement->pparameter]*this->NOP, 0, this->NOP, 1) += this->pintegrations[pelement]->Integrate(f);
 	}
 
 	return dcompliance;

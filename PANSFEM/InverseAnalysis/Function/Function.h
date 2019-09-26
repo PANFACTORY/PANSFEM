@@ -31,7 +31,8 @@ namespace PANSFEM {
 		std::vector<int> pf_to_ps;							//設計変数の関数内番号→系のパラメータ番号
 		std::vector<int> refuf_to_us;						//関数が参照する従属変数の関数内番号→系の従属変数番号
 		std::vector<int> refpf_to_us;						//関数が参照するパラメータの関数内番号→系のパラメータ番号
-		std::vector<Element*> pelements;					//設計変数の定義された要素
+		std::vector<Element*> pelements;					//関数値および感度解析に必要な要素
+		std::map<Parameter*, int> parametersindex;			//設計変数が定義されたパラメータ
 		std::map<Element*, Integration*> pintegrations;		//要素毎の積分法
 
 

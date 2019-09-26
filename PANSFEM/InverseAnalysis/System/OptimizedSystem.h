@@ -56,6 +56,11 @@ namespace PANSFEM {
 				tmpfunction->pelements.push_back(pelement);
 			}
 		}
+		int i = 0;
+		for (auto poptimizedparameter : this->poptimizedparameters) {
+			tmpfunction->parametersindex[poptimizedparameter] = i;
+			i++;
+		}
 		this->pobjectives.push_back(tmpfunction);
 		return true;
 	}
@@ -68,6 +73,11 @@ namespace PANSFEM {
 			if (std::find(this->poptimizedparameters.begin(), this->poptimizedparameters.end(), pelement->pparameter) != this->poptimizedparameters.end()) {
 				tmpfunction->pelements.push_back(pelement);
 			}
+		}
+		int i = 0;
+		for (auto poptimizedparameter : this->poptimizedparameters) {
+			tmpfunction->parametersindex[poptimizedparameter] = i;
+			i++;
 		}
 		this->pconstraints.push_back(tmpfunction);
 		return true;

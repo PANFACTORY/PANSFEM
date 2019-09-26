@@ -19,9 +19,8 @@ PANSFEM::WeightAlternative3Phase::WeightAlternative3Phase(std::vector<int> _plis
 
 
 Eigen::VectorXd PANSFEM::WeightAlternative3Phase::sensitivitis() {
-	Eigen::VectorXd dweight = Eigen::VectorXd::Zero(this->NOP*this->pelements.size());
+	Eigen::VectorXd dweight = Eigen::VectorXd::Zero(this->NOP*this->parametersindex.size());
 
-	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
 		double s0 = pelement->pparameter->parameters[this->refpf_to_us[0]];
@@ -40,8 +39,7 @@ Eigen::VectorXd PANSFEM::WeightAlternative3Phase::sensitivitis() {
 		ddds(1, 0) = (dmax - dmin)*pow(s0, p);
 		
 		//----------要素毎の感度計算----------
-		dweight.block(i*this->NOP, 0, this->NOP, 1) += ddds * 4.0*(l - d)*t*rho;
-		i++;
+		dweight.block(this->parametersindex[pelement->pparameter]*this->NOP, 0, this->NOP, 1) += ddds * 4.0*(l - d)*t*rho;
 	}
 
 	return dweight;

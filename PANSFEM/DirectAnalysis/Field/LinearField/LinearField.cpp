@@ -50,14 +50,12 @@ void PANSFEM::LinearField::SolveEquation() {
 	std::vector<double> F = std::vector<double>(this->KDEGREE, 0.0);	//係数ベクトル
 
 	//.....Neumann境界条件の設定.....
-	for (auto pneumann : this->pneumanns) {
-		int Ki = this->Kmap[pneumann->pnode].first;					//全体―節点方程式の行インデックス
+	for (auto pnode : this->pnodes) {
+		int Ki = this->Kmap[pnode].first;																	//全体―節点方程式の行インデックス
 		for (auto usi : this->uf_to_us) {
-			if (pneumann->pnode->us_to_un.find(usi) != pneumann->pnode->us_to_un.end()) {	//節点で定義されているか
-				if (!pneumann->pnode->is_ufixed[pneumann->pnode->us_to_un[usi]]) {			//節点でDirichlet境界条件が与えられていないか
-					if (pneumann->q.find(usi) != pneumann->q.end()) {
-						F[Ki] += pneumann->q[usi];
-					}
+			if (pnode->us_to_un.find(usi) != pnode->us_to_un.end()) {										//節点で定義されているか
+				if (!pnode->is_ufixed[pnode->us_to_un[usi]] && pnode->is_qfixed[pnode->us_to_un[usi]]) {	//節点でDirichlet境界条件が与えられておらずNeumann境界条件が与えられているか
+					F[Ki] += pnode->q[usi];
 					Ki++;
 				}
 			}

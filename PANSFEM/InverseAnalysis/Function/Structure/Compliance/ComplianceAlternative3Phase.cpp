@@ -19,7 +19,7 @@ PANSFEM::ComplianceAlternative3Phase::ComplianceAlternative3Phase(std::vector<in
 
 
 Eigen::VectorXd PANSFEM::ComplianceAlternative3Phase::sensitivitis() {
-	Eigen::VectorXd dcompliance = Eigen::VectorXd::Zero(this->NOP*this->pelements.size());
+	Eigen::VectorXd dcompliance = Eigen::VectorXd::Zero(this->NOP*this->parametersindex.size());
 
 	//----------[A]の生成----------
 	Eigen::MatrixXd A = Eigen::MatrixXd(3, 4);
@@ -27,7 +27,6 @@ Eigen::VectorXd PANSFEM::ComplianceAlternative3Phase::sensitivitis() {
 	A(1, 0) = 0.0;	A(1, 1) = 0.0;	A(1, 2) = 0.0;	A(1, 3) = 1.0;
 	A(2, 0) = 0.0;	A(2, 1) = 1.0;	A(2, 2) = 1.0;	A(2, 3) = 0.0;
 
-	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
 		double s0 = pelement->pparameter->parameters[this->refpf_to_us[0]];
@@ -66,8 +65,7 @@ Eigen::VectorXd PANSFEM::ComplianceAlternative3Phase::sensitivitis() {
 		};
 
 		//----------要素毎の積分計算----------
-		dcompliance.block(i*this->NOP, 0, this->NOP, 1) += ddds * this->pintegrations[pelement]->Integrate(f);
-		i++;
+		dcompliance.block(this->parametersindex[pelement->pparameter]*this->NOP, 0, this->NOP, 1) += ddds * this->pintegrations[pelement]->Integrate(f);
 	}
 
 	return dcompliance;

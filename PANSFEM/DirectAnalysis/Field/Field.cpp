@@ -21,9 +21,6 @@ PANSFEM::Field::~Field(){
 	for (auto& pequation : this->pequations) {
 		delete pequation;
 	}
-	for (auto& pneumann : this->pneumanns) {
-		delete pneumann;
-	}
 }
 
 

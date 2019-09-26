@@ -26,7 +26,9 @@ namespace PANSFEM {
 
 		Eigen::VectorXd x;				//独立変数
 		Eigen::VectorXd u;				//従属変数
+		Eigen::VectorXd q;				//従属変数の等価フラックス
 		std::vector<bool> is_ufixed;	//従属変数が固定されているか
+		std::vector<bool> is_qfixed;	//従属変数の等価フラックスが固定されているか
 		std::map<int, int> us_to_un;	//系従属変数番号→節点従属変数番号
 	};
 }

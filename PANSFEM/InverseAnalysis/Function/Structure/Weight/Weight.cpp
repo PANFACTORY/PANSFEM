@@ -19,9 +19,8 @@ PANSFEM::Weight::Weight(std::vector<int> _plist, std::vector<int> _refulist, std
 
 
 Eigen::VectorXd PANSFEM::Weight::sensitivitis(){
-	Eigen::VectorXd dweight = Eigen::VectorXd::Zero(this->NOP*this->pelements.size());
+	Eigen::VectorXd dweight = Eigen::VectorXd::Zero(this->NOP*this->parametersindex.size());
 
-	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
 		double t = pelement->pparameter->parameters[this->refpf_to_us[1]];
@@ -32,8 +31,7 @@ Eigen::VectorXd PANSFEM::Weight::sensitivitis(){
 		};
 
 		//----------要素毎の積分計算----------
-		dweight[i] += this->pintegrations[pelement]->Integrate(f);
-		i++;
+		dweight[this->parametersindex[pelement->pparameter]] += this->pintegrations[pelement]->Integrate(f);
 	}
 
 	return dweight;
