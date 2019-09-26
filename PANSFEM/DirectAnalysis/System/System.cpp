@@ -22,6 +22,9 @@ PANSFEM::System::~System(){
 	for (auto& pfield : this->pfields) {
 		delete pfield;
 	}
+	for (auto& pparameter : this->pparameters) {
+		delete pparameter;
+	}
 }
 
 
@@ -49,22 +52,23 @@ bool PANSFEM::System::ImportNode(std::string _fname){
 
 		//.....節点IDを読み飛ばす.....
 		std::getline(sbuf, str, ',');
+		if (!str.empty()) {
+			//.....節点の独立変数の値を読み込む.....
+			std::vector<double> xs(this->DOX);
+			for (auto& x : xs) {
+				std::getline(sbuf, str, ',');
+				x = stod(str);
+			}
 
-		//.....節点の独立変数の値を読み込む.....
-		std::vector<double> xs(this->DOX);
-		for (auto& x : xs) {
-			std::getline(sbuf, str, ',');
-			x = stod(str);
-		}
+			//.....節点の従属変数の対応番号を読み込む.....
+			std::vector<int> ulist;
+			while (std::getline(sbuf, str, ',')) {
+				ulist.push_back(stoi(str));
+			}
 
-		//.....節点の従属変数の対応番号を読み込む.....
-		std::vector<int> ulist;
-		while (std::getline(sbuf, str, ',')) {
-			ulist.push_back(stoi(str));
-		}
-
-		//.....節点を追加.....
-		this->pnodes.push_back(new Node(xs, ulist));
+			//.....節点を追加.....
+			this->pnodes.push_back(new Node(xs, ulist));
+		}		
 	}
 
 	ifs.close();
@@ -92,21 +96,18 @@ bool PANSFEM::System::ImportParameter(std::vector<int> _plist, std::string _fnam
 		std::istringstream sbuf(buf);
 		std::string str;
 
-		//.....パラメータIDを読み飛ばす.....
+		//.....パラメータIDを読み捨てる.....
 		std::getline(sbuf, str, ',');
+		if (!str.empty()) {
+			//.....パラメータの値を読み込む.....
+			std::vector<double> ps;
+			while (std::getline(sbuf, str, ',')) {
+				ps.push_back(stod(str));
+			}
 
-		//.....対応する要素を指すポインタを取得.....
-		std::getline(sbuf, str, ',');
-		Element* tmppelement = this->pelements[stoi(str)];
-
-		//.....パラメータの値を読み込む.....
-		std::vector<double> ps;
-		while (std::getline(sbuf, str, ',')) {
-			ps.push_back(stod(str));
+			//.....パラメータのインスタンスを生成.....
+			this->pparameters.push_back(new Parameter(ps, _plist));
 		}
-
-		//.....要素にパラメータを代入.....
-		tmppelement->SetParameter(ps, _plist);
 	}
 
 	ifs.close();
@@ -136,21 +137,22 @@ bool PANSFEM::System::ImportDirichlet(std::string _fname){
 
 		//.....境界条件IDを読み飛ばす.....
 		std::getline(sbuf, str, ',');
-
-		//.....対応する節点を指すポインタを取得.....
-		std::getline(sbuf, str, ',');
-		Node* pnode = this->pnodes[stoi(str)];
-
-		//.....節点の従属変数の値を読み込む.....
-		for (int i = 0; i < this->DOU; i++) {
+		if (!str.empty()) {
+			//.....対応する節点を指すポインタを取得.....
 			std::getline(sbuf, str, ',');
-			if (str != "free") {
-				if (pnode->us_to_un.find(i) != pnode->us_to_un.end()) {
-					pnode->is_ufixed[pnode->us_to_un[i]] = true;
-					pnode->u[pnode->us_to_un[i]] = stod(str);
-				}				
+			Node* pnode = this->pnodes[stoi(str)];
+
+			//.....節点の従属変数の値を読み込む.....
+			for (int i = 0; i < this->DOU; i++) {
+				std::getline(sbuf, str, ',');
+				if (str != "free") {
+					if (pnode->us_to_un.find(i) != pnode->us_to_un.end()) {
+						pnode->is_ufixed[pnode->us_to_un[i]] = true;
+						pnode->u[pnode->us_to_un[i]] = stod(str);
+					}
+				}
 			}
-		}
+		}		
 	}
 
 	ifs.close();
@@ -181,26 +183,27 @@ bool PANSFEM::System::ImportNeumann(int _fi, std::string _fname){
 
 		//.....境界条件IDを読み飛ばす.....
 		std::getline(sbuf, str, ',');
-
-		//.....対応する節点を指すポインタを取得.....
-		std::getline(sbuf, str, ',');
-		Node* pnode = this->pnodes[stoi(str)];
-
-		//.....Neumann境界値を定める.....
-		std::vector<double> q;
-		std::vector<int> qlist;
-		for (int i = 0; i < this->DOU; i++) {
+		if (!str.empty()) {
+			//.....対応する節点を指すポインタを取得.....
 			std::getline(sbuf, str, ',');
-			if (str != "free") {
-				if (pnode->us_to_un.find(i) != pnode->us_to_un.end()) {
-					qlist.push_back(i);
-					q.push_back(stod(str));
+			Node* pnode = this->pnodes[stoi(str)];
+
+			//.....Neumann境界値を定める.....
+			std::vector<double> q;
+			std::vector<int> qlist;
+			for (int i = 0; i < this->DOU; i++) {
+				std::getline(sbuf, str, ',');
+				if (str != "free") {
+					if (pnode->us_to_un.find(i) != pnode->us_to_un.end()) {
+						qlist.push_back(i);
+						q.push_back(stod(str));
+					}
 				}
 			}
-		}
 
-		//.....節点のNeumann境界条件値を読み込む.....
-		this->pfields[_fi]->pneumanns.push_back(new Neumann(pnode, q, qlist));
+			//.....節点のNeumann境界条件値を読み込む.....
+			this->pfields[_fi]->pneumanns.push_back(new Neumann(pnode, q, qlist));
+		}		
 	}
 
 	ifs.close();

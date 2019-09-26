@@ -20,14 +20,14 @@ PANSFEM::OptimizedAlternative3Phase2D::OptimizedAlternative3Phase2D(Element * _p
 
 void PANSFEM::OptimizedAlternative3Phase2D::SetEquation() {
 	//----------ƒpƒ‰ƒ[ƒ^‚ÌŽæ“¾----------
-	double s0 = pelement->parameters[this->peq_to_ps[0]];
-	double s1 = pelement->parameters[this->peq_to_ps[1]];
-	double E = pelement->parameters[this->peq_to_ps[2]];
-	double l = pelement->parameters[this->peq_to_ps[3]];
-	double dmax = pelement->parameters[this->peq_to_ps[4]];
-	double dmin = pelement->parameters[this->peq_to_ps[5]];
-	double d0 = pelement->parameters[this->peq_to_ps[6]];
-	double t = pelement->parameters[this->peq_to_ps[7]];
+	double s0 = pelement->pparameter->parameters[this->peq_to_ps[0]];
+	double s1 = pelement->pparameter->parameters[this->peq_to_ps[1]];
+	double E = pelement->pparameter->parameters[this->peq_to_ps[2]];
+	double l = pelement->pparameter->parameters[this->peq_to_ps[3]];
+	double dmax = pelement->pparameter->parameters[this->peq_to_ps[4]];
+	double dmin = pelement->pparameter->parameters[this->peq_to_ps[5]];
+	double d0 = pelement->pparameter->parameters[this->peq_to_ps[6]];
+	double t = pelement->pparameter->parameters[this->peq_to_ps[7]];
 
 	double p = 3.0;
 	double d = (((dmax - dmin)*s1 + dmin) - d0)*pow(s0, p) + d0;

@@ -147,6 +147,7 @@
     <ClCompile Include="DirectAnalysis\Integration\Integration.cpp" />
     <ClCompile Include="DirectAnalysis\Neumann\Neumann.cpp" />
     <ClCompile Include="DirectAnalysis\Node\Node.cpp" />
+    <ClCompile Include="DirectAnalysis\Parameter\Parameter.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic2\Cubic2.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.cpp" />
     <ClCompile Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="DirectAnalysis\Integration\Integration.h" />
     <ClInclude Include="DirectAnalysis\Neumann\Neumann.h" />
     <ClInclude Include="DirectAnalysis\Node\Node.h" />
+    <ClInclude Include="DirectAnalysis\Parameter\Parameter.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic2\Cubic2.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Cubic\Cubic.h" />
     <ClInclude Include="DirectAnalysis\ShapeFunction\Parametric\Quadrangle2\Quadrangle2.h" />

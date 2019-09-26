@@ -52,10 +52,11 @@ namespace PANSFEM {
 				
 
 	protected:
-		std::vector<Node*> pnodes;			//系を構成する節点
-		std::vector<Element*> pelements;	//系を構成する要素
-		std::vector<Field*> pfields;		//系を構成する場
-		std::vector<Neumann*> pneumanns;	//系に課せられたNeumann条件
+		std::vector<Node*> pnodes;				//系を構成する節点
+		std::vector<Element*> pelements;		//系を構成する要素
+		std::vector<Field*> pfields;			//系を構成する場
+		std::vector<Neumann*> pneumanns;		//系に課せられたNeumann条件
+		std::vector<Parameter*> pparameters;	//系内の要素に割り当てられたパラメータ
 	};
 
 
@@ -81,22 +82,27 @@ namespace PANSFEM {
 
 			//.....要素IDを読み飛ばす.....
 			std::getline(sbuf, str, ',');
-
-			//.....要素を構成する節点の数を取得.....
-			std::getline(sbuf, str, ',');
-			int NON = stoi(str);
-
-			//.....要素を構成する節点を指すポインタを取得.....
-			std::vector<Node*> tmppnodes(NON);
-			for (auto &pnode : tmppnodes) {
+			if (!str.empty()) {
+				//.....パラメータIDを読み込む.....
 				std::getline(sbuf, str, ',');
-				pnode = this->pnodes[stoi(str)];
-			}
+				Parameter* tmppparameter = this->pparameters[stoi(str)];
 
-			//.....節点を追加.....
-			Element *tmppelement = new Element(tmppnodes, _ulist, _paraviewtype);
-			tmppelement->SetShapeFunction<Ns...>();
-			this->pelements.push_back(tmppelement);
+				//.....要素を構成する節点の数を取得.....
+				std::getline(sbuf, str, ',');
+				int NON = stoi(str);
+
+				//.....要素を構成する節点を指すポインタを取得.....
+				std::vector<Node*> tmppnodes(NON);
+				for (auto &pnode : tmppnodes) {
+					std::getline(sbuf, str, ',');
+					pnode = this->pnodes[stoi(str)];
+				}
+
+				//.....節点を追加.....
+				Element *tmppelement = new Element(tmppparameter, tmppnodes, _ulist, _paraviewtype);
+				tmppelement->SetShapeFunction<Ns...>();
+				this->pelements.push_back(tmppelement);
+			}
 		}
 
 		ifs.close();
@@ -127,13 +133,14 @@ namespace PANSFEM {
 
 			//.....要素―節点方程式IDを読み飛ばす.....
 			std::getline(sbuf, str, ',');
+			if (!str.empty()) {
+				//.....対応する要素を指すポインタを取得.....
+				std::getline(sbuf, str, ',');
+				Element* pelement = this->pelements[stoi(str)];
 
-			//.....対応する要素を指すポインタを取得.....
-			std::getline(sbuf, str, ',');
-			Element* pelement = this->pelements[stoi(str)];
-
-			//.....要素―節点方程式を追加.....
-			this->pfields[_fi]->pequations.push_back(new E(pelement, this->pfields[_fi]->uf_to_us, _refulist, _plist, new I()));
+				//.....要素―節点方程式を追加.....
+				this->pfields[_fi]->pequations.push_back(new E(pelement, this->pfields[_fi]->uf_to_us, _refulist, _plist, new I()));
+			}			
 		}
 
 		ifs.close();

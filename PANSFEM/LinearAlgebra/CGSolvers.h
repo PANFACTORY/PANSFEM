@@ -109,7 +109,7 @@ std::vector<T> CG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps) {
 
 		//----------収束判定----------
 		T rnorm = std::inner_product(rk.begin(), rk.end(), rk.begin(), T());
-		//std::cout << "k = " << k << "\teps = " << rnorm / bnorm << std::endl;
+		std::cout << "k = " << k << "\teps = " << rnorm / bnorm << std::endl;
 		if (rnorm < _eps*bnorm) {
 			std::cout << "\tConvergence:" << k << std::endl;
 			return xk;
@@ -151,6 +151,7 @@ std::vector<T> BiCGSTAB(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps) {
 
 		//----------収束判定----------
 		T rnorm = std::inner_product(rk.begin(), rk.end(), rk.begin(), T());
+		std::cout << "k = " << k << "\teps = " << rnorm / bnorm << std::endl;
 		if (rnorm < _eps*bnorm) {
 			std::cout << "\tConvergence:" << k << std::endl;
 			return xk;
@@ -234,27 +235,30 @@ std::vector<T> ILU0CG(CSR<T> &_A, CSR<T> &_M, std::vector<T> &_b, int _itrmax, T
 	std::vector<T> xk(_b.size(), T());
 	std::vector<T> rk = subtract(_b, _A*xk);
 	std::vector<T> pk = PreILU0(_M, rk);
+	std::vector<T> Mrk = pk;							//前処理
+	T Mrkdotrk = std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T());
 	T bnorm = std::inner_product(_b.begin(), _b.end(), _b.begin(), T());
 
 	//----------反復計算----------
 	for (int k = 0; k < _itrmax; ++k) {
 		std::vector<T> Apk = _A * pk;
 
-		std::vector<T> Mrk = PreILU0(_M, rk);			//前処理
-
-		T alpha = std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T()) / std::inner_product(pk.begin(), pk.end(), Apk.begin(), T());
+		T alpha = Mrkdotrk / std::inner_product(pk.begin(), pk.end(), Apk.begin(), T());
 		std::vector<T> xkp1 = add(xk, alpha, pk);
 		std::vector<T> rkp1 = subtract(rk, alpha, Apk);
 
 		std::vector<T> Mrkp1 = PreILU0(_M, rkp1);		//前処理
 
-		T beta = std::inner_product(Mrkp1.begin(), Mrkp1.end(), rkp1.begin(), T()) / std::inner_product(Mrk.begin(), Mrk.end(), rk.begin(), T());
+		T Mrkp1dotrkp1 = std::inner_product(Mrkp1.begin(), Mrkp1.end(), rkp1.begin(), T());
+		T beta = Mrkp1dotrkp1 / Mrkdotrk;
 		std::vector<T> pkp1 = add(Mrkp1, beta, pk);
 
 		//----------値の更新----------
 		xk = xkp1;
 		rk = rkp1;
 		pk = pkp1;
+		Mrk = Mrkp1;
+		Mrkdotrk = Mrkp1dotrkp1;
 
 		//----------収束判定----------
 		T rnorm = std::inner_product(rk.begin(), rk.end(), rk.begin(), T());
@@ -408,7 +412,7 @@ std::vector<T> ScalingCG(CSR<T> &_A, std::vector<T> &_b, int _itrmax, T _eps) {
 
 		//----------収束判定----------
 		T rnorm = std::inner_product(rk.begin(), rk.end(), rk.begin(), T());
-		//std::cout << "k = " << k << "\teps = " << rnorm / bnorm << std::endl;
+		std::cout << "k = " << k << "\teps = " << rnorm / bnorm << std::endl;
 		if (rnorm < _eps*bnorm) {
 			std::cout << "\tConvergence:" << k << std::endl;
 			return xk;

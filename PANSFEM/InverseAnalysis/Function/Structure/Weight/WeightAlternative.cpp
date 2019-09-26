@@ -24,12 +24,12 @@ Eigen::VectorXd PANSFEM::WeightAlternative::sensitivitis(){
 	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
-		double s = pelement->parameters[this->refpf_to_us[0]];
-		double l = pelement->parameters[this->refpf_to_us[1]];
-		double rho = pelement->parameters[this->refpf_to_us[2]];
-		double dmax = pelement->parameters[this->refpf_to_us[3]];
-		double dmin = pelement->parameters[this->refpf_to_us[4]];
-		double t = pelement->parameters[this->refpf_to_us[5]];
+		double s = pelement->pparameter->parameters[this->refpf_to_us[0]];
+		double l = pelement->pparameter->parameters[this->refpf_to_us[1]];
+		double rho = pelement->pparameter->parameters[this->refpf_to_us[2]];
+		double dmax = pelement->pparameter->parameters[this->refpf_to_us[3]];
+		double dmin = pelement->pparameter->parameters[this->refpf_to_us[4]];
+		double t = pelement->pparameter->parameters[this->refpf_to_us[5]];
 
 		double d = (dmax - dmin)*s + dmin;
 
@@ -46,12 +46,12 @@ double PANSFEM::WeightAlternative::value(){
 	double weight = 0.0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの代入----------
-		double s = pelement->parameters[this->refpf_to_us[0]];
-		double l = pelement->parameters[this->refpf_to_us[1]];
-		double rho = pelement->parameters[this->refpf_to_us[2]];
-		double dmax = pelement->parameters[this->refpf_to_us[3]];
-		double dmin = pelement->parameters[this->refpf_to_us[4]];
-		double t = pelement->parameters[this->refpf_to_us[5]];
+		double s = pelement->pparameter->parameters[this->refpf_to_us[0]];
+		double l = pelement->pparameter->parameters[this->refpf_to_us[1]];
+		double rho = pelement->pparameter->parameters[this->refpf_to_us[2]];
+		double dmax = pelement->pparameter->parameters[this->refpf_to_us[3]];
+		double dmin = pelement->pparameter->parameters[this->refpf_to_us[4]];
+		double t = pelement->pparameter->parameters[this->refpf_to_us[5]];
 
 		double d = (dmax - dmin)*s + dmin;
 		double w = 2.0*(2.0*l - d)*d*t*rho;

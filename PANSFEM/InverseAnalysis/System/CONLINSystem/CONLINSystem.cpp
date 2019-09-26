@@ -34,7 +34,7 @@ void PANSFEM::CONLINSystem::Schedule(){
 	//----------
 	//設計変数の初期値，制約条件の上限値，ラグランジュ乗数の初期値，
 	//制約緩和の重みw，収束値のトレランス，ムーブリミットの設定
-	const int NOS = this->poptimizedelements.size() * this->plist.size();	//設計変数ベクトルの要素数
+	const int NOS = this->poptimizedparameters.size() * this->plist.size();	//設計変数ベクトルの要素数
 	const int NOOBJ = this->pobjectives.size();								//目的関数の数
 	const int NOCON = this->pconstraints.size();							//制約条件の数
 	
@@ -58,9 +58,9 @@ void PANSFEM::CONLINSystem::Schedule(){
 		//----------現在の設計変数ベクトルを生成----------
 		Eigen::VectorXd s = Eigen::VectorXd(NOS);
 		int spos = 0;
-		for (auto pelement : this->poptimizedelements) {
+		for (auto pparameter : this->poptimizedparameters) {
 			for (auto pi : this->plist) {
-				s(spos) = pelement->parameters[pi];
+				s(spos) = pparameter->parameters[pi];
 				spos++;
 			}
 		}
@@ -159,9 +159,9 @@ void PANSFEM::CONLINSystem::Schedule(){
 				//std::cout << "r = " << r.transpose() << "\tg = " << g.transpose() << std::endl;
 
 				int pos2 = 0;
-				for (auto pelement : this->poptimizedelements) {
+				for (auto pparameter : this->poptimizedparameters) {
 					for (auto pi : this->plist) {
-						pelement->parameters[pi] = stildanew(pos2)*s(pos2);
+						pparameter->parameters[pi] = stildanew(pos2)*s(pos2);
 						pos2++;
 					}
 				}

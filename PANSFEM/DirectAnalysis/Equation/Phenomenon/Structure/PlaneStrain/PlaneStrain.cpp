@@ -20,9 +20,9 @@ PANSFEM::PlaneStrain::PlaneStrain(Element * _pelement, std::vector<int> _ulist, 
 
 void PANSFEM::PlaneStrain::SetEquation(){
 	//----------物性値の取得----------
-	double E = this->pelement->parameters[this->peq_to_ps[0]];
-	double V = this->pelement->parameters[this->peq_to_ps[1]];
-	double t = this->pelement->parameters[this->peq_to_ps[2]];
+	double E = this->pelement->pparameter->parameters[this->peq_to_ps[0]];
+	double V = this->pelement->pparameter->parameters[this->peq_to_ps[1]];
+	double t = this->pelement->pparameter->parameters[this->peq_to_ps[2]];
 
 	//----------[D]マトリックスの生成----------
 	Eigen::MatrixXd D = Eigen::MatrixXd(3, 3);

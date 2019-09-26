@@ -20,7 +20,7 @@ PANSFEM::HeatTransferStatic2D::HeatTransferStatic2D(Element * _pelement, std::ve
 
 void PANSFEM::HeatTransferStatic2D::SetEquation(){
 	//----------物性値の取得----------
-	double alpha = this->pelement->parameters[this->peq_to_ps[0]];
+	double alpha = this->pelement->pparameter->parameters[this->peq_to_ps[0]];
 
 	//----------[Ke]マトリクスの被積分関数を定義-----------
 	std::function<Eigen::MatrixXd(std::vector<double>)> ke = [&](std::vector<double> _xi) {

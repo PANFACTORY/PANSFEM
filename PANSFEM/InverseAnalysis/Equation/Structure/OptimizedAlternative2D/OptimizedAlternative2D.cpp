@@ -20,12 +20,12 @@ PANSFEM::OptimizedAlternative2D::OptimizedAlternative2D(Element * _pelement, std
 
 void PANSFEM::OptimizedAlternative2D::SetEquation(){
 	//----------ƒpƒ‰ƒ[ƒ^‚ÌŽæ“¾----------
-	double s = this->pelement->parameters[this->peq_to_ps[0]];
-	double E = this->pelement->parameters[this->peq_to_ps[1]];
-	double l = this->pelement->parameters[this->peq_to_ps[2]];
-	double dmax = this->pelement->parameters[this->peq_to_ps[3]];
-	double dmin = this->pelement->parameters[this->peq_to_ps[4]];
-	double t = this->pelement->parameters[this->peq_to_ps[5]];
+	double s = this->pelement->pparameter->parameters[this->peq_to_ps[0]];
+	double E = this->pelement->pparameter->parameters[this->peq_to_ps[1]];
+	double l = this->pelement->pparameter->parameters[this->peq_to_ps[2]];
+	double dmax = this->pelement->pparameter->parameters[this->peq_to_ps[3]];
+	double dmin = this->pelement->pparameter->parameters[this->peq_to_ps[4]];
+	double t = this->pelement->pparameter->parameters[this->peq_to_ps[5]];
 
 	double d = (dmax - dmin)*s + dmin;
 	double dl = d / l;

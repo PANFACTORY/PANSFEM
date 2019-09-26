@@ -1,5 +1,5 @@
 //*****************************************************************************
-//Title		:PANSFEM/Core/Equation/Equation.h
+//Title		:PANSFEM/DirectAnalysis/Equation/Equation.h
 //Author	:Tanabe Yuta
 //Date		:2019/06/09
 //Copyright	:(C)2019 TanabeYuta

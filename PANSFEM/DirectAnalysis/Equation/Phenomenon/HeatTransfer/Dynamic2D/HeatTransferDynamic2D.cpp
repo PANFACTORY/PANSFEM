@@ -20,11 +20,11 @@ PANSFEM::HeatTransferDynamic2D::HeatTransferDynamic2D(Element * _pelement, std::
 
 void PANSFEM::HeatTransferDynamic2D::SetEquation(){
 	//----------物性値の取得----------
-	double rho = this->pelement->parameters[this->peq_to_ps[0]];
-	double c = this->pelement->parameters[this->peq_to_ps[1]];
-	double k = this->pelement->parameters[this->peq_to_ps[2]];
-	double dt = this->pelement->parameters[this->peq_to_ps[3]];
-	double theta = this->pelement->parameters[this->peq_to_ps[4]];
+	double rho = this->pelement->pparameter->parameters[this->peq_to_ps[0]];
+	double c = this->pelement->pparameter->parameters[this->peq_to_ps[1]];
+	double k = this->pelement->pparameter->parameters[this->peq_to_ps[2]];
+	double dt = this->pelement->pparameter->parameters[this->peq_to_ps[3]];
+	double theta = this->pelement->pparameter->parameters[this->peq_to_ps[4]];
 
 	//----------[Ke]マトリックスの被積分関数を定義----------
 	std::function<Eigen::MatrixXd(std::vector<double>)> ke = [&](std::vector<double> _xi) {

@@ -24,14 +24,14 @@ Eigen::VectorXd PANSFEM::WeightAlternative3Phase::sensitivitis() {
 	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
-		double s0 = pelement->parameters[this->refpf_to_us[0]];
-		double s1 = pelement->parameters[this->refpf_to_us[1]];
-		double l = pelement->parameters[this->refpf_to_us[2]];
-		double rho = pelement->parameters[this->refpf_to_us[3]];
-		double dmax = pelement->parameters[this->refpf_to_us[4]];
-		double dmin = pelement->parameters[this->refpf_to_us[5]];
-		double d0 = pelement->parameters[this->refpf_to_us[6]];
-		double t = pelement->parameters[this->refpf_to_us[7]];
+		double s0 = pelement->pparameter->parameters[this->refpf_to_us[0]];
+		double s1 = pelement->pparameter->parameters[this->refpf_to_us[1]];
+		double l = pelement->pparameter->parameters[this->refpf_to_us[2]];
+		double rho = pelement->pparameter->parameters[this->refpf_to_us[3]];
+		double dmax = pelement->pparameter->parameters[this->refpf_to_us[4]];
+		double dmin = pelement->pparameter->parameters[this->refpf_to_us[5]];
+		double d0 = pelement->pparameter->parameters[this->refpf_to_us[6]];
+		double t = pelement->pparameter->parameters[this->refpf_to_us[7]];
 		
 		double p = 3.0;
 		double d = (((dmax - dmin)*s1 + dmin) - d0)*pow(s0, p) + d0;
@@ -52,14 +52,14 @@ double PANSFEM::WeightAlternative3Phase::value() {
 	double weight = 0.0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの代入----------
-		double s0 = pelement->parameters[this->refpf_to_us[0]];
-		double s1 = pelement->parameters[this->refpf_to_us[1]];
-		double l = pelement->parameters[this->refpf_to_us[2]];
-		double rho = pelement->parameters[this->refpf_to_us[3]];
-		double dmax = pelement->parameters[this->refpf_to_us[4]];
-		double dmin = pelement->parameters[this->refpf_to_us[5]];
-		double d0 = pelement->parameters[this->refpf_to_us[6]];
-		double t = pelement->parameters[this->refpf_to_us[7]];
+		double s0 = pelement->pparameter->parameters[this->refpf_to_us[0]];
+		double s1 = pelement->pparameter->parameters[this->refpf_to_us[1]];
+		double l = pelement->pparameter->parameters[this->refpf_to_us[2]];
+		double rho = pelement->pparameter->parameters[this->refpf_to_us[3]];
+		double dmax = pelement->pparameter->parameters[this->refpf_to_us[4]];
+		double dmin = pelement->pparameter->parameters[this->refpf_to_us[5]];
+		double d0 = pelement->pparameter->parameters[this->refpf_to_us[6]];
+		double t = pelement->pparameter->parameters[this->refpf_to_us[7]];
 
 		double p = 3.0;
 		double d = (((dmax - dmin)*s1 + dmin) - d0)*pow(s0, p) + d0;

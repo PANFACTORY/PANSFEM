@@ -42,7 +42,7 @@ double PANSFEM::WeightIsotropicElastic::value() {
 	double weight = 0.0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの代入----------
-		double rho = pelement->parameters[this->refpf_to_us[0]];
+		double rho = pelement->pparameter->parameters[this->refpf_to_us[0]];
 
 		//----------要素毎の重量計算式----------
 		std::function<double(std::vector<double>) > f = [=](std::vector<double> _xi) {

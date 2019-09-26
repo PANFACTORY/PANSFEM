@@ -40,9 +40,9 @@ void PANSFEM::Beam2D::SetEquation(){
 	T(5, 0) = 0.0;	T(5, 1) = 0.0;	T(5, 2) = 0.0;  T(5, 3) = 0.0;	T(5, 4) = 0.0;	T(5, 5) = 1.0;
 
 	//----------—v‘fß“_•û’öŽ®‚ð¶¬----------
-	double E = this->pelement->parameters[this->peq_to_ps[0]];
-	double I = this->pelement->parameters[this->peq_to_ps[1]];
-	double A = this->pelement->parameters[this->peq_to_ps[2]];
+	double E = this->pelement->pparameter->parameters[this->peq_to_ps[0]];
+	double I = this->pelement->pparameter->parameters[this->peq_to_ps[1]];
+	double A = this->pelement->pparameter->parameters[this->peq_to_ps[2]];
 
 	Eigen::MatrixXd Kel = Eigen::MatrixXd::Zero(6, 6);
 	Kel(0, 0) = A * E / l;	Kel(0, 1) = 0.0;						Kel(0, 2) = 0.0;					Kel(0, 3) = -A * E / l;		Kel(0, 4) = 0.0;						Kel(0, 5) = 0.0;

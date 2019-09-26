@@ -32,7 +32,7 @@ void PANSFEM::OCSystem::Schedule(){
 	}
 
 	//----------設計変数の初期化----------
-	const int rholen = this->poptimizedelements.size() * this->plist.size();	//設計変数ベクトルの要素数
+	const int rholen = this->poptimizedparameters.size() * this->plist.size();	//設計変数ベクトルの要素数
 	const int iterationmax = 50;				//最適化ループの最大反復数
 	const double valueconvergence = 1.0e-3;		//目的関数の収束判定値
 	const double lambdaconvergence = 1.0e-9;	//Lagrange乗数λの収束判定値
@@ -73,9 +73,9 @@ void PANSFEM::OCSystem::Schedule(){
 		//----------現在の設計変数ベクトルを生成----------
 		Eigen::VectorXd rho = Eigen::VectorXd(rholen);
 		int pos = 0;
-		for (auto pelement : this->poptimizedelements) {
+		for (auto pparameter : this->poptimizedparameters) {
 			for (auto pi : this->plist) {
-				rho(pos) = pelement->parameters[pi];
+				rho(pos) = pparameter->parameters[pi];
 				pos++;
 			}
 		}
@@ -87,9 +87,9 @@ void PANSFEM::OCSystem::Schedule(){
 			Eigen::VectorXd B = pow((-objectivesensitivity.array() / constraintsensitivity.array()).array() / lambda, iota).array()*rho.array();
 			Eigen::VectorXd rhonew = (((B.array().min(rho.array() + mvlmt)).array().min(Eigen::VectorXd::Ones(rholen).array())).array().max(rho.array() - mvlmt)).array().max(Eigen::VectorXd::Constant(rholen, 1.0e-10).array());
 			int pos2 = 0;
-			for (auto pelement : this->poptimizedelements) {
+			for (auto pparameter : this->poptimizedparameters) {
 				for (auto pi : this->plist) {
-					pelement->parameters[pi] = rhonew(pos2);
+					pparameter->parameters[pi] = rhonew(pos2);
 					pos2++;
 				}
 			}

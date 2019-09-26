@@ -1,5 +1,5 @@
 //*****************************************************************************
-//Title		:PANSFEM/Core/Element/Element.h
+//Title		:PANSFEM/DirectAnalysis/Element/Element.h
 //Author	:Tanabe Yuta
 //Date		:2019/06/08
 //Copyright	:(C)2019 TanabeYuta
@@ -22,7 +22,10 @@ PANSFEM::Element::~Element(){
 }
 
 
-PANSFEM::Element::Element(std::vector<Node*> _pnodes, std::vector<int> _ulist, int _paraviewtype) : NON(_pnodes.size()), PARAVIEWTYPE(_paraviewtype){
+PANSFEM::Element::Element(Parameter* _pparameter, std::vector<Node*> _pnodes, std::vector<int> _ulist, int _paraviewtype) : NON(_pnodes.size()), PARAVIEWTYPE(_paraviewtype){
+	//----------パラメータを指すポインタを代入----------
+	this->pparameter = _pparameter;
+	
 	//----------節点を指すポインタの代入----------
 	this->pnodes = _pnodes;
 
@@ -36,7 +39,7 @@ PANSFEM::Element::Element(std::vector<Node*> _pnodes, std::vector<int> _ulist, i
 }
 
 
-void PANSFEM::Element::SetParameter(std::vector<double> _parameters, std::vector<int> _plist){
+/*void PANSFEM::Element::SetParameter(std::vector<double> _parameters, std::vector<int> _plist){
 	try {
 		if (_parameters.size() != _plist.size()) {
 			throw std::exception();
@@ -50,7 +53,12 @@ void PANSFEM::Element::SetParameter(std::vector<double> _parameters, std::vector
 	catch (std::exception e) {
 		std::cout << "Error in setting parameters" << std::endl;
 	}
-}
+}*/
+
+
+/*void PANSFEM::Element::SetParameter(Parameter * _pparameter) {
+	this->pparameter = _pparameter;
+}*/
 
 
 Eigen::MatrixXd PANSFEM::Element::Trial(std::vector<int> _ueq_to_us, std::vector<double> _xi){

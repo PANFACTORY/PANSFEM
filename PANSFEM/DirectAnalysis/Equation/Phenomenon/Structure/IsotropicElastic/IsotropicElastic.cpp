@@ -20,8 +20,8 @@ PANSFEM::IsotropicElastic::IsotropicElastic(Element * _pelement, std::vector<int
 
 void PANSFEM::IsotropicElastic::SetEquation(){
 	//----------物性値の取得----------
-	double E = this->pelement->parameters[this->peq_to_ps[0]];
-	double V = this->pelement->parameters[this->peq_to_ps[1]];
+	double E = this->pelement->pparameter->parameters[this->peq_to_ps[0]];
+	double V = this->pelement->pparameter->parameters[this->peq_to_ps[1]];
 
 	//----------[D]マトリックスの生成----------
 	Eigen::MatrixXd D = Eigen::MatrixXd(6, 6);

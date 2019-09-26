@@ -32,10 +32,10 @@ PANSFEM::ElasticPlasticTruss2D::ElasticPlasticTruss2D(Element * _pelement, std::
 
 void PANSFEM::ElasticPlasticTruss2D::SetEquation(){
 	//----------ƒpƒ‰ƒ[ƒ^‚Ìæ“¾----------
-	double A = this->pelement->parameters[this->peq_to_ps[0]];			//—v‘f‰Šú’f–ÊÏ
-	double E = this->pelement->parameters[this->peq_to_ps[1]];			//Ş—¿Young—¦
-	double H = this->pelement->parameters[this->peq_to_ps[2]];			//Ş—¿‘Y«ŒW”
-	double tauy0 = this->pelement->parameters[this->peq_to_ps[3]];		//‰Šú~•š‰—Í
+	double A = this->pelement->pparameter->parameters[this->peq_to_ps[0]];			//—v‘f‰Šú’f–ÊÏ
+	double E = this->pelement->pparameter->parameters[this->peq_to_ps[1]];			//Ş—¿Young—¦
+	double H = this->pelement->pparameter->parameters[this->peq_to_ps[2]];			//Ş—¿‘Y«ŒW”
+	double tauy0 = this->pelement->pparameter->parameters[this->peq_to_ps[3]];		//‰Šú~•š‰—Í
 
 	Eigen::VectorXd n = this->pelement->pnodes[1]->x - this->pelement->pnodes[0]->x;	
 	double L = n.norm();												//—v‘f‰Šú’·‚³

@@ -27,7 +27,7 @@ namespace PANSFEM {
 		bool ImportConstraint(std::vector<int> _refulist, std::vector<int> _refplist);		//制約関数を追加
 
 
-		bool ImportOptimizedElement(std::string _fname);				//最適化対象の要素を設定
+		bool ImportOptimizedParameter(std::string _fname);				//最適化対象のパラメータを設定
 
 
 		template<class I>
@@ -36,23 +36,26 @@ namespace PANSFEM {
 		bool ImportElementToConstraint(int _id, std::string _fname);	//制約条件に要素に合わせた積分法を追加
 
 
-		virtual void Schedule() = 0;				//順解析，感度計算を行う順番，タイミングを管理
-													//本来なら最適化手法によって変えるべき部分，具体的なイメージをつかむため今はこうする
-		void Export(std::string _fname);			//最適化の結果を出力
+		virtual void Schedule() = 0;					//順解析，感度計算を行う順番，タイミングを管理
+		void Export(std::string _fname);				//最適化の結果を出力
 		
 
 	protected:
-		std::vector<int> plist;						//最適化されるパラメータ
-		std::vector<Element*> poptimizedelements;	//設計変数を持つ要素
-		std::vector<Function*> pobjectives;			//目的関数を指すポインタ
-		std::vector<Function*> pconstraints;		//制約関数を指すポインタ
+		std::vector<int> plist;							//最適化されるパラメータの番号
+		std::vector<Parameter*> poptimizedparameters;	//設計変数を持つパラメータ
+		std::vector<Function*> pobjectives;				//目的関数を指すポインタ
+		std::vector<Function*> pconstraints;			//制約関数を指すポインタ
 	};
 
 
 	template<class F>
 	inline bool OptimizedSystem::ImportObjective(std::vector<int> _refulist, std::vector<int> _refplist){
 		Function* tmpfunction = new F(this->plist, _refulist, _refplist);
-		tmpfunction->pelements = this->poptimizedelements;
+		for (auto pelement : this->pelements) {
+			if (std::find(this->poptimizedparameters.begin(), this->poptimizedparameters.end(), pelement->pparameter) != this->poptimizedparameters.end()) {
+				tmpfunction->pelements.push_back(pelement);
+			}
+		}
 		this->pobjectives.push_back(tmpfunction);
 		return true;
 	}
@@ -61,7 +64,11 @@ namespace PANSFEM {
 	template<class F>
 	inline bool OptimizedSystem::ImportConstraint(std::vector<int> _refulist, std::vector<int> _refplist){
 		Function* tmpfunction = new F(this->plist, _refulist, _refplist);
-		tmpfunction->pelements = this->poptimizedelements;
+		for (auto pelement : this->pelements) {
+			if (std::find(this->poptimizedparameters.begin(), this->poptimizedparameters.end(), pelement->pparameter) != this->poptimizedparameters.end()) {
+				tmpfunction->pelements.push_back(pelement);
+			}
+		}
 		this->pconstraints.push_back(tmpfunction);
 		return true;
 	}

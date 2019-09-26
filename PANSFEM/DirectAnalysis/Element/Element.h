@@ -1,5 +1,5 @@
 //*****************************************************************************
-//Title		:PANSFEM/Core/Element/Element.h
+//Title		:PANSFEM/DirectAnalysis/Element/Element.h
 //Author	:Tanabe Yuta
 //Date		:2019/06/08
 //Copyright	:(C)2019 TanabeYuta
@@ -14,6 +14,7 @@
 
 #include "../Node/Node.h" 
 #include "../ShapeFunction/ShapeFunction.h"
+#include "../Parameter/Parameter.h"
 
 
 namespace PANSFEM {
@@ -22,7 +23,7 @@ namespace PANSFEM {
 	public:
 		Element();
 		virtual ~Element();
-		Element(std::vector<Node*> _pnodes, std::vector<int> _ulist, int _paraviewtype);
+		Element(Parameter* _pparameter, std::vector<Node*> _pnodes, std::vector<int> _ulist, int _paraviewtype);
 
 
 		const int NON;									//要素を構成する節点数
@@ -31,10 +32,12 @@ namespace PANSFEM {
 
 		std::vector<Node*> pnodes;						//要素を構成する節点を指すポインタ
 		std::map<int, int> us_to_uel;					//系従属変数番号→要素従属変数番号
-		std::map<int, double> parameters;				//系パラメータ番号→要素パラメータの値
+		//std::map<int, double> parameters;				//系パラメータ番号→要素パラメータの値
+		Parameter* pparameter;							//要素のパラメータ
 				
 		
-		void SetParameter(std::vector<double> _parameters, std::vector<int> _plist);	//要素パラメータを指定
+		//void SetParameter(std::vector<double> _parameters, std::vector<int> _plist);	//要素パラメータを指定
+		//void SetParameter(Parameter* _pparameter);		//要素パラメータを指定
 		template<class N0, class N1, class ...Ns>
 		void SetShapeFunction();						//形状関数を指定
 		template<class N0>

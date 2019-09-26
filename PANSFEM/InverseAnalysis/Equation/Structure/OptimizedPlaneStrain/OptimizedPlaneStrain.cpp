@@ -20,11 +20,11 @@ PANSFEM::OptimizedPlaneStrain::OptimizedPlaneStrain(Element * _pelement, std::ve
 
 void PANSFEM::OptimizedPlaneStrain::SetEquation(){
 	//----------ÉpÉâÉÅÅ[É^ÇÃéÊìæ----------
-	double rho = this->pelement->parameters[this->peq_to_ps[0]];
-	double Emax = this->pelement->parameters[this->peq_to_ps[1]];
-	double Emin = this->pelement->parameters[this->peq_to_ps[2]];
-	double V = this->pelement->parameters[this->peq_to_ps[3]];
-	double t = this->pelement->parameters[this->peq_to_ps[4]];
+	double rho = this->pelement->pparameter->parameters[this->peq_to_ps[0]];
+	double Emax = this->pelement->pparameter->parameters[this->peq_to_ps[1]];
+	double Emin = this->pelement->pparameter->parameters[this->peq_to_ps[2]];
+	double V = this->pelement->pparameter->parameters[this->peq_to_ps[3]];
+	double t = this->pelement->pparameter->parameters[this->peq_to_ps[4]];
 
 	//----------[D]ÇÃê∂ê¨----------
 	double E = (Emax - Emin)*pow(rho, 3.0) + Emin;

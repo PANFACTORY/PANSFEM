@@ -72,8 +72,8 @@ int main() {
 	std::string model0_path = "Data/Input/Structure/TriangleBeam/";
 	/*StaticSystem model0 = StaticSystem(2, 2);
 	model0.ImportNode(model0_path + "Node.csv");
-	model0.ImportElement<Triangle, Triangle, Triangle>({ 0, 1 }, 5, model0_path + "Element.csv");
 	model0.ImportParameter({ 0, 1, 2 }, model0_path + "Parameter.csv");
+	model0.ImportElement<Triangle, Triangle, Triangle>({ 0, 1 }, 5, model0_path + "Element.csv");
 	model0.ImportField<LinearField>({ 0, 1 });
 	model0.ImportEquation<PlaneStrain, GaussTriangle>(0, {}, { 0, 1, 2 }, model0_path + "Equation.csv");
 	model0.ImportDirichlet(model0_path + "Dirichlet.csv");
@@ -87,8 +87,8 @@ int main() {
 	std::string model1_path = "Data/Input/Structure/QuadrangleBeam/";
 	/*StaticSystem model1 = StaticSystem(2, 2);
 	model1.ImportNode(model1_path + "Node.csv");
-	model1.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, 9, model1_path + "Element.csv");
 	model1.ImportParameter({ 0, 1, 2 }, model1_path + "Parameter.csv");
+	model1.ImportElement<Quadrangle, Quadrangle, Quadrangle>({ 0, 1 }, 9, model1_path + "Element.csv");
 	model1.ImportField<LinearField>({ 0, 1 });
 	model1.ImportEquation<PlaneStrain, GaussSquare>(0, {}, { 0, 1, 2 }, model1_path + "Equation.csv");
 	model1.ImportDirichlet(model1_path + "Dirichlet.csv");
@@ -175,17 +175,17 @@ int main() {
 	//	NB=5974
 	//------------------------------------------------------
 	std::string model6_path = "Data/Input/Optimize/QuadrangleBeam/";
-	/*OCSystem model6 = OCSystem(2, 2, { 0 });
+	OCSystem model6 = OCSystem(2, 2, { 0 });
 	
 	model6.ImportNode(model6_path + "Node.csv");
-	model6.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 9, model6_path + "Element.csv");
 	model6.ImportParameter({ 0, 1, 2, 3, 4 }, model6_path + "Parameter.csv");
+	model6.ImportElement<Quadrangle2, Quadrangle2, Quadrangle2>({ 0, 1 }, 23, model6_path + "Element.csv");
 	model6.ImportField<LinearField>({ 0, 1 });
 	model6.ImportEquation<OptimizedPlaneStrain, GaussSquare2>(0, {}, { 0, 1, 2, 3, 4 }, model6_path + "Equation.csv");
 	model6.ImportDirichlet(model6_path + "Dirichlet.csv");
 	model6.ImportNeumann(0, model6_path + "Neumann.csv");
 	
-	model6.ImportOptimizedElement(model6_path + "Equation.csv");
+	model6.ImportOptimizedParameter(model6_path + "Equation.csv");
 	model6.ImportObjective<Compliance>({ 0, 1 }, { 0, 1, 2, 3, 4 });
 	model6.ImportElementToObjective<GaussSquare2>(0, model6_path + "Equation.csv");
 	model6.ImportConstraint<Weight>({}, { 0, 4 });
@@ -193,7 +193,7 @@ int main() {
 	
 	model6.Schedule();
 	model6.Export("Data/Output/model6");
-	*/
+	
 
 	//----------直梁（四角形要素）モデル----------
 	std::string model7_path = "Data/Input/Structure/QuadrangleBeam2/";
@@ -495,7 +495,7 @@ int main() {
 	//
 	//------------------------------------------------------
 	std::string model19_path = "Data/Input/Optimize/Beam3D/";
-	OCSystem model19 = OCSystem(3, 3, { 0 });
+	/*OCSystem model19 = OCSystem(3, 3, { 0 });
 
 	model19.ImportNode(model19_path + "Node.csv");
 	model19.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model19_path + "Element.csv");
@@ -513,8 +513,22 @@ int main() {
 
 	model19.Schedule();
 	model19.Export("Data/Output/model19");
-	
+	*/
 
+	//----------骨の三次元モデル----------
+	std::string model20_path = "Data/Input/Structure/Bone/";
+	/*StaticSystem model20 = StaticSystem(3, 3);
+	model20.ImportNode(model20_path + "Node.csv");
+	model20.ImportElement<Cubic, Cubic, Cubic, Cubic>({ 0, 1, 2 }, 12, model20_path + "Element.csv");
+	model20.ImportParameter({ 0, 1 }, model20_path + "Parameter.csv");
+	model20.ImportField<LinearField>({ 0, 1, 2 });
+	model20.ImportEquation<IsotropicElastic, GaussCubic>(0, {}, { 0, 1 }, model20_path + "Equation.csv");
+	model20.ImportDirichlet(model20_path + "Dirichlet.csv");
+	model20.ImportNeumann(0, model20_path + "Neumann.csv");
+	model20.Schedule();
+	//model20.Show();
+	model20.Export("Data/Output/model20");
+	*/
 	std::cout << "--------------------Finish--------------------" << std::endl;
 
 	return 0;

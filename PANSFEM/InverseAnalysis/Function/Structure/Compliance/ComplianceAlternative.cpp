@@ -30,12 +30,12 @@ Eigen::VectorXd PANSFEM::ComplianceAlternative::sensitivitis(){
 	int i = 0;
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
-		double s = pelement->parameters[this->refpf_to_us[0]];
-		double E = pelement->parameters[this->refpf_to_us[1]];
-		double l = pelement->parameters[this->refpf_to_us[2]];
-		double dmax = pelement->parameters[this->refpf_to_us[3]];
-		double dmin = pelement->parameters[this->refpf_to_us[4]];
-		double t = pelement->parameters[this->refpf_to_us[5]];
+		double s = pelement->pparameter->parameters[this->refpf_to_us[0]];
+		double E = pelement->pparameter->parameters[this->refpf_to_us[1]];
+		double l = pelement->pparameter->parameters[this->refpf_to_us[2]];
+		double dmax = pelement->pparameter->parameters[this->refpf_to_us[3]];
+		double dmin = pelement->pparameter->parameters[this->refpf_to_us[4]];
+		double t = pelement->pparameter->parameters[this->refpf_to_us[5]];
 
 		double d = (dmax - dmin)*s + dmin;
 		double dl = d / l;
@@ -79,12 +79,12 @@ double PANSFEM::ComplianceAlternative::value(){
 
 	for (auto pelement : this->pelements) {
 		//----------パラメータの取得----------
-		double s = pelement->parameters[this->refpf_to_us[0]];
-		double E = pelement->parameters[this->refpf_to_us[1]];
-		double l = pelement->parameters[this->refpf_to_us[2]];
-		double dmax = pelement->parameters[this->refpf_to_us[3]];
-		double dmin = pelement->parameters[this->refpf_to_us[4]];
-		double t = pelement->parameters[this->refpf_to_us[5]];
+		double s = pelement->pparameter->parameters[this->refpf_to_us[0]];
+		double E = pelement->pparameter->parameters[this->refpf_to_us[1]];
+		double l = pelement->pparameter->parameters[this->refpf_to_us[2]];
+		double dmax = pelement->pparameter->parameters[this->refpf_to_us[3]];
+		double dmin = pelement->pparameter->parameters[this->refpf_to_us[4]];
+		double t = pelement->pparameter->parameters[this->refpf_to_us[5]];
 
 		double d = (dmax - dmin)*s + dmin;
 		double dl = d / l;
