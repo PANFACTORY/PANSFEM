@@ -51,6 +51,9 @@
     <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\ComplianceIsotropicElastic.cpp" />
     <ClCompile Include="InverseAnalysis\Function\Structure\Weight\WeightIsotropicElastic.cpp" />
     <ClCompile Include="DirectAnalysis\Parameter\Parameter.cpp" />
+    <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedAlternative3D\OptimizedAlternative3D.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\ComplianceAlternative3D.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Weight\WeightAlternative3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
@@ -103,6 +106,9 @@
     <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\ComplianceIsotropicElastic.h" />
     <ClInclude Include="InverseAnalysis\Function\Structure\Weight\WeightIsotropicElastic.h" />
     <ClInclude Include="DirectAnalysis\Parameter\Parameter.h" />
+    <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedAlternative3D\OptimizedAlternative3D.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\ComplianceAlternative3D.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Weight\WeightAlternative3D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

@@ -122,11 +122,11 @@ void PANSFEM::LinearField::SolveEquation() {
 	std::chrono::system_clock::time_point start, end;
 	start = std::chrono::system_clock::now();
 
-	CSR<double> M = ILU0(K2);
+	//CSR<double> M = ILU0(K2);
 	//std::vector<double> res = CG(K2, F, this->KDEGREE, 1.0e-10);
 	//std::vector<double> res = SORCG(K2, F, this->KDEGREE, 1.0e-10, 1.7);
-	//std::vector<double> res = ScalingCG(K2, F, this->KDEGREE, 1.0e-10);
-	std::vector<double> res = ILU0CG(K2, M, F, this->KDEGREE, 1.0e-10);
+	std::vector<double> res = ScalingCG(K2, F, this->KDEGREE, 1.0e-10);
+	//std::vector<double> res = ILU0CG(K2, M, F, this->KDEGREE, 1.0e-10);
 	//std::vector<double> res = BiCGSTAB(K2, F, this->KDEGREE, 1.0e-10);
 	//std::vector<double> res = ILU0BiCGSTAB(K2, M, F, this->KDEGREE, 1.0e-10);
 

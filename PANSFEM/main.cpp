@@ -62,6 +62,11 @@
 #include "InverseAnalysis/Function/Structure/Weight/WeightIsotropicElastic.h"
 
 
+#include "InverseAnalysis/Equation/Structure/OptimizedAlternative3D/OptimizedAlternative3D.h"
+#include "InverseAnalysis/Function/Structure/Compliance/ComplianceAlternative3D.h"
+#include "InverseAnalysis/Function/Structure/Weight/WeightAlternative3D.h"
+
+
 using namespace PANSFEM;
 
 
@@ -129,7 +134,7 @@ int main() {
 
 	//----------熱はり曲げモデル----------
 	std::string model4_path = "Data/Input/HeatAndStructure/StaticHeatBeam/";
-	StaticSystem model4 = StaticSystem(2, 3);
+	/*StaticSystem model4 = StaticSystem(2, 3);
 	model4.ImportNode(model4_path + "Node.csv");
 	model4.ImportParameter({ 0, 1, 2, 3, 4 }, model4_path + "Parameter.csv");
 	model4.ImportElement<Quadrangle, Quadrangle, Quadrangle, Quadrangle>({ 0, 1, 2 }, 9, model4_path + "Element.csv");
@@ -142,7 +147,7 @@ int main() {
 	model4.ImportNeumann(model4_path + "Neumann1.csv");
 	model4.Schedule();
 	model4.Export("Data/Output/model4");
-	
+	*/
 
 	//----------非定常熱伝導モデル----------
 	std::string model5_path = "Data/Input/HeatTransfer/Dynamic/";
@@ -503,7 +508,7 @@ int main() {
 	model19.ImportField<LinearField>({ 0, 1, 2 });
 	model19.ImportEquation<OptimizedIsotropicElastic, GaussCubic2>(0, {}, { 0, 1, 2, 3 }, model19_path + "Equation.csv");
 	model19.ImportDirichlet(model19_path + "Dirichlet.csv");
-	model19.ImportNeumann(0, model19_path + "Neumann.csv");
+	model19.ImportNeumann(model19_path + "Neumann.csv");
 
 	model19.ImportOptimizedParameter(model19_path + "Equation.csv");
 	model19.ImportObjective<ComplianceIsotropicElastic>({ 0, 1, 2 }, { 0, 1, 2, 3 });
@@ -529,6 +534,43 @@ int main() {
 	//model20.Show();
 	model20.Export("Data/Output/model20");
 	*/
+
+	//----------トポロジー最適化モデル（代替要素3D梁）----------
+	//	パラメータ
+	//		0	:s		設計変数
+	//		1	:dmax	最大梁直径
+	//		2	:dmin	最小梁直径
+	//		3	:L		Latticeセルサイズ
+	//		4	:E		材料Young率	
+	//		5	:ρ		材料密度
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//		2	:uz		z軸方向変位
+	//	設計パラメータ
+	//		0	:s		（パラメータ0番）
+	//
+	//------------------------------------------------------
+	std::string model21_path = "Data/Input/Optimize/AlternativeBeam3D/";
+	OCSystem model21 = OCSystem(3, 3, { 0 });
+
+	model21.ImportNode(model21_path + "Node.csv");
+	model21.ImportParameter({ 0, 1, 2, 3, 4, 5 }, model21_path + "Parameter.csv");
+	model21.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model21_path + "Element.csv");
+	model21.ImportField<LinearField>({ 0, 1, 2 });
+	model21.ImportEquation<OptimizedAlternative3D, GaussCubic2>(0, {}, { 0, 1, 2, 3, 4 }, model21_path + "Equation.csv");
+	model21.ImportDirichlet(model21_path + "Dirichlet.csv");
+	model21.ImportNeumann(model21_path + "Neumann.csv");
+
+	model21.ImportOptimizedParameter(model21_path + "Equation.csv");
+	model21.ImportObjective<ComplianceAlternative3D>({ 0, 1, 2 }, { 0, 1, 2, 3, 4 });
+	model21.ImportElementToObjective<GaussCubic2>(0, model21_path + "Equation.csv");
+	model21.ImportConstraint<WeightAlternative3D>({}, { 0, 1, 2, 3, 5 });
+	model21.ImportElementToConstraint<GaussCubic2>(0, model21_path + "Equation.csv");
+
+	model21.Schedule();
+	model21.Export("Data/Output/model21");
+	
 	std::cout << "--------------------Finish--------------------" << std::endl;
 
 	return 0;
