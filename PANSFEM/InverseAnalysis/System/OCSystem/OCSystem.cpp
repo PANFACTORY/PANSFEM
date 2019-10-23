@@ -33,9 +33,11 @@ void PANSFEM::OCSystem::Schedule(){
 
 	//----------設計変数の初期化----------
 	const int rholen = this->poptimizedparameters.size() * this->plist.size();	//設計変数ベクトルの要素数
-	const int iterationmax = 50;				//最適化ループの最大反復数
+	const int iterationmax = 100;				//最適化ループの最大反復数
 	const double valueconvergence = 1.0e-3;		//目的関数の収束判定値
 	const double lambdaconvergence = 1.0e-9;	//Lagrange乗数λの収束判定値
+	const double lambdamax = 1.0e12;
+	const double lambdamin = 1.0e-10;
 	const double mvlmt = 0.15;					//ムーブリミット
 	const double iota = 0.75;					//ダンピング係数
 
@@ -61,7 +63,7 @@ void PANSFEM::OCSystem::Schedule(){
 		std::cout << "\t" << "Constraint function value:" << constraintvalue << std::endl;
 
 		//----------収束判定----------
-		if (fabs((currentvalue - previousvalue) / (currentvalue + previousvalue)) < valueconvergence) {
+		if (fabs((currentvalue - previousvalue) / (currentvalue + previousvalue)) < valueconvergence && itr > 15) {
 			std::cout << "----------System is optimized----------" << std::endl;
 			break;
 		}
@@ -81,7 +83,7 @@ void PANSFEM::OCSystem::Schedule(){
 		}
 
 		//----------Lagrange乗数を二分探索----------
-		double lambda0 = 1.0e-10, lambda1 = 1.0e10;
+		double lambda0 = lambdamin, lambda1 = lambdamax;
 		while ((lambda1 - lambda0) / (lambda1 + lambda0) > lambdaconvergence) {
 			double lambda = 0.5 * (lambda1 + lambda0);
 			Eigen::VectorXd B = pow((-objectivesensitivity.array() / constraintsensitivity.array()).array() / lambda, iota).array()*rho.array();

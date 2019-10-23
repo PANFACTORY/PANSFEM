@@ -73,7 +73,7 @@ class Cubic(Element):
         
 
 #**********メイン処理**********
-file_path = ""                #ファイルパス
+file_path = "Beam_"                #ファイルパス
 DOF = 3                        #節点自由度
 #NOA = 2                       #一辺辺りに追加する節点数
 

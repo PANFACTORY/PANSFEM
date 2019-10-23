@@ -100,7 +100,7 @@ double PANSFEM::ComplianceAlternative3D::value() {
 
 		double Dii = Eeq * (1.0 - Veq) / ((1.0 - 2.0*Veq)*(1.0 + Veq));
 		double Dij = Eeq * Veq / ((1.0 - 2.0*Veq)*(1.0 + Veq));
-		double Gii = (3.141592*E / (4.0*sqrt(3.0)))*pow(dl, 4.0);
+		double Gii = (5.0*3.141592*E / (8.0*sqrt(3.0)))*pow(dl, 4.0);
 
 		//----------[D]ÇÃê∂ê¨----------
 		Eigen::MatrixXd D = Eigen::MatrixXd(6, 6);

@@ -54,7 +54,7 @@ double PANSFEM::WeightAlternative3D::value() {
 
 		//----------要素毎の重量計算式----------
 		std::function<double(std::vector<double>) > f = [=](std::vector<double> _xi) {
-			return 0.15*rho*pelement->Jacobian(_xi).determinant();			//ここでは例として重量制約15%とする。
+			return 0.02*rho*pelement->Jacobian(_xi).determinant();			//ここでは例として重量制約3%とする。
 		};
 
 		//----------要素毎の積分計算----------

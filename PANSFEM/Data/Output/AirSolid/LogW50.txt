@@ -1,0 +1,142 @@
+--------------------This is PANSFEM.--------------------
+Iteration:0
+        Solution        Convergence:1250
+53949.8
+ is done.
+        Objective function value:19.0281
+        Constraint function value:0
+        Lagrange value：0.000302596
+Iteration:1
+        Solution        Convergence:1365
+56420.8
+ is done.
+        Objective function value:10.3013
+        Constraint function value:7.19129e-06
+        Lagrange value：0.000264449
+Iteration:2
+        Solution        Convergence:1471
+60891
+ is done.
+        Objective function value:7.44203
+        Constraint function value:-1.35817e-05
+        Lagrange value：0.000288322
+Iteration:3
+        Solution        Convergence:1616
+66570.7
+ is done.
+        Objective function value:5.71076
+        Constraint function value:-2.3477e-05
+        Lagrange value：0.000161559
+Iteration:4
+        Solution        Convergence:1681
+70016.5
+ is done.
+        Objective function value:4.92715
+        Constraint function value:-2.04673e-06
+        Lagrange value：0.000123827
+Iteration:5
+        Solution        Convergence:1797
+74161.9
+ is done.
+        Objective function value:4.71997
+        Constraint function value:2.26328e-05
+        Lagrange value：0.000101177
+Iteration:6
+        Solution        Convergence:1740
+71438.6
+ is done.
+        Objective function value:4.53786
+        Constraint function value:-1.47883e-05
+        Lagrange value：9.59296e-05
+Iteration:7
+        Solution        Convergence:1877
+97171.2
+ is done.
+        Objective function value:4.42348
+        Constraint function value:8.41002e-07
+        Lagrange value：8.66997e-05
+Iteration:8
+        Solution        Convergence:1875
+86612.2
+ is done.
+        Objective function value:4.29698
+        Constraint function value:1.22814e-05
+        Lagrange value：8.1692e-05
+Iteration:9
+        Solution        Convergence:2006
+89545.7
+ is done.
+        Objective function value:4.18727
+        Constraint function value:-1.14528e-05
+        Lagrange value：7.52148e-05
+Iteration:10
+        Solution        Convergence:2031
+88983.9
+ is done.
+        Objective function value:4.03187
+        Constraint function value:9.79606e-06
+        Lagrange value：6.29785e-05
+Iteration:11
+        Solution        Convergence:2155
+91772.8
+ is done.
+        Objective function value:3.83923
+        Constraint function value:-2.12093e-06
+        Lagrange value：5.07192e-05
+Iteration:12
+        Solution        Convergence:2138
+153222
+ is done.
+        Objective function value:3.63238
+        Constraint function value:-3.1658e-06
+        Lagrange value：3.29823e-05
+Iteration:13
+        Solution        Convergence:2089
+147678
+ is done.
+        Objective function value:3.47754
+        Constraint function value:8.17594e-06
+        Lagrange value：2.64796e-05
+Iteration:14
+        Solution        Convergence:1974
+86011.6
+ is done.
+        Objective function value:3.37501
+        Constraint function value:-4.16926e-07
+        Lagrange value：2.40725e-05
+Iteration:15
+        Solution        Convergence:1940
+137315
+ is done.
+        Objective function value:3.31386
+        Constraint function value:1.2862e-07
+        Lagrange value：2.22007e-05
+Iteration:16
+        Solution        Convergence:1966
+80829.2
+ is done.
+        Objective function value:3.28086
+        Constraint function value:8.17826e-07
+        Lagrange value：2.05843e-05
+Iteration:17
+        Solution        Convergence:1943
+80725.9
+ is done.
+        Objective function value:3.2637
+        Constraint function value:3.8606e-07
+        Lagrange value：1.96369e-05
+Iteration:18
+        Solution        Convergence:1927
+78293.3
+ is done.
+        Objective function value:3.25397
+        Constraint function value:1.22671e-07
+        Lagrange value：1.91739e-05
+Iteration:19
+        Solution        Convergence:1925
+80353.3
+ is done.
+        Objective function value:3.24826
+        Constraint function value:9.80751e-09
+----------System is optimized----------
+--------------------Finish--------------------

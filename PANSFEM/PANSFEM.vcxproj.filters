@@ -54,6 +54,12 @@
     <ClCompile Include="InverseAnalysis\Equation\Structure\OptimizedAlternative3D\OptimizedAlternative3D.cpp" />
     <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\ComplianceAlternative3D.cpp" />
     <ClCompile Include="InverseAnalysis\Function\Structure\Weight\WeightAlternative3D.cpp" />
+    <ClCompile Include="InverseAnalysis\Equation\Structure\Optimized3PhaseMaterials3D\Optimized3PhaseMaterials3D.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\3PhaseMaterials3D\Compliance3PhaseMaterials3D.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Weight\3PhaseMaterials3D\Weight3PhaseMaterials3D.cpp" />
+    <ClCompile Include="InverseAnalysis\Equation\Structure\Optimized2PhaseMaterials3D\Optimized2PhaseMaterials3D.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Compliance\2PhaseMaterials3D\Compliance2PhaseMaterials3D.cpp" />
+    <ClCompile Include="InverseAnalysis\Function\Structure\Weight\2PhaseMaterials3D\Weight2PhaseMaterials3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectAnalysis\Element\Element.h" />
@@ -109,6 +115,12 @@
     <ClInclude Include="InverseAnalysis\Equation\Structure\OptimizedAlternative3D\OptimizedAlternative3D.h" />
     <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\ComplianceAlternative3D.h" />
     <ClInclude Include="InverseAnalysis\Function\Structure\Weight\WeightAlternative3D.h" />
+    <ClInclude Include="InverseAnalysis\Equation\Structure\Optimized3PhaseMaterials3D\Optimized3PhaseMaterials3D.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\3PhaseMaterials3D\Compliance3PhaseMaterials3D.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Weight\3PhaseMaterials3D\Weight3PhaseMaterials3D.h" />
+    <ClInclude Include="InverseAnalysis\Equation\Structure\Optimized2PhaseMaterials3D\Optimized2PhaseMaterials3D.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Compliance\2PhaseMaterials3D\Compliance2PhaseMaterials3D.h" />
+    <ClInclude Include="InverseAnalysis\Function\Structure\Weight\2PhaseMaterials3D\Weight2PhaseMaterials3D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Input\TestFor1D2DConverter2\Element_modified.csv" />

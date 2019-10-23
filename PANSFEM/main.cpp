@@ -67,6 +67,16 @@
 #include "InverseAnalysis/Function/Structure/Weight/WeightAlternative3D.h"
 
 
+#include "InverseAnalysis/Equation/Structure/Optimized3PhaseMaterials3D/Optimized3PhaseMaterials3D.h"
+#include "InverseAnalysis/Function/Structure/Compliance/3PhaseMaterials3D/Compliance3PhaseMaterials3D.h"
+#include "InverseAnalysis/Function/Structure/Weight/3PhaseMaterials3D/Weight3PhaseMaterials3D.h"
+
+
+#include "InverseAnalysis/Equation/Structure/Optimized2PhaseMaterials3D/Optimized2PhaseMaterials3D.h"
+#include "InverseAnalysis/Function/Structure/Compliance/2PhaseMaterials3D/Compliance2PhaseMaterials3D.h"
+#include "InverseAnalysis/Function/Structure/Weight/2PhaseMaterials3D/Weight2PhaseMaterials3D.h"
+
+
 using namespace PANSFEM;
 
 
@@ -499,8 +509,8 @@ int main() {
 	//		0	:ρ		密度（パラメータ0番）
 	//
 	//------------------------------------------------------
-	std::string model19_path = "Data/Input/Optimize/Beam3D/";
-	/*OCSystem model19 = OCSystem(3, 3, { 0 });
+	/*std::string model19_path = "Data/Input/Optimize/Beam3D/";
+	OCSystem model19 = OCSystem(3, 3, { 0 });
 
 	model19.ImportNode(model19_path + "Node.csv");
 	model19.ImportParameter({ 0, 1, 2, 3 }, model19_path + "Parameter.csv");
@@ -552,7 +562,7 @@ int main() {
 	//
 	//------------------------------------------------------
 	std::string model21_path = "Data/Input/Optimize/AlternativeBeam3D/";
-	OCSystem model21 = OCSystem(3, 3, { 0 });
+	/*OCSystem model21 = OCSystem(3, 3, { 0 });
 
 	model21.ImportNode(model21_path + "Node.csv");
 	model21.ImportParameter({ 0, 1, 2, 3, 4, 5 }, model21_path + "Parameter.csv");
@@ -570,7 +580,95 @@ int main() {
 
 	model21.Schedule();
 	model21.Export("Data/Output/model21");
-	
+	*/
+
+
+	//----------トポロジー最適化モデル（3D梁）----------
+	//	パラメータ
+	//		0	:s0		設計変数1
+	//		1	:s1		設計変数2
+	//		2	:E0		空気Young率
+	//		3	:V0		空気Poisson比
+	//		4	:G0		空気横弾性係数
+	//		5	:ρ0	空気密度
+	//		6	:E1		LatticeYoung率
+	//		7	:V1		LatticePoisson比
+	//		8	:G1		Lattice横弾性係数
+	//		9	:ρ1	Lattice密度
+	//		10	:E2		固体Young率
+	//		11	:V2		固体Poisson比
+	//		12	:G2		固体横弾性係数
+	//		13	:ρ2	固体密度
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//		2	:uz		z軸方向変位
+	//	設計パラメータ
+	//		0	:s0		設計変数1
+	//		1	:s1		設計変数2
+	//
+	//------------------------------------------------------
+	//std::string model22_path = "Data/Input/Optimize/AirLatticeSolid/";
+	std::string model22_path = "Data/Input/Optimize/AirLatticeSolid2/";
+	/*OCSystem model22 = OCSystem(3, 3, { 0, 1 });
+
+	model22.ImportNode(model22_path + "Node.csv");
+	model22.ImportParameter({ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, model22_path + "Parameter.csv");
+	model22.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model22_path + "Element.csv");
+	model22.ImportField<LinearField>({ 0, 1, 2 });
+	model22.ImportEquation<Optimized3PhaseMaterials3D, GaussCubic2>(0, {}, { 0, 1, 2, 3, 4, 6, 7, 8, 10, 11, 12 }, model22_path + "Equation.csv");
+	model22.ImportDirichlet(model22_path + "Dirichlet.csv");
+	model22.ImportNeumann(model22_path + "Neumann.csv");
+
+	model22.ImportOptimizedParameter(model22_path + "Equation.csv");
+	model22.ImportObjective<Compliance3PhaseMaterials3D>({ 0, 1, 2 }, { 0, 1, 2, 3, 4, 6, 7, 8, 10, 11, 12 });
+	model22.ImportElementToObjective<GaussCubic2>(0, model22_path + "Equation.csv");
+	model22.ImportConstraint<Weight3PhaseMaterials3D>({}, { 0, 1, 5, 9, 13 });
+	model22.ImportElementToConstraint<GaussCubic2>(0, model22_path + "Equation.csv");
+
+	model22.Schedule();
+	model22.Export("Data/Output/model23");
+	*/
+
+	//----------トポロジー最適化モデル（3D梁）----------
+	//	パラメータ
+	//		0	:s		設計変数
+	//		1	:E0		空気Young率
+	//		2	:V0		空気Poisson比
+	//		3	:G0		空気横弾性係数
+	//		4	:ρ0	空気密度
+	//		5	:E1		LatticeYoung率
+	//		6	:V1		LatticePoisson比
+	//		7	:G1		Lattice横弾性係数
+	//		8	:ρ1	Lattice密度
+	//	従属変数
+	//		0	:ux		x軸方向変位
+	//		1	:uy		y軸方向変位
+	//		2	:uz		z軸方向変位
+	//	設計パラメータ
+	//		0	:s		設計変数
+	//
+	//------------------------------------------------------
+	std::string model24_path = "Data/Input/Optimize/AirSolid/LatticeSolid/";
+	OCSystem model24 = OCSystem(3, 3, { 0 });
+
+	model24.ImportNode(model24_path + "Node.csv");
+	model24.ImportParameter({ 0, 1, 2, 3, 4, 5, 6, 7, 8 }, model24_path + "Parameter.csv");
+	model24.ImportElement<Cubic2, Cubic2, Cubic2, Cubic2>({ 0, 1, 2 }, 25, model24_path + "Element.csv");
+	model24.ImportField<LinearField>({ 0, 1, 2 });
+	model24.ImportEquation<Optimized2PhaseMaterials3D, GaussCubic2>(0, {}, { 0, 1, 2, 3, 5, 6, 7 }, model24_path + "Equation.csv");
+	model24.ImportDirichlet(model24_path + "Dirichlet.csv");
+	model24.ImportNeumann(model24_path + "Neumann.csv");
+
+	model24.ImportOptimizedParameter(model24_path + "Equation.csv");
+	model24.ImportObjective<Compliance2PhaseMaterials3D>({ 0, 1, 2 }, { 0, 1, 2, 3, 5, 6, 7 });
+	model24.ImportElementToObjective<GaussCubic2>(0, model24_path + "Equation.csv");
+	model24.ImportConstraint<Weight2PhaseMaterials3D>({}, { 0, 4, 8 });
+	model24.ImportElementToConstraint<GaussCubic2>(0, model24_path + "Equation.csv");
+
+	model24.Schedule();
+	model24.Export("Data/Output/AirSolid/W50L10");
+
 	std::cout << "--------------------Finish--------------------" << std::endl;
 
 	return 0;

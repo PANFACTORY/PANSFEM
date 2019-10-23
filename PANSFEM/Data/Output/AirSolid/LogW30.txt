@@ -1,0 +1,170 @@
+--------------------This is PANSFEM.--------------------
+Iteration:0
+        Solution        Convergence:1250
+26002.5
+ is done.
+        Objective function value:19.0281
+        Constraint function value:26041.7
+        Lagrange value：1e+12
+Iteration:1
+        Solution        Convergence:1250
+26140.4
+ is done.
+        Objective function value:55.4756
+        Constraint function value:6510.42
+        Lagrange value：0.00316115
+Iteration:2
+        Solution        Convergence:1413
+30040.5
+ is done.
+        Objective function value:36.3342
+        Constraint function value:7.49982e-06
+        Lagrange value：0.00209808
+Iteration:3
+        Solution        Convergence:1604
+33940.2
+ is done.
+        Objective function value:24.8549
+        Constraint function value:-1.72167e-05
+        Lagrange value：0.00169045
+Iteration:4
+        Solution        Convergence:1910
+40404.1
+ is done.
+        Objective function value:20.5205
+        Constraint function value:-1.37594e-05
+        Lagrange value：0.00118939
+Iteration:5
+        Solution        Convergence:2089
+44104.4
+ is done.
+        Objective function value:16.66
+        Constraint function value:8.47495e-06
+        Lagrange value：0.000939291
+Iteration:6
+        Solution        Convergence:2354
+49740.3
+ is done.
+        Objective function value:15.113
+        Constraint function value:6.58977e-06
+        Lagrange value：0.00069293
+Iteration:7
+        Solution        Convergence:2366
+50250.1
+ is done.
+        Objective function value:13.3961
+        Constraint function value:-2.06171e-06
+        Lagrange value：0.000624303
+Iteration:8
+        Solution        Convergence:2402
+86253.5
+ is done.
+        Objective function value:12.3684
+        Constraint function value:2.75716e-06
+        Lagrange value：0.000529395
+Iteration:9
+        Solution        Convergence:2600
+86206.7
+ is done.
+        Objective function value:11.3838
+        Constraint function value:2.15356e-06
+        Lagrange value：0.00046917
+Iteration:10
+        Solution        Convergence:2548
+91803.8
+ is done.
+        Objective function value:10.2872
+        Constraint function value:8.39563e-06
+        Lagrange value：0.000375489
+Iteration:11
+        Solution        Convergence:2704
+99516.6
+ is done.
+        Objective function value:9.39016
+        Constraint function value:7.38254e-06
+        Lagrange value：0.000344306
+Iteration:12
+        Solution        Convergence:2778
+97272.6
+ is done.
+        Objective function value:8.36185
+        Constraint function value:8.021e-06
+        Lagrange value：0.000229442
+Iteration:13
+        Solution        Convergence:3129
+106335
+ is done.
+        Objective function value:7.64714
+        Constraint function value:5.26879e-06
+        Lagrange value：0.000210493
+Iteration:14
+        Solution        Convergence:3080
+66159.4
+ is done.
+        Objective function value:6.95917
+        Constraint function value:-1.5601e-05
+        Lagrange value：0.000122164
+Iteration:15
+        Solution        Convergence:3338
+72825.5
+ is done.
+        Objective function value:6.48666
+        Constraint function value:-7.97485e-06
+        Lagrange value：0.000104655
+Iteration:16
+        Solution        Convergence:3311
+69338.3
+ is done.
+        Objective function value:6.16328
+        Constraint function value:4.41123e-06
+        Lagrange value：7.13859e-05
+Iteration:17
+        Solution        Convergence:3507
+77640.7
+ is done.
+        Objective function value:5.95901
+        Constraint function value:4.25247e-06
+        Lagrange value：5.49857e-05
+Iteration:18
+        Solution        Convergence:3625
+77282.4
+ is done.
+        Objective function value:5.82726
+        Constraint function value:-6.58629e-07
+        Lagrange value：4.50172e-05
+Iteration:19
+        Solution        Convergence:3805
+85722.1
+ is done.
+        Objective function value:5.74737
+        Constraint function value:-6.12295e-07
+        Lagrange value：4.36555e-05
+Iteration:20
+        Solution        Convergence:3968
+131502
+ is done.
+        Objective function value:5.70142
+        Constraint function value:-2.81221e-06
+        Lagrange value：4.23715e-05
+Iteration:21
+        Solution        Convergence:4630
+153873
+ is done.
+        Objective function value:5.67578
+        Constraint function value:-6.32224e-07
+        Lagrange value：3.89773e-05
+Iteration:22
+        Solution        Convergence:4658
+155469
+ is done.
+        Objective function value:5.66064
+        Constraint function value:-1.31419e-07
+        Lagrange value：3.53199e-05
+Iteration:23
+        Solution        Convergence:4224
+139544
+ is done.
+        Objective function value:5.65112
+        Constraint function value:-2.97345e-07
+----------System is optimized----------
+--------------------Finish--------------------
